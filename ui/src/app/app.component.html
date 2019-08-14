@@ -1,0 +1,48 @@
+
+<mz-sidenav #sidenav
+  [id]="'sidenav-demo'"
+  [closeOnClick]="true">
+  <mz-sidenav-header>
+    <div class="sidenav-header">
+    <div>Door system monitoring</div>
+    </div>
+  </mz-sidenav-header>
+  <mz-sidenav-link>
+    <a routerLink="/dashboard">Dashboard</a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLink="/permissions">Permissions</a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLink="/groups">Groups</a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLink="/users">Users</a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLink="/doors">Doors</a>
+  </mz-sidenav-link>
+</mz-sidenav>
+
+<mz-navbar
+[navbarClass]="'blue'">
+  <mz-navbar-item-container [align]="'left'" class="hide-on-med-and-down">
+    <mz-navbar-item>
+      <button mz-button class="sidenav-button"
+              (click)="sidenav.opened = true"
+              [float]="true"
+              [flat]="true"
+              [large]="true">
+        <i mz-icon [icon]="'menu'"></i>
+      </button>
+    </mz-navbar-item>
+  </mz-navbar-item-container>
+
+  <a class="brand-logo center">{{title}}</a>
+
+</mz-navbar>
+
+
+
+<router-outlet></router-outlet>
+

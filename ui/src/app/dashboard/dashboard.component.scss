@@ -1,0 +1,17 @@
+
+::ng-deep .card {
+  display: flex;
+  width: 60%;
+  margin: 12px auto;
+
+  > div {
+    width: 100%;
+  }
+}
+
+.load-message {
+  font-size: 24px;
+  text-align: center;
+}
+
+

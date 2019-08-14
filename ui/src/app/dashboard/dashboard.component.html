@@ -1,0 +1,65 @@
+<mz-switch-container>
+  <input mz-switch
+         [off]="'Off Loading'"
+         [on]="'On Loading'"
+         type="checkbox"
+         [(ngModel)]="loading">
+</mz-switch-container>
+
+<mz-card>
+  <mz-card-title>
+    Current door status
+  </mz-card-title>
+  <mz-card-content>
+    <ng-template #loadingMsg>
+      <mz-progress
+        [backgroundClass]="'blue lighten-4'"
+        [progressClass]="'blue'">
+      </mz-progress>
+      <div class="load-message">Getting data from the server...</div>
+    </ng-template>
+
+    <ng-container *ngIf="!loading; else loadingMsg">
+      <table>
+        <thead>
+        <tr>
+          <th>Mac address</th>
+          <th>Description</th>
+          <th>Group</th>
+          <th>Power</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <ng-container *ngIf="!!fakeData.length; then showData else noData"></ng-container>
+
+        <tbody>
+        <ng-template #noData>
+          <tr>
+          </tr>
+        </ng-template>
+        <ng-template #showData>
+          <tr *ngFor="let data of fakeData">
+            <td>{{data.mac}}</td>
+            <td>Door which give access in flor #1</td>
+            <td>Flor #1</td>
+            <td><i mz-icon mz-tooltip [ngClass]="data.status ? 'green-text' : 'red-text'"
+                   [align]="'center'"
+                   [tooltip]="data.status ? 'Online' : 'Offline'"
+                   [delay]="100"
+                   [icon]="data.status ? 'lens' : 'error'"
+                   [size]="'24px'">
+            </i></td>
+            <td><i mz-icon mz-tooltip
+                   [align]="'center'"
+                   [tooltip]="data.locked ? 'Locked' : 'Unlocked'"
+                   [delay]="100"
+                   [icon]="data.icon"
+                   [size]="'24px'">
+            </i></td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </ng-container>
+  </mz-card-content>
+</mz-card>

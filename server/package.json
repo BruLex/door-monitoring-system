@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap test/**/*.test.js",
+    "start": "app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "fastify": "^2.0.0",
+    "fastify-autoload": "^1.0.0",
+    "fastify-mysql": "^0.3.0",
+    "fastify-plugin": "^1.5.0",
+    "fs": "0.0.1-security",
+    "jsend": "^1.1.0",
+    "mongoose": "^5.7.0",
+    "mysql": "^2.17.1",
+    "path": "^0.12.7",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "tap": "^12.5.3"
+  }
+}

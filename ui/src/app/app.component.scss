@@ -1,0 +1,22 @@
+.brand-logo {
+  margin-left: 16px;
+}
+$custom-color: #FFFFFF;
+
+.sidenav-button {
+  &.active {background: rgba($custom-color, 0.3);}
+  &:hover {background: rgba($custom-color, 0.3);}
+  &:focus {
+    background: rgba($custom-color, 0.1);
+    &.active{
+      background: rgba($custom-color, 0.1);
+    }
+  }
+}
+mz-sidenav-header {
+  .sidenav-header {
+    display: flex;
+    background-size: 400px;
+    padding: 32px 32px 16px;
+  }
+}
