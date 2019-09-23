@@ -1,132 +1,81 @@
-<mz-switch-container>
-  <input mz-switch
-         [off]="'Off Loading'"
-         [on]="'On Loading'"
-         type="checkbox"
-         [(ngModel)]="loading">
-</mz-switch-container>
-<button mz-button mz-halfway-fab [float]="true"><i mz-icon [icon]="'add'"></i></button>
-
-<mz-card>
-  <mz-card-title>
-    <div header-title>Doors list</div>
-  </mz-card-title>
-  <mz-card-content>
-    <ng-template #loadingMsg>
-      <mz-progress
-        [backgroundClass]="'blue lighten-4'"
-        [progressClass]="'blue'">
-      </mz-progress>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Doors list</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngIf="loading">
+      <mat-progress-bar
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-bar>
       <div class="load-message">Getting data from the server...</div>
-    </ng-template>
-    <div class="example-container">
+    </ng-container>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <button mat-stroked-button color="primary" (click)="dialog.open(dialogD)">Add</button>
+        <button mat-stroked-button color="primary" (click)="dialog.open(dialogD)">Delete</button>
 
-      <div class="example-loading-shade"
-           *ngIf="isLoadingResults || isRateLimitReached">
-        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-          GitHub's API rate limit has been reached. It will be reset in one minute.
-        </div>
-      </div>
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <button (click)="bottomSheetModal.openModal()" mz-button>ADD</button>
-          <button (click)="dialog.open(dialogD)" mz-button>ADD2</button>
-          <span flex></span>
-          <mat-paginator #paginator [length]="fakeData.length"
-                         [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <div class="example-table-container">
-
-        <table class="example-table" mat-table [dataSource]="dataSource"
-               matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
-
-          <!-- Checkbox Column -->
-          <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                            [aria-label]="checkboxLabel()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)">
-              </mat-checkbox>
-            </td>
-          </ng-container>
-
-          <!-- Position Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          </ng-container>
-          <!-- Description Column -->
-          <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description</th>
-            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-          </ng-container>
-          <!-- IP Column -->
-          <ng-container matColumnDef="ip">
-            <th mat-header-cell *matHeaderCellDef> IP address</th>
-            <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="['select', 'name', 'description', 'ip']"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'description', 'ip'];"
-              (click)="selection.toggle(row)">
-          </tr>
-        </table>
-      </div>
-    </div>
-  </mz-card-content>
-</mz-card>
+        <mat-slide-toggle
+          color="primary"
+          [checked]="loading"
+          (change)="loading=$event.checked">
+          Loading
+        </mat-slide-toggle>
+        <span flex></span>
+        <mat-paginator #paginator [length]="fakeData.length"
+                       [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
+      </mat-toolbar-row>
+    </mat-toolbar>
+<div class="table-container">
 
 
-<mz-modal #bottomSheetModal [fixedFooter]="true">
-  <mz-modal-header>
-    <h4>Add data about new door</h4>
-  </mz-modal-header>
-  <mz-modal-content>
-    <mz-input-container>
-      <input mz-input
-             type="text"
-             [label]="'Name'"
-             [validate]="true"
-             [dataError]="'Name is invalid'"
-             [dataSuccess]="'Name is valid'"
-             length="64">
+    <table mat-table [dataSource]="dataSource"
+           matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
 
-    </mz-input-container>
-    <mz-input-container>
-      <input mz-input
-             type="text"
-             [label]="'IP address'"
-             [validate]="true"
-             [dataError]="'IP address is invalid'"
-             [dataSuccess]="'IP address is valid'"
-             length="64">
-    </mz-input-container>
-    <mz-input-container>
-      <input mz-input
-             type="text"
-             [label]="'Description'"
-             [validate]="true"
-             [dataError]="'Description is invalid'"
-             [dataSuccess]="'Description is valid'"
-             length="64">
-    </mz-input-container>
-  </mz-modal-content>
-  <mz-modal-footer>
-    <button mz-button [flat]="true" mz-modal-close>Disagree</button>
-    <button mz-button [flat]="true" mz-modal-close>Agree</button>
-  </mz-modal-footer>
-</mz-modal>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
 
-  <ng-template #dialogD>
+      <!-- Position Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description</th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+      <!-- IP Column -->
+      <ng-container matColumnDef="ip">
+        <th mat-header-cell *matHeaderCellDef> IP address</th>
+        <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['select', 'name', 'description', 'ip']; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'description', 'ip'];"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+</div>
+  </mat-card-content>
+</mat-card>
+
+
+<ng-template #dialogD>
   <h1 mat-dialog-title>Add data about new door</h1>
   <div mat-dialog-content>
     <mat-form-field>

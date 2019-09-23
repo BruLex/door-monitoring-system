@@ -5,20 +5,18 @@ import {UsersComponent} from './users';
 import {DoorsComponent} from './doors';
 import {GroupsComponent} from './groups';
 import {PermissionsComponent} from './permissions';
+import {TestTableNgComponent} from "./test-table-ng/test-table-ng.component";
+import {SystemLogsComponent} from "./system-logs/system-logs.component";
 
 const routes: Routes = [
-  {
-    path: 'ui', children: [
-      {path: 'doors', component: DoorsComponent},
-      {path: 'users', component: UsersComponent},
-      {path: 'groups', component: GroupsComponent},
-      {path: 'permissions', component: PermissionsComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-      {path: '**', redirectTo: ''}
-    ]
-  },
-  {path: '', redirectTo: '/ui', pathMatch: 'full'},
+  {path: 'test-table', component: TestTableNgComponent},
+  {path: 'system_logs', component: SystemLogsComponent},
+  {path: 'doors', component: DoorsComponent},
+  {path: 'users', component: UsersComponent},
+  {path: 'groups', component: GroupsComponent},
+  {path: 'permissions', component: PermissionsComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: '**', redirectTo: ''}
 ];
 

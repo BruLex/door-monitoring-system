@@ -12,6 +12,7 @@ import {
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,14 +25,17 @@ import { DoorsComponent } from './doors';
 import { PermissionsComponent } from './permissions';
 import { UsersComponent } from './users';
 import {
-  MatButtonModule,
+  MatButtonModule, MatCardModule,
   MatCheckboxModule, MatDialogModule, MatInputModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
+  MatPaginatorModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
+import { TestTableNgComponent } from './test-table-ng/test-table-ng.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import { SystemLogsComponent } from './system-logs/system-logs.component';
 
 const NGX_MATERIALIZE_IMPORTS = [
   MzNavbarModule,
@@ -55,7 +59,11 @@ const ANGULAR_MATERIAL = [
   MatButtonModule,
   MatToolbarModule,
   MatDialogModule,
-  MatInputModule
+  MatInputModule,
+  MatCardModule,
+  MatProgressBarModule,
+  MatSlideToggleModule,
+  ScrollingModule
 ];
 
 @NgModule({
@@ -65,7 +73,9 @@ const ANGULAR_MATERIAL = [
     GroupsComponent,
     DoorsComponent,
     PermissionsComponent,
-    UsersComponent
+    UsersComponent,
+    TestTableNgComponent,
+    SystemLogsComponent
   ],
   imports: [
     ...NGX_MATERIALIZE_IMPORTS,
@@ -73,7 +83,8 @@ const ANGULAR_MATERIAL = [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [AppService],
   bootstrap: [AppComponent]
