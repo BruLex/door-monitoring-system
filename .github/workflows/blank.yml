@@ -12,8 +12,4 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
     - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        ls ./ui
-        echo test, and deploy your project.
+      run: cd ./ui && npm run buil
