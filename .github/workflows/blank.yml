@@ -12,6 +12,6 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
     - name: Install packages
-      run: cd ./ui && npm run install
+      run: cd ./ui && npm install
     - name: Run project build
       run: cd ./ui && npm run build
