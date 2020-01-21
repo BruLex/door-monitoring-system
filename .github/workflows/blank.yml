@@ -12,4 +12,4 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v1.1.0
     - name: Run a one-line script
-      run: cd ./ui && npm run buil
+      run: cd ./ui && npm run build
