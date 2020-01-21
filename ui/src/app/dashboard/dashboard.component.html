@@ -1,65 +1,43 @@
-<mz-switch-container>
-  <input mz-switch
-         [off]="'Off Loading'"
-         [on]="'On Loading'"
-         type="checkbox"
-         [(ngModel)]="loading">
-</mz-switch-container>
+<table mat-table [dataSource]="fakeData">
+  <ng-container matColumnDef="mac">
+    <th mat-header-cell *matHeaderCellDef>Mac address</th>
+    <td mat-cell *matCellDef="let data">{{data.mac}}</td>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Description</th>
+    <!--          <td mat-cell *matCellDef="let data">{{data.name}}</td>-->
+    <td mat-cell *matCellDef="let data">Door which give access in flor #1</td>
+  </ng-container>
 
-<mz-card>
-  <mz-card-title>
-    Current door status
-  </mz-card-title>
-  <mz-card-content>
-    <ng-template #loadingMsg>
-      <mz-progress
-        [backgroundClass]="'blue lighten-4'"
-        [progressClass]="'blue'">
-      </mz-progress>
-      <div class="load-message">Getting data from the server...</div>
-    </ng-template>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="group">
+    <th mat-header-cell *matHeaderCellDef>Group</th>
+    <!--          <td mat-cell *matCellDef="let element">{{element.weight}}</td>-->
+    <td mat-cell *matCellDef="let element">Flor #1</td>
+  </ng-container>
 
-    <ng-container *ngIf="!loading; else loadingMsg">
-      <table>
-        <thead>
-        <tr>
-          <th>Mac address</th>
-          <th>Description</th>
-          <th>Group</th>
-          <th>Power</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <ng-container *ngIf="!!fakeData.length; then showData else noData"></ng-container>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="power">
+    <th mat-header-cell *matHeaderCellDef>Power</th>
+    <td mat-cell *matCellDef="let data">
+      <mat-icon [ngClass]="data.status ? 'green-icon' : 'red-icon'"
+         [matTooltip]="data.status ? 'Online' : 'Offline'">
+          {{ data.status ? 'lens' : 'error' }}
+      </mat-icon>
+    </td>
+  </ng-container>
 
-        <tbody>
-        <ng-template #noData>
-          <tr>
-          </tr>
-        </ng-template>
-        <ng-template #showData>
-          <tr *ngFor="let data of fakeData">
-            <td>{{data.mac}}</td>
-            <td>Door which give access in flor #1</td>
-            <td>Flor #1</td>
-            <td><i mz-icon mz-tooltip [ngClass]="data.status ? 'green-text' : 'red-text'"
-                   [align]="'center'"
-                   [tooltip]="data.status ? 'Online' : 'Offline'"
-                   [delay]="100"
-                   [icon]="data.status ? 'lens' : 'error'"
-                   [size]="'24px'">
-            </i></td>
-            <td><i mz-icon mz-tooltip
-                   [align]="'center'"
-                   [tooltip]="data.locked ? 'Locked' : 'Unlocked'"
-                   [delay]="100"
-                   [icon]="data.icon"
-                   [size]="'24px'">
-            </i></td>
-          </tr>
-        </ng-template>
-        </tbody>
-      </table>
-    </ng-container>
-  </mz-card-content>
-</mz-card>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let data">
+      <mat-icon
+          [matTooltip]="data.locked ? 'Locked' : 'Unlocked'">
+          {{ data.icon }}
+      </mat-icon>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['mac', 'description', 'group', 'power', 'status']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['mac', 'description', 'group', 'power', 'status'];"></tr>
+</table>

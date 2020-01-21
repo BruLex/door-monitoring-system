@@ -1,10 +1,11 @@
 'use strict'
 
-const mongoose = require('mongoose');
 const fastify = require('fastify')({
     logger: false
 });
 const fsequelize = require('fastify-sequelize');
+const AutoLoad = require('fastify-autoload');
+const path = require('path');
 
 const sequelizeConfig = {
     instance: 'sequelize',
@@ -17,10 +18,6 @@ const sequelizeConfig = {
         timestamps: false
     }
 };
-mongoose.connect('mongodb://localhost:27017/door_system_monitoring')
-    .then(() => console.log('MongoDB connected…'))
-    .catch(err => console.log(err));
-
 
 fastify.register(require('fastify-mysql'), {
     connectionString: 'mysql://door-system@localhost/door_system?password=door123'
@@ -28,14 +25,16 @@ fastify.register(require('fastify-mysql'), {
 
 fastify.register(fsequelize, sequelizeConfig);
 
+fastify.decorate('cardModel', require('./models/cardModel').CardDbModel);
+fastify.decorate('logModel', require('./models/logModel').LogDbModel);
+
+
 fastify.register(require('fastify-cors'));
 
-fastify.register(require('./controllers/cardController'), {logLevel: 'debug'});
-fastify.register(require('./controllers/configController'), {logLevel: 'debug'});
-fastify.register(require('./controllers/doorController'), {logLevel: 'debug'});
-fastify.register(require('./controllers/groupController'), {logLevel: 'debug'});
-fastify.register(require('./controllers/logsController'), {logLevel: 'debug'});
-
+fastify.register(AutoLoad, {
+    dir: path.join(__dirname, 'controllers'),
+    options: { logLevel: 'debug' }
+});
 
 fastify.ready(err => {
     console.log(err)

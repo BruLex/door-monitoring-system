@@ -1,0 +1,14 @@
+.table-container {
+  overflow: auto;
+  height: 78vh;
+}
+
+[mat-table] {
+  width: 100%;
+}
+mat-toolbar {
+  background: white;
+}
+button {
+  margin: 16px 8px;
+}

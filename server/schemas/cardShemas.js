@@ -12,9 +12,6 @@ const cardProperties = {
     },
     is_used: {
         type: 'boolean'
-    },
-    _id: {
-        type: 'string'
     }
 };
 
@@ -41,7 +38,7 @@ exports.addCardSchema = {
                 data: {
                     type: 'object',
                     properties: {
-                        _id: {
+                        i_card: {
                             type: 'string'
                         }
                     }
@@ -54,9 +51,9 @@ exports.addCardSchema = {
 exports.getCardInfoSchema = {
         body: {
             type: 'object',
-            required: ['_id'],
+            required: ['i_card'],
             properties: {
-                _id: {
+                i_card: {
                     type: 'string'
                 },
             },

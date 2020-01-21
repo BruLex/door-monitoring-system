@@ -19,12 +19,12 @@
       "dom"
     ],
     "types": [
-      "jquery",
-      "materialize-css"
+      "jquery"
     ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "disableTypeScriptVersionCheck": true
   }
 }

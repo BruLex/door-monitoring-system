@@ -1,22 +1,35 @@
-.brand-logo {
-  margin-left: 16px;
-}
-$custom-color: #FFFFFF;
+@import "../variables";
 
-.sidenav-button {
-  &.active {background: rgba($custom-color, 0.3);}
-  &:hover {background: rgba($custom-color, 0.3);}
-  &:focus {
-    background: rgba($custom-color, 0.1);
-    &.active{
-      background: rgba($custom-color, 0.1);
-    }
-  }
-}
-mz-sidenav-header {
-  .sidenav-header {
+.app-container {
     display: flex;
-    background-size: 400px;
-    padding: 32px 32px 16px;
-  }
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+h1.brand-logo {
+    margin-left: 8px;
+}
+
+.sidenav-container {
+    height: 100%;
+}
+
+.load-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    color: mat-color($primaryPalette);
+    font-weight: 500;
+    font-size: 24px;
+}
+
+::ng-deep .load-backdrop {
+    background: mat-color($foreground, elevation, .65);
 }

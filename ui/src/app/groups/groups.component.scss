@@ -1,0 +1,91 @@
+@import "~@angular/material/_theming.scss";
+@import "./../../variables";
+
+.table-container {
+    overflow: auto;
+    height: 78vh;
+}
+
+[mat-table] {
+    width: 100%;
+}
+
+mat-toolbar {
+    background: mat-color($background, card);
+
+    button {
+        margin: 16px 8px;
+    }
+}
+
+
+
+mat-form-field {
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: #777;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    width: 100%;
+    padding: 8px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.example-element-diagram {
+    display: flex;
+    flex-direction: row;
+}
+.grid-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+.mat-row {
+    &:hover {
+        .action-button {
+            display: inherit;
+        }
+    }
+
+    .action-button {
+        display: none;
+        position: absolute;
+        right: 24px;
+    }
+}

@@ -1,0 +1,14 @@
+@import "~@angular/material/_theming.scss";
+
+$primaryPalette: mat-palette($mat-amber);
+$accentPalette: mat-palette($mat-pink, A200, A100, A400);
+
+// the default warn palette is red, so use that if the theme doesn't define one
+$warnPalette: mat-palette($mat-red);
+
+// re-define the indigo-pink theme
+$defaultTheme: mat-light-theme($primaryPalette, $accentPalette, $warnPalette);
+
+$foreground: map-get($defaultTheme, foreground);
+$background: map-get($defaultTheme, background);
+

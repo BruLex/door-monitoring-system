@@ -1,17 +1,12 @@
+@import "~@angular/material/_theming.scss";
 
-::ng-deep .card {
-  display: flex;
-  width: 60%;
-  margin: 12px auto;
-
-  > div {
+[mat-table] {
     width: 100%;
-  }
 }
 
-.load-message {
-  font-size: 24px;
-  text-align: center;
+.green-icon {
+    color: mat-color($mat-green, 500);
 }
-
-
+.red-icon {
+    color: mat-color($mat-red, 500);
+}
