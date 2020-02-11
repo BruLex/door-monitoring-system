@@ -1,40 +1,41 @@
 <mat-toolbar>
     <mat-toolbar-row>
         <span flex></span>
-        <mat-paginator [length]="dataSource.data.length" pageSize="100" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
+        <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
+                       pageSize="100"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource"
-         matSort matSortActive="time" matSortDisableClear matSortDirection="desc">
-    <ng-container matColumnDef="uid">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Uid</th>
-      <td mat-cell *matCellDef="let log">{{log.card_info.uid}}</td>
-    </ng-container>
-    <ng-container matColumnDef="user">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>User</th>
-      <td mat-cell *matCellDef="let log">{{log.user_info ? log.user_info.name : 'No data'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="group">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Group</th>
-      <td mat-cell *matCellDef="let log"> {{log.group_info ? log.group_info.name : 'No data'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="door">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Door</th>
-      <td mat-cell *matCellDef="let log">{{log.door_info ? log.door_info.name : 'No data'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="time">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Time</th>
-      <td mat-cell *matCellDef="let log">{{log.time | date :'medium'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="access">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Access</th>
-      <td mat-cell *matCellDef="let log">{{log.access ? 'granted' : 'denied'}}</td>
-    </ng-container>
+    <table [dataSource]="dataSource" mat-table
+           matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+        <ng-container matColumnDef="uid">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Uid</th>
+            <td *matCellDef="let log" mat-cell>{{log.card_info.uid}}</td>
+        </ng-container>
+        <ng-container matColumnDef="user">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
+            <td *matCellDef="let log" mat-cell>{{log.user_info ? log.user_info.name : 'No data'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="group">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Group</th>
+            <td *matCellDef="let log" mat-cell> {{log.group_info ? log.group_info.name : 'No data'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="door">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Door</th>
+            <td *matCellDef="let log" mat-cell>{{log.door_info ? log.door_info.name : 'No data'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="time">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Time</th>
+            <td *matCellDef="let log" mat-cell>{{log.time | date :'medium'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="access">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Access</th>
+            <td *matCellDef="let log" mat-cell>{{log.access ? 'granted' : 'denied'}}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['uid', 'user', 'group','door', 'time', 'access']; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['uid', 'user', 'group','door', 'time', 'access'];">
-    </tr>
-  </table>
+        <tr *matHeaderRowDef="['uid', 'user', 'group','door', 'time', 'access']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['uid', 'user', 'group','door', 'time', 'access'];" mat-row>
+        </tr>
+    </table>
 </div>

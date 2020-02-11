@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup } from "@angular/forms";
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { AppService } from '../app.service';
 import { TableAbstract } from '../tools/table-abstract';
 import { createFormControl } from "../tools/validations";
@@ -25,14 +25,6 @@ export class DevicesComponent extends TableAbstract<DeviceModel> {
 
     @ViewChild('addDialog', { static: false }) addDialogRef: TemplateRef<ElementRef>;
 
-    @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
-        this.dataSource.paginator = paginator;
-    }
-
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
-        this.dataSource.sort = sort;
-    }
-
     constructor(private appSrv: AppService, private matDialog: MatDialog) {
         super('name');
         appSrv.setAppConfig({ title: 'Devices' });
@@ -45,6 +37,14 @@ export class DevicesComponent extends TableAbstract<DeviceModel> {
             }
         });
 
+    }
+
+    @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
+        this.dataSource.paginator = paginator;
+    }
+
+    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+        this.dataSource.sort = sort;
     }
 
     openAdd(): void {

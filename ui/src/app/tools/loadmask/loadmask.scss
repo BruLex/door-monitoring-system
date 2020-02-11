@@ -20,7 +20,7 @@
             top: 0;
         }
 
-        &:not(.dk-loadmask-top):before,  &.dk-loadmask-top:before {
+        &:not(.dk-loadmask-top):before, &.dk-loadmask-top:before {
             display: block;
             position: absolute;
             bottom: 0;

@@ -25,15 +25,14 @@ export class AppComponent implements RootComponentInterface {
     ];
 
     @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;
-
-    get title() {
-        return this.appService.getConfig().title;
-    }
-
     private overlayRef: OverlayRef;
 
     constructor(private appService: AppService, private overlay: Overlay) {
         this.appService.setupRootComponent(this);
+    }
+
+    get title() {
+        return this.appService.getConfig().title;
     }
 
     showLoadmask(): void {

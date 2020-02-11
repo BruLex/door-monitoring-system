@@ -1,51 +1,51 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <button mat-stroked-button color="primary" (click)="openAdd()">Add</button>
-        <button *ngIf="selection.hasValue()" mat-stroked-button color="primary" (click)="deleteModel()">Delete</button>
+        <button (click)="openAdd()" color="primary" mat-stroked-button>Add</button>
+        <button (click)="deleteModel()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
         <mat-paginator [length]="dataSource.data?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
-    <table mat-table [dataSource]="dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top"
-           dkLoadmaskText="Getting data from the server..."
-           matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
+    <table [dataSource]="dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top" dkLoadmaskText="Getting data from the server..."
+           mat-table
+           matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox [checked]="selection.hasValue() && isAllSelected()"
-                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            <th *matHeaderCellDef mat-header-cell>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
                               [aria-label]="checkboxLabel()"
-                              (change)="$event ? masterToggle() : null">
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox [checked]="selection.isSelected(row)"
-                              [aria-label]="checkboxLabel(row)"
+            <td *matCellDef="let row" mat-cell>
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null"
                               (click)="$event.stopPropagation()"
-                              (change)="$event ? selection.toggle(row) : null">
+                              [aria-label]="checkboxLabel(row)"
+                              [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
 
         <!-- Position Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+            <td *matCellDef="let element" mat-cell> {{element.name}} </td>
         </ng-container>
         <!-- Description Column -->
         <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description</th>
-            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            <th *matHeaderCellDef mat-header-cell> Description</th>
+            <td *matCellDef="let element" mat-cell> {{element.description}} </td>
         </ng-container>
         <!-- IP Column -->
         <ng-container matColumnDef="ip">
-            <th mat-header-cell *matHeaderCellDef> IP address</th>
-            <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
+            <th *matHeaderCellDef mat-header-cell> IP address</th>
+            <td *matCellDef="let element" mat-cell> {{element.ip}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['select', 'name', 'description', 'ip']; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'description', 'ip'];"></tr>
+        <tr *matHeaderRowDef="['select', 'name', 'description', 'ip']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'description', 'ip'];" mat-row></tr>
     </table>
 </div>
 
@@ -55,19 +55,20 @@
     <div mat-dialog-content>
         <form [formGroup]="addGroup">
             <mat-form-field>
-                <input matInput formControlName="name" [(ngModel)]="newModel.name" placeholder="Name">
+                <input [(ngModel)]="newModel.name" formControlName="name" matInput placeholder="Name">
             </mat-form-field>
             <mat-form-field>
-                <input matInput formControlName="ip" [(ngModel)]="newModel.ip" placeholder="IP address">
+                <input [(ngModel)]="newModel.ip" formControlName="ip" matInput placeholder="IP address">
             </mat-form-field>
             <mat-form-field>
-                <input matInput formControlName="description" [(ngModel)]="newModel.description" placeholder="Description">
+                <input [(ngModel)]="newModel.description" formControlName="description" matInput
+                       placeholder="Description">
             </mat-form-field>
         </form>
 
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">Close</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Create</button>
+        <button [mat-dialog-close]="false" mat-button>Close</button>
+        <button [mat-dialog-close]="true" cdkFocusInitial mat-button>Create</button>
     </div>
 </ng-template>

@@ -25,33 +25,16 @@ export class GroupsComponent extends TableAbstract<any> {
     loading = true;
     selection: SelectionModel<GroupModel> = new SelectionModel<GroupModel>(true, []);
     dataSource: MatTableDataSource<GroupModel> = new MatTableDataSource();
-
-    @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
-        this.dataSource.paginator = paginator;
-    }
-
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
-        this.dataSource.sort = sort;
-    }
-
     @ViewChild('addEditDialog', { static: false }) addDialogRef: TemplateRef<ElementRef>;
-
     addEditModel: GroupModel = {} as GroupModel;
     doorToAdd: DeviceModel;
     myControl = new FormControl();
     devices: DeviceModel[] = [];
-
     filteredOptions: Observable<DeviceModel[]> = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => (typeof value === 'string' ? value : value?.name)),
         map(name => (name ? this._filter(name) : this.notAddedDoors))
     );
-
-    get notAddedDoors(): DeviceModel[] {
-        return (this.devices || []).filter(
-            o => !(this.addEditModel.allowed_devices || []).some(op => op.i_device === o.i_device)
-        );
-    }
 
     constructor(private appSrv: AppService, private matDialog: MatDialog, private overlay: Overlay) {
         super('name');
@@ -76,7 +59,21 @@ export class GroupsComponent extends TableAbstract<any> {
         );
     }
 
-    showOverlay(cdkPortal: CdkPortal, origin: HTMLElement) {
+    @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
+        this.dataSource.paginator = paginator;
+    }
+
+    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+        this.dataSource.sort = sort;
+    }
+
+    get notAddedDoors(): DeviceModel[] {
+        return (this.devices || []).filter(
+            o => !(this.addEditModel.allowed_devices || []).some(op => op.i_device === o.i_device)
+        );
+    }
+
+    showOverlay(cdkPortal: CdkPortal, origin: ElementRef) {
         const overlayRef: OverlayRef = this.overlay.create({
             hasBackdrop: true,
             backdropClass: null,
@@ -155,11 +152,6 @@ export class GroupsComponent extends TableAbstract<any> {
         return user ? user.name : undefined;
     }
 
-    private _filter(name: string): any[] {
-        const filterValue = name.toLowerCase();
-        return this.devices.filter(o => o.name.toLowerCase().indexOf(filterValue) === 0);
-    }
-
     addDoorToModel(): void {
         this.addEditModel.allowed_devices = [...(this.addEditModel.allowed_devices || []), this.doorToAdd];
         this.doorToAdd = null;
@@ -171,5 +163,10 @@ export class GroupsComponent extends TableAbstract<any> {
             ({ i_device }) => door.i_device !== i_device
         );
         this.myControl.reset();
+    }
+
+    private _filter(name: string): any[] {
+        const filterValue = name.toLowerCase();
+        return this.devices.filter(o => o.name.toLowerCase().indexOf(filterValue) === 0);
     }
 }

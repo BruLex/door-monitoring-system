@@ -21,10 +21,6 @@ export class SystemLogsComponent extends TableAbstract<LogData> implements After
     dialog: MatDialog;
     dataSource: MatTableDataSource<LogData> = new MatTableDataSource();
 
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
-        this.dataSource.sort = sort;
-    }
-
     constructor(private appSrv: AppService) {
         super('');
         appSrv.setAppConfig({ title: 'System Logs' });
@@ -37,6 +33,10 @@ export class SystemLogsComponent extends TableAbstract<LogData> implements After
                 }
             })
         );
+    }
+
+    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+        this.dataSource.sort = sort;
     }
 
     ngAfterViewInit(): void {

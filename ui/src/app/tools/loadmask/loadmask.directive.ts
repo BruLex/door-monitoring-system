@@ -4,6 +4,10 @@ import { Directive, HostBinding, Input } from '@angular/core';
     selector: '[dkLoadmask]',
 })
 export class LoadmaskDirective {
+    @HostBinding('class.dk-loadmask') isEnabled = false;
+    @HostBinding('class.dk-loadmask-top') top = false;
+    @HostBinding('attr.dk-loadmask-text') text = '';
+
     @Input() set dkLoadmask(status: boolean) {
         if (status === this.isEnabled) {
             return;
@@ -19,8 +23,4 @@ export class LoadmaskDirective {
     @Input() set dkLoadmaskText(text: string) {
         this.text = text;
     }
-
-    @HostBinding('class.dk-loadmask') isEnabled = false;
-    @HostBinding('class.dk-loadmask-top') top = false;
-    @HostBinding('attr.dk-loadmask-text') text = '';
 }

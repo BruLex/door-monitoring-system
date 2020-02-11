@@ -1,10 +1,8 @@
 /* tslint:disable:array-type */
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { combineLatest, observable, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { TableAbstract } from '../tools/table-abstract';
 
@@ -64,17 +62,17 @@ export class DashboardComponent extends TableAbstract<DoorData> {
         },
     ];
 
+    constructor(private appSrv: AppService, private httpClient: HttpClient) {
+        super('mac');
+        appSrv.setAppConfig({ title: 'Dashboard' });
+        this.dataSource.data = this.modelData;
+    }
+
     @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
         this.dataSource.paginator = paginator;
     }
 
     @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
         this.dataSource.sort = sort;
-    }
-
-    constructor(private appSrv: AppService, private httpClient: HttpClient) {
-        super('mac');
-        appSrv.setAppConfig({ title: 'Dashboard' });
-        this.dataSource.data = this.modelData;
     }
 }

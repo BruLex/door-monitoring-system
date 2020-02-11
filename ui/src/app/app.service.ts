@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, of as observableOf } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -36,11 +36,11 @@ interface ConfirmDialogConfig {
     providedIn: 'root',
 })
 export class AppService {
+    private static rootComponent: RootComponentInterface;
     private title = '';
 
-    private static rootComponent: RootComponentInterface;
-
-    constructor(private http: HttpClient, private matDialog: MatDialog) {}
+    constructor(private http: HttpClient, private matDialog: MatDialog) {
+    }
 
     setAppConfig(config: { title: string }) {
         this.title = config.title;
@@ -54,7 +54,7 @@ export class AppService {
 
     apiRequest(service: string, method: string, body: object = {}): Observable<Response> {
         return this.http
-            .post<Response>(`http://127.0.0.1:3000/api/${service}/${method}`, body)
+            .post<Response>(`http://127.0.0.1:3000/api/${ service }/${ method }`, body)
             .pipe(mergeMap(resp => observableOf(new Response(resp))));
     }
 
@@ -80,7 +80,7 @@ export class AppService {
             if (result) {
                 config.onSuccess();
             }
-            if (!result && !!config.onFail ) {
+            if (!result && !!config.onFail) {
                 config.onFail();
             }
         });

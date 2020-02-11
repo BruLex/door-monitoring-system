@@ -43,9 +43,9 @@ export abstract class TableAbstract<T> implements OnDestroy, AfterViewInit {
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: T): string {
         if (!row) {
-            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+            return `${ this.isAllSelected() ? 'select' : 'deselect' } all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row[this.mainKey]}`;
+        return `${ this.selection.isSelected(row) ? 'deselect' : 'select' } row ${ row[this.mainKey] }`;
     }
 
     protected compare(a: number | string, b: number | string, isAsc: boolean): number {

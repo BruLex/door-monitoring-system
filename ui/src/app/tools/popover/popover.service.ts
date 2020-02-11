@@ -5,70 +5,71 @@ import { PopoverContent, PopoverRef } from './popover-ref';
 import { PopoverComponent } from './popover.component';
 
 export interface PopoverParams<T> {
-  width?: string | number;
-  height?: string | number;
-  origin: HTMLElement;
-  content: PopoverContent;
-  data?: T;
+    width?: string | number;
+    height?: string | number;
+    origin: HTMLElement;
+    content: PopoverContent;
+    data?: T;
 }
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class Popover {
-  constructor(private overlay: Overlay, private injector: Injector) { }
+    constructor(private overlay: Overlay, private injector: Injector) {
+    }
 
-  open<T>({ origin, content, data, width, height }: PopoverParams<T>): PopoverRef<T> {
-    const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height }));
-    const popoverRef = new PopoverRef<T>(overlayRef, content, data);
+    open<T>({ origin, content, data, width, height }: PopoverParams<T>): PopoverRef<T> {
+        const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height }));
+        const popoverRef = new PopoverRef<T>(overlayRef, content, data);
 
-    const injector = this.createInjector(popoverRef, this.injector);
-    overlayRef.attach(new ComponentPortal(PopoverComponent, null, injector));
+        const injector = this.createInjector(popoverRef, this.injector);
+        overlayRef.attach(new ComponentPortal(PopoverComponent, null, injector));
 
-    return popoverRef;
-  }
+        return popoverRef;
+    }
 
-  private getOverlayConfig({ origin, width, height }): OverlayConfig {
-    return new OverlayConfig({
-      hasBackdrop: true,
-      width,
-      height,
-      backdropClass: 'popover-backdrop',
-      positionStrategy: this.getOverlayPosition(origin),
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
-    });
-  }
+    createInjector(popoverRef: PopoverRef, injector: Injector) {
+        const tokens = new WeakMap([[PopoverRef, popoverRef]]);
+        return new PortalInjector(injector, tokens);
+    }
 
-  private getOverlayPosition(origin: HTMLElement): PositionStrategy {
-    const positionStrategy = this.overlay.position()
-      .flexibleConnectedTo(origin)
-      .withPositions(this.getPositions())
-      .withFlexibleDimensions(false)
-      .withPush(false);
+    private getOverlayConfig({ origin, width, height }): OverlayConfig {
+        return new OverlayConfig({
+            hasBackdrop: true,
+            width,
+            height,
+            backdropClass: 'popover-backdrop',
+            positionStrategy: this.getOverlayPosition(origin),
+            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        });
+    }
 
-    return positionStrategy;
-  }
+    private getOverlayPosition(origin: HTMLElement): PositionStrategy {
+        const positionStrategy = this.overlay.position()
+            .flexibleConnectedTo(origin)
+            .withPositions(this.getPositions())
+            .withFlexibleDimensions(false)
+            .withPush(false);
 
-  createInjector(popoverRef: PopoverRef, injector: Injector) {
-    const tokens = new WeakMap([[PopoverRef, popoverRef]]);
-    return new PortalInjector(injector, tokens);
-  }
+        return positionStrategy;
+    }
 
-  private getPositions(): ConnectionPositionPair[] {
-    return [
-      {
-        originX: 'center',
-        originY: 'top',
-        overlayX: 'center',
-        overlayY: 'bottom',
-      },
-      {
-        originX: 'center',
-        originY: 'bottom',
-        overlayX: 'center',
-        overlayY: 'top',
-      },
-    ];
-  }
+    private getPositions(): ConnectionPositionPair[] {
+        return [
+            {
+                originX: 'center',
+                originY: 'top',
+                overlayX: 'center',
+                overlayY: 'bottom',
+            },
+            {
+                originX: 'center',
+                originY: 'bottom',
+                overlayX: 'center',
+                overlayY: 'top',
+            },
+        ];
+    }
 
 }

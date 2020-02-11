@@ -1,51 +1,51 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <button mat-stroked-button color="primary" (click)="openDialog('add')">Add</button>
-        <button mat-stroked-button color="primary" *ngIf="selection.hasValue()" (click)="deleteGroups()">Delete</button>
+        <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
+        <button (click)="deleteGroups()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
-        <mat-paginator [length]="dataSource.data.length" pageSize="100"
-                       [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
+        <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
+                       pageSize="100"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows
-           matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
+    <table [dataSource]="dataSource" mat-table matSort
+           matSortActive="name" matSortDirection="desc" matSortDisableClear multiTemplateDataRows>
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
+            <th *matHeaderCellDef mat-header-cell>
                 <mat-checkbox (change)="$event && masterToggle()"
+                              [aria-label]="checkboxLabel()"
                               [checked]="selection.hasValue() && isAllSelected()"
-                              [indeterminate]="selection.hasValue() && !isAllSelected()"
-                              [aria-label]="checkboxLabel()">
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()"
-                              (change)="$event ? selection.toggle(row) : null"
-                              [checked]="selection.isSelected(row)"
-                              [aria-label]="checkboxLabel(row)">
+            <td *matCellDef="let row" mat-cell>
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                              (click)="$event.stopPropagation()"
+                              [aria-label]="checkboxLabel(row)"
+                              [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+            <td *matCellDef="let element" mat-cell> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="devices">
-            <th mat-header-cell *matHeaderCellDef>Allowed door devices</th>
-            <td mat-cell *matCellDef="let element">
+            <th *matHeaderCellDef mat-header-cell>Allowed door devices</th>
+            <td *matCellDef="let element" mat-cell>
                 <mat-icon #refACl
-                          [style.cursor]="!element.allowed_all && !!element.allowed_devices?.length ? 'pointer' : null"
+                          (click)="!element.allowed_all && !!element.allowed_devices?.length && showOverlay(portalACl, refACl._elementRef)"
                           [matBadgeColor]="'primary'"
                           [matBadge]="element.allowed_all ? 'All' : element.allowed_devices?.length || '-'"
-                          (click)="!element.allowed_all && !!element.allowed_devices?.length && showOverlay(portalACl, refACl._elementRef)">
+                          [style.cursor]="!element.allowed_all && !!element.allowed_devices?.length ? 'pointer' : null">
                     meeting_room
                 </mat-icon>
 
-                <ng-template cdk-portal #portalACl="cdkPortal">
+                <ng-template #portalACl="cdkPortal" cdk-portal>
                     <div class="portal">
                         <ol class="popover">
                             <li *ngFor="let el of element.allowed_devices">
@@ -58,17 +58,16 @@
         </ng-container>
 
         <ng-container matColumnDef="users">
-            <th mat-header-cell *matHeaderCellDef>User</th>
-            <td mat-cell
-                *matCellDef="let element">
+            <th *matHeaderCellDef mat-header-cell>User</th>
+            <td *matCellDef="let element" mat-cell>
                 <mat-icon #refUser
-                          [style.cursor]="!!element.users?.length ? 'pointer' : null"
+                          (click)="!!element.users?.length && showOverlay(portalUser, refUser._elementRef)"
                           [matBadgeColor]="'primary'"
                           [matBadge]="element.users?.length || 0"
-                          (click)="!!element.users?.length && showOverlay(portalUser, refUser._elementRef)">
+                          [style.cursor]="!!element.users?.length ? 'pointer' : null">
                     supervised_user_circle
                 </mat-icon>
-                <ng-template cdk-portal #portalUser="cdkPortal">
+                <ng-template #portalUser="cdkPortal" cdk-portal>
                     <div class="portal">
                         <ol class="popover">
                             <li *ngFor="let el of element.users">
@@ -81,17 +80,17 @@
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-icon-button class="action-button" (click)="openDialog('edit', element)">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let element" mat-cell>
+                <button (click)="openDialog('edit', element)" class="action-button" mat-icon-button>
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="['select', 'name', 'devices', 'users', 'actions']; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'devices', 'users', 'actions'];"></tr>
+        <tr *matHeaderRowDef="['select', 'name', 'devices', 'users', 'actions']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'devices', 'users', 'actions'];" mat-row></tr>
     </table>
 </div>
 
@@ -99,7 +98,7 @@
     <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add data about new group' }}</h1>
     <div mat-dialog-content>
         <mat-form-field>
-            <input matInput [formControl]="nameControl" [(ngModel)]="addEditModel.name" placeholder="Name">
+            <input [(ngModel)]="addEditModel.name" [formControl]="nameControl" matInput placeholder="Name">
         </mat-form-field>
         <mat-slide-toggle [(ngModel)]="addEditModel.allowed_all">Allowed all</mat-slide-toggle>
         <ng-container *ngIf="!addEditModel.allowed_all">
@@ -107,24 +106,24 @@
             <mat-divider></mat-divider>
             <div style="display: flex; flex-direction: row; align-items: center">
                 <mat-form-field>
-                    <input type="text" placeholder="Assignee" aria-label="Assignee" matInput [formControl]="myControl"
-                           [matAutocomplete]="auto">
+                    <input [formControl]="myControl" [matAutocomplete]="auto" aria-label="Assignee" matInput placeholder="Assignee"
+                           type="text">
                     <mat-autocomplete #auto="matAutocomplete"
-                                      [displayWith]="displayFn"
-                                      (optionSelected)="doorToAdd=$event.option.value">
+                                      (optionSelected)="doorToAdd=$event.option.value"
+                                      [displayWith]="displayFn">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{option.name}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <button mat-icon-button color="primary" [disabled]="!doorToAdd" (click)="addDoorToModel()">
+                <button (click)="addDoorToModel()" [disabled]="!doorToAdd" color="primary" mat-icon-button>
                     <mat-icon>add_circle</mat-icon>
                 </button>
             </div>
             <mat-chip-list>
-                <mat-chip *ngFor="let door of addEditModel.allowed_devices"
-                          [removable]="true"
-                          (removed)="removeDoorfromModel(door)">
+                <mat-chip (removed)="removeDoorfromModel(door)"
+                          *ngFor="let door of addEditModel.allowed_devices"
+                          [removable]="true">
                     {{ door.name }}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
@@ -132,10 +131,10 @@
         </ng-container>
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">Close</button>
-        <button mat-button
-                [disabled]="nameControl.invalid"
-                [mat-dialog-close]="true">
+        <button [mat-dialog-close]="false" mat-button>Close</button>
+        <button [disabled]="nameControl.invalid"
+                [mat-dialog-close]="true"
+                mat-button>
             {{ this.dialogEditMode ? 'Save' : 'Create' }}
         </button>
     </div>

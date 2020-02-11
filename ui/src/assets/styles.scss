@@ -4,16 +4,23 @@
 @include angular-material-theme($defaultTheme);
 
 [header-title] {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 [flex] {
-  flex: 1;
-}
-mat-card {
-  min-height: 400px;
+    flex: 1;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+mat-card {
+    min-height: 400px;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 

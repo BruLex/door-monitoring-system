@@ -1,61 +1,52 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <button mat-stroked-button color="primary">Add</button>
-        <button mat-stroked-button color="primary">Delete</button>
-
-        <mat-slide-toggle
-            color="primary"
-            [checked]="loading"
-            (change)="loading=$event.checked">
-            Loading
-        </mat-slide-toggle>
+        <button color="primary" mat-stroked-button>Add</button>
+        <button color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
-        <mat-paginator #paginator [length]="modelData.length"
+        <mat-paginator #paginator [length]="dataSource.data.length"
                        [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
-    <table mat-table [dataSource]="dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top"
-           dkLoadmaskText="Getting data from the server..."
-           matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
+    <table [dataSource]="dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top" dkLoadmaskText="Getting data from the server..."
+           mat-table
+           matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox
-                                (change)="$event ? masterToggle() : null"
-                                            [checked]="selection.hasValue() && isAllSelected()"
-                                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                            [aria-label]="checkboxLabel()">
+            <th *matHeaderCellDef mat-header-cell>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [aria-label]="checkboxLabel()"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox
-                                (click)="$event.stopPropagation()"
-                                            (change)="$event ? selection.toggle(row) : null"
-                                            [checked]="selection.isSelected(row)"
-                                            [aria-label]="checkboxLabel(row)">
+            <td *matCellDef="let row" mat-cell>
+                <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                              (click)="$event.stopPropagation()"
+                              [aria-label]="checkboxLabel(row)"
+                              [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
 
-        <!-- Position Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+            <td *matCellDef="let element" mat-cell>{{element.name}}</td>
         </ng-container>
-        <!-- Description Column -->
+
         <ng-container matColumnDef="card_uid">
-            <th mat-header-cell *matHeaderCellDef>Card UUID</th>
-            <td mat-cell *matCellDef="let element">{{element.card_uid}}</td>
+            <th *matHeaderCellDef mat-header-cell>Card UUID</th>
+            <td *matCellDef="let element" mat-cell>{{element.card_uid}}</td>
         </ng-container>
-        <!-- IP Column -->
+
         <ng-container matColumnDef="group">
-            <th mat-header-cell *matHeaderCellDef>Group</th>
-            <td mat-cell *matCellDef="let element">{{element.group}}</td>
+            <th *matHeaderCellDef mat-header-cell>Group</th>
+            <td *matCellDef="let element" mat-cell>{{element.group}}</td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['select', 'name', 'card_uid', 'group']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'card_uid', 'group'];">
+
+        <tr *matHeaderRowDef="['select', 'name', 'card_uid', 'group']" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'card_uid', 'group'];" mat-row>
         </tr>
     </table>
 </div>
