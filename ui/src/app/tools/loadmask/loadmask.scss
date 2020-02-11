@@ -1,0 +1,79 @@
+@import '~@angular/material/theming';
+
+@import "../../../variables";
+
+@mixin dk-loadmask-mixin {
+
+    .dk-loadmask {
+        position: relative;
+        user-select: none;
+        overflow-x: hidden;
+        pointer-events: none;
+        cursor: default;
+        min-height: calc(1em + 4px);
+
+        &:not(.dk-loadmask-top):before {
+            bottom: 0;
+        }
+
+        &.dk-loadmask-top:before {
+            top: 0;
+        }
+
+        &:not(.dk-loadmask-top):before,  &.dk-loadmask-top:before {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            height: 4px;
+            content: '';
+            left: 0px;
+            width: 200px;
+            background-color: mat-color($primaryPalette);
+            animation: loading 2s linear infinite;
+
+            // It should be above the content and the background of loadmask
+            z-index: 1002;
+
+            @keyframes loading {
+                from {
+                    left: -200px;
+                    width: 30%;
+                }
+                50% {
+                    width: 30%;
+                }
+                70% {
+                    width: 70%;
+                }
+                80% {
+                    left: 50%;
+                }
+                95% {
+                    left: 120%;
+                }
+                to {
+                    left: 100%;
+                }
+            }
+        }
+
+        &:after {
+            content: attr(dk-loadmask-text);
+            position: absolute;
+            display: flex;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+            color: mat-color($primaryPalette);
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.87);
+            padding-bottom: 4px;
+            z-index: 1001;
+        }
+    }
+}
+

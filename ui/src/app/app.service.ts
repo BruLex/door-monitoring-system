@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Component, Injectable, TemplateRef } from '@angular/core';
 import { Observable, of as observableOf } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { RootComponentInterface } from "./types";
+import { RootComponentInterface } from './types';
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "./tools/confirm-dialog.component";
 
 enum Statuses {
     Success = 'success',
@@ -24,6 +26,12 @@ class Response {
     }
 }
 
+interface ConfirmDialogConfig {
+    message: string;
+    onSuccess: () => void;
+    onFail?: () => void;
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -32,8 +40,7 @@ export class AppService {
 
     private static rootComponent: RootComponentInterface;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient, private matDialog: MatDialog) {}
 
     setAppConfig(config: { title: string }) {
         this.title = config.title;
@@ -47,7 +54,7 @@ export class AppService {
 
     apiRequest(service: string, method: string, body: object = {}): Observable<Response> {
         return this.http
-            .post<Response>(`http://127.0.0.1:3000/api/${ service }/${ method }`, body)
+            .post<Response>(`http://127.0.0.1:3000/api/${service}/${method}`, body)
             .pipe(mergeMap(resp => observableOf(new Response(resp))));
     }
 
@@ -61,5 +68,21 @@ export class AppService {
 
     hideLoadmask(): void {
         AppService.rootComponent?.hideLoadmask();
+    }
+
+    openConfirmDialog(config: ConfirmDialogConfig) {
+        const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
+            data: {
+                message: config.message
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                config.onSuccess();
+            }
+            if (!result && !!config.onFail ) {
+                config.onFail();
+            }
+        });
     }
 }

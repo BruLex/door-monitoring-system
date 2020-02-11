@@ -1,9 +1,9 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <button mat-stroked-button color="primary" (click)="openAdd()">Add</button>
+        <button mat-stroked-button color="primary" (click)="openDialog('add')">Add</button>
         <button mat-stroked-button color="primary" *ngIf="selection.hasValue()" (click)="null">Delete</button>
         <span flex></span>
-        <mat-paginator #paginator [length]="fakeData.length"
+        <mat-paginator [length]="dataSource.data.length" pageSize="100"
                        [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -14,7 +14,7 @@
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null"
+                <mat-checkbox (change)="$event && masterToggle()"
                               [checked]="selection.hasValue() && isAllSelected()"
                               [indeterminate]="selection.hasValue() && !isAllSelected()"
                               [aria-label]="checkboxLabel()">
@@ -34,16 +34,26 @@
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="acls">
-            <th mat-header-cell *matHeaderCellDef>ACL</th>
+        <ng-container matColumnDef="devices">
+            <th mat-header-cell *matHeaderCellDef>Allowed door devices</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button>
-                    <mat-icon
-                        [matBadgeColor]="'primary'"
-                        [matBadge]="element.allowed_all ? 'All' : element.acl_list?.length">
-                        meeting_room
-                    </mat-icon>
-                </button>
+                <mat-icon #refACl
+                          [style.cursor]="!element.allowed_all && !!element.allowed_devices?.length ? 'pointer' : null"
+                          [matBadgeColor]="'primary'"
+                          [matBadge]="element.allowed_all ? 'All' : element.allowed_devices?.length || '-'"
+                          (click)="!element.allowed_all && !!element.allowed_devices?.length && showOverlay(portalACl, refACl._elementRef)">
+                    meeting_room
+                </mat-icon>
+
+                <ng-template cdk-portal #portalACl="cdkPortal">
+                    <div class="portal">
+                        <ol class="popover">
+                            <li *ngFor="let el of element.allowed_devices">
+                                {{el.name}}
+                            </li>
+                        </ol>
+                    </div>
+                </ng-template>
             </td>
         </ng-container>
 
@@ -51,44 +61,78 @@
             <th mat-header-cell *matHeaderCellDef>User</th>
             <td mat-cell
                 *matCellDef="let element">
-                <button mat-icon-button>
-                    <mat-icon
-                        [matBadgeColor]="'primary'"
-                        [matBadge]="element.users?.length || 0">
-                        supervised_user_circle
-                    </mat-icon>
-                </button>
+                <mat-icon #refUser
+                          [style.cursor]="!!element.users?.length ? 'pointer' : null"
+                          [matBadgeColor]="'primary'"
+                          [matBadge]="element.users?.length || 0"
+                          (click)="!!element.users?.length && showOverlay(portalUser, refUser._elementRef)">
+                    supervised_user_circle
+                </mat-icon>
+                <ng-template cdk-portal #portalUser="cdkPortal">
+                    <div class="portal">
+                        <ol class="popover">
+                            <li *ngFor="let el of element.users">
+                                Name: {{el.name}} UUID: {{el.uuid}}
+                            </li>
+                        </ol>
+                    </div>
+                </ng-template>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <button mat-icon-button *matCellDef="let element" class="action-button">
-                <mat-icon>edit</mat-icon>
-            </button>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button class="action-button" (click)="openDialog('edit', element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="['select', 'name', 'acls', 'users']; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'acls', 'users', 'actions'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['select', 'name', 'devices', 'users', 'actions']; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'devices', 'users', 'actions'];"></tr>
     </table>
 </div>
 
-
-<ng-template #addDialog>
-    <h1 mat-dialog-title>Add data about new group</h1>
+<ng-template #addEditDialog>
+    <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add data about new group' }}</h1>
     <div mat-dialog-content>
         <mat-form-field>
-            <input matInput placeholder="Name">
+            <input matInput [formControl]="nameControl" [(ngModel)]="addEditModel.name" placeholder="Name">
         </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="IP address">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Description">
-        </mat-form-field>
+        <mat-slide-toggle [(ngModel)]="addEditModel.allowed_all">Allowed all</mat-slide-toggle>
+        <ng-container *ngIf="!addEditModel.allowed_all">
+            <p>Allowed devices</p>
+            <mat-divider></mat-divider>
+            <div style="display: flex; flex-direction: row; align-items: center">
+                <mat-form-field>
+                    <input type="text" placeholder="Assignee" aria-label="Assignee" matInput [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete"
+                                      [displayWith]="displayFn"
+                                      (optionSelected)="doorToAdd=$event.option.value">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button mat-icon-button color="primary" [disabled]="!doorToAdd" (click)="addDoorToModel()">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
+            <mat-chip-list>
+                <mat-chip *ngFor="let door of addEditModel.allowed_devices"
+                          [removable]="true"
+                          (removed)="removeDoorfromModel(door)">
+                    {{ door.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </ng-container>
     </div>
     <div mat-dialog-actions>
         <button mat-button mat-dialog-close>Close</button>
-        <button mat-button mat-dialog-close cdkFocusInitial>Create</button>
+        <button mat-button mat-dialog-close cdkFocusInitial>{{ this.dialogEditMode ? 'Save' : 'Create' }}</button>
     </div>
 </ng-template>

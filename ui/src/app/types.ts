@@ -3,9 +3,8 @@ export interface RootComponentInterface {
     hideLoadmask(): void;
 }
 
-
-export interface DoorModel {
-    i_door?: number;
+export interface DeviceModel {
+    i_device?: number;
     name: string;
     description: string;
     ip: string;
@@ -20,7 +19,7 @@ export interface PeriodicElement {
 
 export interface GroupModel {
     name: string;
-    allowed_all?: boolean
-    acl_list?: DoorModel[];
+    allowed_all?: boolean;
+    allowed_devices?: DeviceModel[];
     users?: string[];
 }

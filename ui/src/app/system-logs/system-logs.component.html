@@ -1,3 +1,10 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span flex></span>
+        <mat-paginator [length]="dataSource.data.length" pageSize="100" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
+    </mat-toolbar-row>
+</mat-toolbar>
+
 <div class="table-container">
   <table mat-table [dataSource]="dataSource"
          matSort matSortActive="time" matSortDisableClear matSortDirection="desc">
@@ -31,23 +38,3 @@
     </tr>
   </table>
 </div>
-
-
-<ng-template #dialogD>
-  <h1 mat-dialog-title>Add data about new door</h1>
-  <div mat-dialog-content>
-    <mat-form-field>
-      <input matInput placeholder="Name">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="IP address">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Description">
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="null">Close</button>
-    <button mat-button [mat-dialog-close]="null" cdkFocusInitial>Create</button>
-  </div>
-</ng-template>

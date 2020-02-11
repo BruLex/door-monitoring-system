@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { AppService } from './app.service';
-import { Overlay, OverlayRef } from "@angular/cdk/overlay";
-import { CdkPortal } from "@angular/cdk/portal";
-import { RootComponentInterface } from "./types";
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { CdkPortal } from '@angular/cdk/portal';
+import { RootComponentInterface } from './types';
 
 interface NavItem {
     link: string;
@@ -21,10 +21,10 @@ export class AppComponent implements RootComponentInterface {
         { link: '/permissions', name: 'Permissions' },
         { link: '/groups', name: 'Groups' },
         { link: '/users', name: 'Users' },
-        { link: '/doors', name: 'Doors' },
-        { link: '/test-table', name: 'Test table' },
-        { link: '/system_logs', name: 'System logs' }
+        { link: '/devices', name: 'Devices' },
+        { link: '/system_logs', name: 'System logs' },
     ];
+    loadmask = false;
 
     private overlayRef: OverlayRef;
 
@@ -32,7 +32,7 @@ export class AppComponent implements RootComponentInterface {
         return this.appService.getConfig().title;
     }
 
-    @ViewChild('globalLoading', {static: true}) globalLoadingRef: CdkPortal;
+    @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;
 
     constructor(private appService: AppService, private overlay: Overlay) {
         this.appService.setupRootComponent(this);
@@ -40,7 +40,7 @@ export class AppComponent implements RootComponentInterface {
 
     showLoadmask(): void {
         if (!this.overlayRef?.hasAttached()) {
-            this.overlayRef = this.overlay.create({ hasBackdrop: true , backdropClass: 'load-backdrop'});
+            this.overlayRef = this.overlay.create({ hasBackdrop: true, backdropClass: 'load-backdrop' });
             this.overlayRef.attach(this.globalLoadingRef);
         }
     }
@@ -50,5 +50,4 @@ export class AppComponent implements RootComponentInterface {
             this.overlayRef.dispose();
         }
     }
-
 }

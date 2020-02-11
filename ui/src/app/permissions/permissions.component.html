@@ -1,1 +1,26 @@
-<p>permissions works!</p>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Personal data
+            </mat-panel-title>
+            <mat-panel-description>
+                Type your name and age
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input type="text" placeholder="Assignee" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="null">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+
+    </mat-expansion-panel>
+
+</mat-accordion>

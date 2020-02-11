@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatCardModule,
@@ -24,19 +24,27 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { DashboardComponent } from './dashboard';
-import { DoorsComponent } from './doors';
+import { DevicesComponent } from './devices';
 import { GroupsComponent } from './groups';
 import { PermissionsComponent } from './permissions';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { TestTableNgComponent } from './test-table-ng/test-table-ng.component';
 import { UsersComponent } from './users';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { PortalModule } from "@angular/cdk/portal";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatBadgeModule } from "@angular/material/badge";
-import { MatGridListModule } from "@angular/material/grid-list";
-import { DragDropModule } from "@angular/cdk/drag-drop";
+import { PortalModule } from '@angular/cdk/portal';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDividerModule } from '@angular/material/divider';
+import { LoadmaskDirective } from './tools/loadmask/loadmask.directive';
+import { ConfirmDialogComponent } from "./tools/confirm-dialog.component";
+import { PopoverComponent } from "./tools/popover/popover.component";
+import { Popover } from "./tools/popover/popover.service";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
+
 const ANGULAR_MATERIAL = [
     MatTableModule,
     MatCheckboxModule,
@@ -52,6 +60,7 @@ const ANGULAR_MATERIAL = [
     MatSlideToggleModule,
     ScrollingModule,
     MatSidenavModule,
+    MatDividerModule,
 ];
 
 @NgModule({
@@ -59,11 +68,13 @@ const ANGULAR_MATERIAL = [
         AppComponent,
         DashboardComponent,
         GroupsComponent,
-        DoorsComponent,
+        DevicesComponent,
         PermissionsComponent,
         UsersComponent,
-        TestTableNgComponent,
         SystemLogsComponent,
+        LoadmaskDirective,
+        ConfirmDialogComponent,
+        PopoverComponent
     ],
     imports: [
         ...ANGULAR_MATERIAL,
@@ -78,9 +89,14 @@ const ANGULAR_MATERIAL = [
         MatTooltipModule,
         MatBadgeModule,
         MatGridListModule,
-        DragDropModule
+        DragDropModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatAutocompleteModule,
+        MatChipsModule
     ],
-    providers: [AppService],
+    entryComponents: [ConfirmDialogComponent, PopoverComponent],
+    providers: [AppService, Popover],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

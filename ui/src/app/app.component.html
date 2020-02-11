@@ -1,9 +1,11 @@
-<div class="app-container">
-    <mat-toolbar color="primary" class="example-toolbar">
-        <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <h1 class="brand-logo">{{ title }}</h1>
+<div class="app-container" ngxLoadingMask>
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <button mat-icon-button (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <h1 class="brand-logo">{{ title }}</h1>
+        </mat-toolbar-row>
     </mat-toolbar>
 
     <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
@@ -24,10 +26,10 @@
 <ng-template cdkPortal #globalLoading="cdkPortal">
     <div class="load-container">
         <mat-progress-spinner
-            class="example-margin"
             [color]="'primary'"
             [mode]="'indeterminate'">
         </mat-progress-spinner>
         <div>Loading...</div>
     </div>
 </ng-template>
+

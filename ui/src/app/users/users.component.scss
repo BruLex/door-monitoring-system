@@ -1,14 +1,19 @@
+@import "~@angular/material/_theming.scss";
+@import "./../../variables";
+
 .table-container {
-  overflow: auto;
-  height: 78vh;
+    overflow: hidden;
+    height: 78vh;
 }
 
 [mat-table] {
-  width: 100%;
+    width: 100%;
 }
+
 mat-toolbar {
-  background: white;
+    background: mat-color($background, card);
 }
+
 button {
-  margin: 16px 8px;
+    margin: 16px 8px;
 }

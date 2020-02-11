@@ -14,7 +14,7 @@ module.exports = async (fastify, options) => {
                     uid: card_info.uid
                 } : null,
                 door_info: null ? {
-                    i_door: log.i_door,
+                    i_device: log.i_device,
                     name: ''
                 } : null,
                 group_info: null ?{

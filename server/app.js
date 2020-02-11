@@ -27,6 +27,8 @@ fastify.register(fsequelize, sequelizeConfig);
 
 fastify.decorate('cardModel', require('./models/cardModel').CardDbModel);
 fastify.decorate('logModel', require('./models/logModel').LogDbModel);
+fastify.decorate('groupModel', require('./models/groupModel').GroupDbModel);
+fastify.decorate('userModel', require('./models/userModel').UserDbModel);
 
 
 fastify.register(require('fastify-cors'));

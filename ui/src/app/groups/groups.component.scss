@@ -18,56 +18,10 @@ mat-toolbar {
     }
 }
 
-
-
 mat-form-field {
     width: 100%;
 }
 
-tr.example-detail-row {
-    height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-    background: #777;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
-}
-
-.example-element-row td {
-    border-bottom-width: 0;
-}
-
-.example-element-detail {
-    overflow: hidden;
-    display: flex;
-}
-
-.example-element-diagram {
-    width: 100%;
-    padding: 8px;
-}
-
-.example-element-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
-}
-
-.example-element-description {
-    padding: 16px;
-}
-
-.example-element-description-attribution {
-    opacity: 0.5;
-}
-
-.example-element-diagram {
-    display: flex;
-    flex-direction: row;
-}
 .grid-list {
     display: flex;
     flex-direction: column;
@@ -82,10 +36,29 @@ tr.example-element-row:not(.example-expanded-row):active {
             display: inherit;
         }
     }
-
     .action-button {
         display: none;
-        position: absolute;
-        right: 24px;
     }
+
+    .cdk-column-actions {
+        right: 24px;
+        padding: 0;
+        width: 48px;
+    }
+}
+.portal {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+}
+.popover {
+    margin: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+[mat-dialog-content] {
+    min-height: 210px;
 }

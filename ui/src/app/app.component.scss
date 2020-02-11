@@ -33,3 +33,7 @@ h1.brand-logo {
 ::ng-deep .load-backdrop {
     background: mat-color($foreground, elevation, .65);
 }
+
+a[mat-list-item] {
+    width: 240px;
+}

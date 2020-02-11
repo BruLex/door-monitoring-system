@@ -2,7 +2,7 @@
 @import "./../../variables";
 
 .table-container {
-    overflow: auto;
+    overflow: hidden;
     height: 78vh;
 }
 
@@ -17,7 +17,6 @@ mat-toolbar {
 button {
     margin: 16px 8px;
 }
-
 
 mat-form-field {
     width: 100%;

@@ -3,26 +3,26 @@
 const jsend = require('jsend');
 module.exports = async (fastify, options) => {
 
-    fastify.post('/api/door/add_door', async (req, reply) => {
+    fastify.post('/api/device/add_device', async (req, reply) => {
         fastify.mysql.getConnection((err, client) => {
             if (err) return reply.send(jsend.error(err));
             client.query(
-                'INSERT INTO doors VALUES (?,?,?,?)',
+                'INSERT INTO devices VALUES (?,?,?,?)',
                 [null, req.body.name, req.body.description, req.body.ip],
                 (err, result) => {
                     client.release();
-                    reply.send(err ? jsend.error(err) : jsend.success({i_door: result.insertId}))
+                    reply.send(err ? jsend.error(err) : jsend.success({i_device: result.insertId}))
                 }
             )
         });
     });
 
-    fastify.post('/api/door/get_door_info', async (req, reply) => {
+    fastify.post('/api/device/get_device_info', async (req, reply) => {
         fastify.mysql.getConnection((err, client) => {
             if (err) return reply.send(jsend.error(err));
             client.query(
-                'SELECT * FROM doors WHERE i_door = ?',
-                [req.body.i_door],
+                'SELECT * FROM devices WHERE i_device = ?',
+                [req.body.i_device],
                 (err, result) => {
                     client.release();
                     console.log(result)
@@ -36,26 +36,26 @@ module.exports = async (fastify, options) => {
         });
     });
 
-    fastify.post('/api/door/get_door_list', async (req, reply) => {
+    fastify.post('/api/device/get_device_list', async (req, reply) => {
         fastify.mysql.getConnection((err, client) => {
             if (err) return reply.send(jsend.error(err));
             client.query(
-                'SELECT * FROM doors',
+                'SELECT * FROM devices',
                 (err, result) => {
                     client.release();
-                    reply.send(err ? jsend.error(err) : jsend.success({door_list: result}))
+                    reply.send(err ? jsend.error(err) : jsend.success({device_list: result}))
                 }
             )
         });
     });
 
 
-    fastify.post('/api/door/update_door_info', async (req, reply) => {
+    fastify.post('/api/device/update_device_info', async (req, reply) => {
         fastify.mysql.getConnection((err, client) => {
             if (err) return reply.send(jsend.error(err));
             client.query(
-                'UPDATE doors SET name = ?, description = ?, ip = ? WHERE i_door = ?',
-                [req.body.name, req.body.description, req.body.ip, req.body.i_door],
+                'UPDATE devices SET name = ?, description = ?, ip = ? WHERE i_device = ?',
+                [req.body.name, req.body.description, req.body.ip, req.body.i_device],
                 (err, result) => {
                     client.release();
                     reply.send(err ? jsend.error(err) : jsend.success(true))
@@ -64,18 +64,18 @@ module.exports = async (fastify, options) => {
         });
     });
 
-    fastify.post('/api/door/delete_door', async (req, reply) => {
+    fastify.post('/api/device/delete_device', async (req, reply) => {
         fastify.mysql.getConnection((err, client) => {
             if (err) return reply.send(jsend.error(err));
             client.query(
-                'DELETE FROM doors WHERE i_door = ?',
-                [req.body.i_door],
+                'DELETE FROM devices WHERE i_device = ?',
+                [req.body.i_device],
                 (err, result) => {
                     client.release();
                     reply.send(err
                         ? jsend.error(err)
                         : !result.affectedRows
-                            ? jsend.error('Wrong i_door')
+                            ? jsend.error('Wrong i_device')
                             : jsend.success(true))
                 }
             )

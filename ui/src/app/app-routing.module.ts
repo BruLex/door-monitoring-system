@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard';
-import { DoorsComponent } from './doors';
+import { DevicesComponent } from './devices';
 import { GroupsComponent } from './groups';
 import { PermissionsComponent } from './permissions';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { TestTableNgComponent } from './test-table-ng/test-table-ng.component';
 import { UsersComponent } from './users';
 
 const routes: Routes = [
-    { path: 'test-table', component: TestTableNgComponent },
     { path: 'system_logs', component: SystemLogsComponent },
-    { path: 'doors', component: DoorsComponent },
+    { path: 'devices', component: DevicesComponent },
     { path: 'users', component: UsersComponent },
     { path: 'groups', component: GroupsComponent },
     { path: 'permissions', component: PermissionsComponent },

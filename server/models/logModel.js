@@ -11,7 +11,7 @@ module.exports.LogDbModel = ["logs", {
         type: Sequelize.STRING,
         allowNull: false
     },
-    i_door: {type: Sequelize.INTEGER},
+    i_device: {type: Sequelize.INTEGER},
     i_group: {type: Sequelize.INTEGER},
     i_user: {type: Sequelize.INTEGER},
     time: {

@@ -4,5 +4,9 @@
     "exclude": [
       "**/*.json"
     ]
-  }
+  },
+    "rules": {
+        "ban-types": false,
+        "no-any": false
+    }
 }
