@@ -1,11 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup } from "@angular/forms";
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from '../app.service';
-import { DeviceModel } from '../types';
 import { TableAbstract } from '../tools/table-abstract';
 import { createFormControl } from "../tools/validations";
-import { FormGroup } from "@angular/forms";
+import { DeviceModel } from '../types';
 
 @Component({
     templateUrl: './devices.component.html',
@@ -53,7 +53,7 @@ export class DevicesComponent extends TableAbstract<DeviceModel> {
             this.matDialog.open(this.addDialogRef).afterClosed().subscribe(create => {
                 if (create) {
                     // TODO send api request and push inside model after success response
-                    this.dataSource.data = [this.newModel, ...this.dataSource.data]
+                    this.dataSource.data = [this.newModel, ...this.dataSource.data];
                 }
             })
         );
@@ -64,8 +64,8 @@ export class DevicesComponent extends TableAbstract<DeviceModel> {
             message: `Do you realy want to delete ${ this.selection.selected.length } records?`,
             onSuccess: () => {
                 // TODO: Send API request
-            }
-        })
+            },
+        });
     }
 
 }

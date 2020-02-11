@@ -1,8 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material/sort';
-import { Subscription } from 'rxjs';
 import { AfterViewInit, OnDestroy } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 import { reverse, sortBy } from 'lodash';
 

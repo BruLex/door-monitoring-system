@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 module.exports.GroupDbModel = ["groups", {
     i_group: {
         type: Sequelize.INTEGER,
-        groupautoIncrement: true,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
@@ -11,8 +11,8 @@ module.exports.GroupDbModel = ["groups", {
         type: Sequelize.STRING,
         allowNull: false
     },
-    access_all: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
+    allowed_all: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 }];

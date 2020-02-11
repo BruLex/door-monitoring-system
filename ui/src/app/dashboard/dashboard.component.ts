@@ -1,12 +1,12 @@
 /* tslint:disable:array-type */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '../app.service';
 import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { combineLatest, observable, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AppService } from '../app.service';
 import { TableAbstract } from '../tools/table-abstract';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
 
 interface DoorData {
     mac: string;

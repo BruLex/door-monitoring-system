@@ -1,7 +1,7 @@
 <mat-toolbar>
     <mat-toolbar-row>
         <button mat-stroked-button color="primary" (click)="openDialog('add')">Add</button>
-        <button mat-stroked-button color="primary" *ngIf="selection.hasValue()" (click)="null">Delete</button>
+        <button mat-stroked-button color="primary" *ngIf="selection.hasValue()" (click)="deleteGroups()">Delete</button>
         <span flex></span>
         <mat-paginator [length]="dataSource.data.length" pageSize="100"
                        [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
@@ -132,7 +132,11 @@
         </ng-container>
     </div>
     <div mat-dialog-actions>
-        <button mat-button mat-dialog-close>Close</button>
-        <button mat-button mat-dialog-close cdkFocusInitial>{{ this.dialogEditMode ? 'Save' : 'Create' }}</button>
+        <button mat-button [mat-dialog-close]="false">Close</button>
+        <button mat-button
+                [disabled]="nameControl.invalid"
+                [mat-dialog-close]="true">
+            {{ this.dialogEditMode ? 'Save' : 'Create' }}
+        </button>
     </div>
 </ng-template>

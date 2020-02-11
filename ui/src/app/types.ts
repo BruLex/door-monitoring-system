@@ -18,6 +18,7 @@ export interface PeriodicElement {
 }
 
 export interface GroupModel {
+    i_group: number;
     name: string;
     allowed_all?: boolean;
     allowed_devices?: DeviceModel[];

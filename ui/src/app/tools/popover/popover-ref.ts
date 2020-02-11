@@ -1,9 +1,9 @@
 import { OverlayRef } from '@angular/cdk/overlay';
+import { TemplateRef, Type } from '@angular/core';
 import { Subject } from 'rxjs';
 import { PopoverParams } from './popover.service';
-import { TemplateRef, Type } from '@angular/core';
 
-export type PopoverCloseEvent<T = any> = {
+export interface PopoverCloseEvent<T = any> {
   type: 'backdropClick' | 'close';
   data: T;
 }
@@ -30,7 +30,7 @@ export class PopoverRef<T = any> {
     this.overlay.dispose();
     this.afterClosed.next({
       type,
-      data
+      data,
     });
     this.afterClosed.complete();
   }

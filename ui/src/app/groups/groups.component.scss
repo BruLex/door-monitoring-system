@@ -46,18 +46,19 @@ mat-form-field {
         width: 48px;
     }
 }
+
 .portal {
     background-color: #fff;
     width: 100%;
     height: 100%;
 }
+
 .popover {
     margin: 8px;
     background-color: #fff;
     font-size: 14px;
     box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
 }
-
 
 [mat-dialog-content] {
     min-height: 210px;

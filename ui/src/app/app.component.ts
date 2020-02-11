@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { AppService } from './app.service';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { AppService } from './app.service';
 import { RootComponentInterface } from './types';
 
 interface NavItem {
@@ -18,21 +18,19 @@ interface NavItem {
 export class AppComponent implements RootComponentInterface {
     readonly navItems: NavItem[] = [
         { link: '/dashboard', name: 'Dashboard' },
-        { link: '/permissions', name: 'Permissions' },
         { link: '/groups', name: 'Groups' },
         { link: '/users', name: 'Users' },
         { link: '/devices', name: 'Devices' },
         { link: '/system_logs', name: 'System logs' },
     ];
-    loadmask = false;
 
-    private overlayRef: OverlayRef;
+    @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;
 
     get title() {
         return this.appService.getConfig().title;
     }
 
-    @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;
+    private overlayRef: OverlayRef;
 
     constructor(private appService: AppService, private overlay: Overlay) {
         this.appService.setupRootComponent(this);

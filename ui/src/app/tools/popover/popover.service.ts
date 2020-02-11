@@ -1,10 +1,10 @@
+import { ConnectionPositionPair, Overlay, OverlayConfig, PositionStrategy } from '@angular/cdk/overlay';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Injectable, Injector } from '@angular/core';
-import { Overlay, ConnectionPositionPair, PositionStrategy, OverlayConfig } from '@angular/cdk/overlay';
-import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
-import { PopoverRef, PopoverContent } from './popover-ref';
+import { PopoverContent, PopoverRef } from './popover-ref';
 import { PopoverComponent } from './popover.component';
 
-export type PopoverParams<T> = {
+export interface PopoverParams<T> {
   width?: string | number;
   height?: string | number;
   origin: HTMLElement;
@@ -13,7 +13,7 @@ export type PopoverParams<T> = {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Popover {
   constructor(private overlay: Overlay, private injector: Injector) { }
@@ -35,7 +35,7 @@ export class Popover {
       height,
       backdropClass: 'popover-backdrop',
       positionStrategy: this.getOverlayPosition(origin),
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
   }
 
@@ -60,7 +60,7 @@ export class Popover {
         originX: 'center',
         originY: 'top',
         overlayX: 'center',
-        overlayY: 'bottom'
+        overlayY: 'bottom',
       },
       {
         originX: 'center',
@@ -68,7 +68,7 @@ export class Popover {
         overlayX: 'center',
         overlayY: 'top',
       },
-    ]
+    ];
   }
 
 }

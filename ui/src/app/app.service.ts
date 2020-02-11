@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, TemplateRef } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
 import { Observable, of as observableOf } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { RootComponentInterface } from './types';
-import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "./tools/confirm-dialog.component";
+import { RootComponentInterface } from './types';
 
 enum Statuses {
     Success = 'success',
@@ -73,8 +73,8 @@ export class AppService {
     openConfirmDialog(config: ConfirmDialogConfig) {
         const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
             data: {
-                message: config.message
-            }
+                message: config.message,
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
