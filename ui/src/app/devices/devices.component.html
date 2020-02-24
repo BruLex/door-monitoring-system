@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <button (click)="openAdd()" color="primary" mat-stroked-button>Add</button>
+        <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
         <button (click)="deleteModel()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
         <mat-paginator [length]="dataSource.data?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
@@ -11,7 +11,6 @@
            mat-table
            matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
 
-        <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th *matHeaderCellDef mat-header-cell>
                 <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -29,39 +28,48 @@
             </td>
         </ng-container>
 
-        <!-- Position Column -->
         <ng-container matColumnDef="name">
             <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
-            <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+            <td *matCellDef="let element" mat-cell> {{ element.name }} </td>
         </ng-container>
-        <!-- Description Column -->
+
         <ng-container matColumnDef="description">
             <th *matHeaderCellDef mat-header-cell> Description</th>
-            <td *matCellDef="let element" mat-cell> {{element.description}} </td>
+            <td *matCellDef="let element" mat-cell> {{ element.description }} </td>
         </ng-container>
-        <!-- IP Column -->
+
         <ng-container matColumnDef="ip">
             <th *matHeaderCellDef mat-header-cell> IP address</th>
-            <td *matCellDef="let element" mat-cell> {{element.ip}} </td>
+            <td *matCellDef="let element" mat-cell> {{ element.ip }} </td>
         </ng-container>
-        <tr *matHeaderRowDef="['select', 'name', 'description', 'ip']; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['select', 'name', 'description', 'ip'];" mat-row></tr>
+
+        <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let element" mat-cell>
+                <button (click)="openDialog('edit', element)" class="action-button" mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="['select', 'name', 'description', 'ip', 'actions']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'description', 'ip', 'actions'];" mat-row></tr>
     </table>
 </div>
 
 
 <ng-template #addDialog>
-    <h1 mat-dialog-title>Add new device</h1>
+    <h1 mat-dialog-title>{{ dialogEditMode ? 'Edit device' : 'Add new device' }}</h1>
     <div mat-dialog-content>
         <form [formGroup]="addGroup">
             <mat-form-field>
-                <input [(ngModel)]="newModel.name" formControlName="name" matInput placeholder="Name">
+                <input [(ngModel)]="addEditModel.name" formControlName="name" matInput placeholder="Name">
             </mat-form-field>
             <mat-form-field>
-                <input [(ngModel)]="newModel.ip" formControlName="ip" matInput placeholder="IP address">
+                <input [(ngModel)]="addEditModel.ip" formControlName="ip" matInput placeholder="IP address">
             </mat-form-field>
             <mat-form-field>
-                <input [(ngModel)]="newModel.description" formControlName="description" matInput
+                <input [(ngModel)]="addEditModel.description" formControlName="description" matInput
                        placeholder="Description">
             </mat-form-field>
         </form>
@@ -69,6 +77,6 @@
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
-        <button [mat-dialog-close]="true" cdkFocusInitial mat-button>Create</button>
+        <button [disabled]="addGroup.invalid" [mat-dialog-close]="true" mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
     </div>
 </ng-template>

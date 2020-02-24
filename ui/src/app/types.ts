@@ -11,7 +11,7 @@ export interface DeviceModel {
     ip: string;
 }
 
-export interface User {
+export interface UserModel {
     i_user: number;
     name: string;
     uuid: string;

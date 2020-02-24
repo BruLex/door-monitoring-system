@@ -1,11 +1,25 @@
-const mongoose = require('mongoose')
+const Sequelize = require('sequelize');
 
-const doorSchema = new mongoose.Schema({
-    description: {type: String, unique: true},
-    name: {type: Boolean, default: false},
-    is_used: {type: Boolean, default: false},
-    users: {type: Array, default: []},
-    permissions: {type: Array, default: []}
-})
-
-module.exports = mongoose.model('Door', doorSchema)
+module.exports.DeviceDbModel = [
+    'device',
+    {
+        i_device: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+            allowNull: false,
+        },
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        ip: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+    },
+];

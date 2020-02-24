@@ -2,8 +2,15 @@
 @import "./../../variables";
 
 .table-container {
-    overflow: auto;
+    overflow: hidden;
     height: 78vh;
+}
+
+.list-item {
+    height: 24px;
+}
+.mat-list-base {
+    padding-bottom: 8px;
 }
 
 [mat-table] {
@@ -22,32 +29,6 @@ mat-form-field {
     width: 100%;
 }
 
-.grid-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-
-.mat-row {
-    &:hover {
-        .action-button {
-            display: inherit;
-        }
-    }
-
-    .action-button {
-        display: none;
-    }
-
-    .cdk-column-actions {
-        right: 24px;
-        padding: 0;
-        width: 48px;
-    }
-}
-
 .portal {
     background-color: #fff;
     width: 100%;
@@ -55,7 +36,6 @@ mat-form-field {
 }
 
 .popover {
-    margin: 8px;
     background-color: #fff;
     font-size: 14px;
     box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);

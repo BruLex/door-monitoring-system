@@ -1,84 +1,41 @@
-'use strict'
+'use strict';
 
 const jsend = require('jsend');
+
 module.exports = async (fastify, options) => {
+    const Device = fastify.sequelize.define(...fastify.deviceModel);
 
-    fastify.post('/api/device/add_device', async (req, reply) => {
-        fastify.mysql.getConnection((err, client) => {
-            if (err) return reply.send(jsend.error(err));
-            client.query(
-                'INSERT INTO devices VALUES (?,?,?,?)',
-                [null, req.body.name, req.body.description, req.body.ip],
-                (err, result) => {
-                    client.release();
-                    reply.send(err ? jsend.error(err) : jsend.success({i_device: result.insertId}))
-                }
-            )
-        });
+    fastify.post('add_device', async (req, reply) => {
+        return Device.create(req.body)
+            .then(({i_device}) => jsend.success({ i_device }))
+            .catch(err => jsend.error(err.errmsg));
     });
-
-    fastify.post('/api/device/get_device_info', async (req, reply) => {
-        fastify.mysql.getConnection((err, client) => {
-            if (err) return reply.send(jsend.error(err));
-            client.query(
-                'SELECT * FROM devices WHERE i_device = ?',
-                [req.body.i_device],
-                (err, result) => {
-                    client.release();
-                    console.log(result)
-                    reply.send(err
-                        ? jsend.error(err)
-                        : !result.length
-                            ? jsend.error('Record not found')
-                            : jsend.success({door_info: result[0]}))
-                }
-            )
-        });
+    fastify.post('get_device_info', async (req, reply) => {
+        return await Device.findByPk(req.body.i_user).then(device_info => jsend.success({ device_info }));
     });
-
-    fastify.post('/api/device/get_device_list', async (req, reply) => {
-        fastify.mysql.getConnection((err, client) => {
-            if (err) return reply.send(jsend.error(err));
-            client.query(
-                'SELECT * FROM devices',
-                (err, result) => {
-                    client.release();
-                    reply.send(err ? jsend.error(err) : jsend.success({device_list: result}))
-                }
-            )
-        });
+    fastify.post('get_device_list', async (req, reply) => {
+        return await Device.findAll().then(device_list => jsend.success({ device_list }));
     });
-
-
-    fastify.post('/api/device/update_device_info', async (req, reply) => {
-        fastify.mysql.getConnection((err, client) => {
-            if (err) return reply.send(jsend.error(err));
-            client.query(
-                'UPDATE devices SET name = ?, description = ?, ip = ? WHERE i_device = ?',
-                [req.body.name, req.body.description, req.body.ip, req.body.i_device],
-                (err, result) => {
-                    client.release();
-                    reply.send(err ? jsend.error(err) : jsend.success(true))
-                }
-            )
-        });
+    fastify.post('update_device', async (req, reply) => {
+        await Device.update(
+            {
+                name: req.body.name,
+                description: req.body.description,
+                ip: req.body.ip,
+            },
+            { where: { i_device: req.body.i_device } }
+        );
+        return jsend.success(null);
     });
-
-    fastify.post('/api/device/delete_device', async (req, reply) => {
-        fastify.mysql.getConnection((err, client) => {
-            if (err) return reply.send(jsend.error(err));
-            client.query(
-                'DELETE FROM devices WHERE i_device = ?',
-                [req.body.i_device],
-                (err, result) => {
-                    client.release();
-                    reply.send(err
-                        ? jsend.error(err)
-                        : !result.affectedRows
-                            ? jsend.error('Wrong i_device')
-                            : jsend.success(true))
-                }
-            )
-        });
+    fastify.post('delete_device', async (req, reply) => {
+        if (req.body.multiple && !!req.body.devices) {
+            for (let index = 0; index < req.body.devices.length; index++) {
+                await (await Device.findByPk(req.body.devices[index])).destroy();
+            }
+        } else {
+            await (await Device.findByPk(req.body.i_device)).destroy();
+        }
+        return jsend.success(null);
     });
 };
+module.exports.autoPrefix = '/api/device/';

@@ -1,7 +1,7 @@
 <mat-toolbar>
     <mat-toolbar-row>
         <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
-        <button (click)="deleteGroups()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
+        <button *ngIf="selection.hasValue()" (click)="deleteGroups()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
         <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
                        pageSize="100"></mat-paginator>
@@ -47,11 +47,11 @@
 
                 <ng-template #portalACl="cdkPortal" cdk-portal>
                     <div class="portal">
-                        <ol class="popover">
-                            <li *ngFor="let el of element.allowed_devices">
-                                {{el.name}}
-                            </li>
-                        </ol>
+                        <mat-list class="popover" role="list">
+                            <mat-list-item  *ngFor="let el of element.allowed_devices" class="list-item" role="listitem">
+                                Name: {{el.name}}
+                            </mat-list-item>
+                        </mat-list>
                     </div>
                 </ng-template>
             </td>
@@ -69,11 +69,11 @@
                 </mat-icon>
                 <ng-template #portalUser="cdkPortal" cdk-portal>
                     <div class="portal">
-                        <ol class="popover">
-                            <li *ngFor="let el of element.users">
+                        <mat-list class="popover" role="list">
+                            <mat-list-item  *ngFor="let el of element.users" class="list-item" role="listitem">
                                 Name: {{el.name}} UUID: {{el.uuid}}
-                            </li>
-                        </ol>
+                            </mat-list-item>
+                        </mat-list>
                     </div>
                 </ng-template>
             </td>
@@ -95,7 +95,7 @@
 </div>
 
 <ng-template #addEditDialog>
-    <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add data about new group' }}</h1>
+    <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add new group' }}</h1>
     <div mat-dialog-content>
         <mat-form-field>
             <input [(ngModel)]="addEditModel.name" [formControl]="nameControl" matInput placeholder="Name">

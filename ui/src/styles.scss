@@ -26,3 +26,20 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-row {
+    &:hover {
+        .action-button {
+            display: inherit;
+        }
+    }
+
+    .action-button {
+        display: none;
+    }
+
+    .cdk-column-actions {
+        right: 24px;
+        padding: 0;
+        width: 48px;
+    }
+}

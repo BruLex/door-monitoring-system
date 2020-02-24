@@ -43,6 +43,7 @@ import { LoadmaskDirective } from './tools/loadmask/loadmask.directive';
 import { PopoverComponent } from "./tools/popover/popover.component";
 import { Popover } from "./tools/popover/popover.service";
 import { UsersComponent } from './users';
+import { MatSelectModule } from "@angular/material/select";
 
 const ANGULAR_MATERIAL = [
     MatTableModule,
@@ -92,6 +93,7 @@ const ANGULAR_MATERIAL = [
         MatExpansionModule,
         MatAutocompleteModule,
         MatChipsModule,
+        MatSelectModule,
     ],
     entryComponents: [ConfirmDialogComponent, PopoverComponent],
     providers: [AppService, Popover],

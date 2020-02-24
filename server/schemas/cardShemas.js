@@ -1,18 +1,18 @@
-'use strict'
+'use strict';
 
 const cardProperties = {
     i_card: {
-        type: 'number'
+        type: 'number',
     },
     uid: {
-        type: 'string'
+        type: 'string',
     },
     is_system: {
-        type: 'boolean'
+        type: 'boolean',
     },
     is_used: {
-        type: 'boolean'
-    }
+        type: 'boolean',
+    },
 };
 
 exports.addCardSchema = {
@@ -21,7 +21,7 @@ exports.addCardSchema = {
         required: ['uid'],
         properties: {
             uid: {
-                type: 'string'
+                type: 'string',
             },
         },
     },
@@ -30,67 +30,61 @@ exports.addCardSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
                 },
                 message: {
-                    type: 'string'
+                    type: 'string',
                 },
                 data: {
                     type: 'object',
                     properties: {
                         i_card: {
-                            type: 'string'
-                        }
-                    }
-                }
-            }
-        }
-    }
-};
-
-exports.getCardInfoSchema = {
-        body: {
-            type: 'object',
-            required: ['i_card'],
-            properties: {
-                i_card: {
-                    type: 'string'
+                            type: 'string',
+                        },
+                    },
                 },
             },
         },
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    status: {
-                        type: 'string'
-                    },
-                    message: {
-                        type: 'string'
-                    },
-                    data: {
-                        type:'object',
-                        properties: {
-                            card_info: {
-                                type: 'object',
-                                nullable: true,
-                                properties: cardProperties
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    },
 };
 
+exports.getCardInfoSchema = {
+    body: {
+        type: 'object',
+        required: ['i_card'],
+        properties: {
+            i_card: {
+                type: 'string',
+            },
+        },
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                status: {
+                    type: 'string',
+                },
+                message: {
+                    type: 'string',
+                },
+                data: {
+                    type: 'object',
+                    properties: {
+                        card_info: {
+                            type: 'object',
+                            nullable: true,
+                            properties: cardProperties,
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
 
-exports.getCardListSchema = {
-}
+exports.getCardListSchema = {};
 
-exports.updateCardInfoSchema = {
-}
+exports.updateCardInfoSchema = {};
 
-exports.deleteCardSchema = {
-}
-
-
+exports.deleteCardSchema = {};

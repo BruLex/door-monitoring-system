@@ -1,11 +1,11 @@
 const configData = {
     only_remote_confirm_mode: {
-        type: 'boolean'
+        type: 'boolean',
     },
     allowed_attempts: {
-        type: 'number'
-    }
-}
+        type: 'number',
+    },
+};
 
 exports.updateConfigsSchema = {
     body: {
@@ -18,22 +18,22 @@ exports.updateConfigsSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
                 },
                 message: {
-                    type: 'string'
+                    type: 'string',
                 },
                 data: {
                     type: 'object',
                     properties: {
                         _id: {
-                            type: 'string'
-                        }
-                    }
-                }
-            }
-        }
-    }
+                            type: 'string',
+                        },
+                    },
+                },
+            },
+        },
+    },
 };
 
 exports.getConfigsSchema = {
@@ -42,16 +42,16 @@ exports.getConfigsSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
                 },
                 message: {
-                    type: 'string'
+                    type: 'string',
                 },
                 data: {
                     type: 'object',
-                    properties: configData
-                }
-            }
-        }
-    }
+                    properties: configData,
+                },
+            },
+        },
+    },
 };

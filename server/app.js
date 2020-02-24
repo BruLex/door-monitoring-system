@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const fastify = require('fastify')({
     logger: false
@@ -25,10 +25,10 @@ fastify.register(require('fastify-mysql'), {
 
 fastify.register(fsequelize, sequelizeConfig);
 
-fastify.decorate('cardModel', require('./models/cardModel').CardDbModel);
 fastify.decorate('logModel', require('./models/logModel').LogDbModel);
 fastify.decorate('groupModel', require('./models/groupModel').GroupDbModel);
 fastify.decorate('userModel', require('./models/userModel').UserDbModel);
+fastify.decorate('deviceModel', require('./models/deviceModel').DeviceDbModel);
 
 
 fastify.register(require('fastify-cors'));
@@ -45,8 +45,8 @@ fastify.ready(err => {
 
 fastify.listen(3000, function (err, address) {
     if (err) {
-        fastify.log.error(err)
+        fastify.log.error(err);
         process.exit(1)
     }
-    fastify.log.info(`server listening on ${address}`)
+    fastify.log.info(`server listening on ${ address }`)
 });
