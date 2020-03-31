@@ -2,8 +2,7 @@
 
 module.exports = async function(fastify, opts) {
     fastify.post('/check_uid', async function(request, reply) {
-        fastify.log.info(`ID:${request.query.uid} IP: ${request.ip}`);
-        return { uid: request.body.uid };
+        return 1;
     });
 
     fastify.get('/get_allowed_uid', async function(request, reply) {

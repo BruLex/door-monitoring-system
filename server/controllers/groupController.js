@@ -33,7 +33,7 @@ module.exports = async (fastify, options) => {
                     allowed_all: Boolean(group.allowed_all),
                 };
 
-                if (Boolean(req.body.with_extended_info)) {
+                if (req.body && Boolean(req.body.with_extended_info)) {
                     group_item.users = await fastify.sequelize.query(
                         `
                 SELECT u.i_user, u.name, u.uuid

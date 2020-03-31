@@ -1,7 +1,7 @@
 'use strict';
 
 const fastify = require('fastify')({
-    logger: false
+    logger: true
 });
 const fsequelize = require('fastify-sequelize');
 const AutoLoad = require('fastify-autoload');
@@ -35,18 +35,15 @@ fastify.register(require('fastify-cors'));
 
 fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'controllers'),
-    options: { logLevel: 'debug' }
+    // options: { logLevel: 'debug' }
 });
 
-fastify.ready(err => {
-    console.log(err)
+fastify.ready(err => console.log('Ready:', err));
 
-});
-
-fastify.listen(3000, function (err, address) {
+fastify.listen(3000, (err, address) => {
     if (err) {
         fastify.log.error(err);
         process.exit(1)
     }
-    fastify.log.info(`server listening on ${ address }`)
+    fastify.log.info(`Server listening on ${ address }`)
 });
