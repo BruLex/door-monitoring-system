@@ -15,5 +15,41 @@
         "sourceType": "module"
     },
     "rules": {
+        "max-len": [
+            2,
+            {
+                "code": 120,
+                "tabWidth": 4,
+                "ignoreUrls": true,
+                "ignorePattern": "goog\\.(module|require)"
+            }
+        ],
+        "camelcase": [2, {"properties": "never",
+            "allow": ["i_", "_info", "_list", "_item"]
+        }],
+        "object-curly-spacing": [2, "always"],
+        "arrow-parens": [2, "as-needed"],
+        "linebreak-style": "off",
+        "indent": [
+            2, 4, {
+                "CallExpression": {
+                    "arguments": 2
+                },
+                "FunctionDeclaration": {
+                    "body": 1,
+                    "parameters": 2
+                },
+                "FunctionExpression": {
+                    "body": 1,
+                    "parameters": 2
+                },
+                "MemberExpression": 2,
+                "ObjectExpression": 1,
+                "SwitchCase": 1,
+                "ignoredNodes": [
+                    "ConditionalExpression"
+                ]
+            }
+        ]
     }
 }

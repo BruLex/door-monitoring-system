@@ -7,8 +7,8 @@ module.exports = async (fastify, options) => {
 
     fastify.post('add_user', async (req, reply) => {
         return User.create(req.body)
-            .then(obj => jsend.success({ i_user: obj.i_user }))
-            .catch(err => jsend.error(err.errmsg));
+                .then(obj => jsend.success({ i_user: obj.i_user }))
+                .catch(err => jsend.error(err.errmsg));
     });
     fastify.post('get_user_info', async (req, reply) => {
         return await User.findByPk(req.body.i_user).then(user_info => jsend.success({ user_info }));
@@ -18,12 +18,12 @@ module.exports = async (fastify, options) => {
     });
     fastify.post('update_user', async (req, reply) => {
         await User.update(
-            {
-                uuid: req.body.uuid,
-                name: req.body.name,
-                i_group: req.body.i_group,
-            },
-            { where: { i_user: req.body.i_user } }
+                {
+                    uuid: req.body.uuid,
+                    name: req.body.name,
+                    i_group: req.body.i_group,
+                },
+                { where: { i_user: req.body.i_user } },
         );
         return jsend.success(null);
     });

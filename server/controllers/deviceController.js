@@ -7,8 +7,8 @@ module.exports = async (fastify, options) => {
 
     fastify.post('add_device', async (req, reply) => {
         return Device.create(req.body)
-            .then(({i_device}) => jsend.success({ i_device }))
-            .catch(err => jsend.error(err.errmsg));
+                .then(({ i_device }) => jsend.success({ i_device }))
+                .catch(err => jsend.error(err.errmsg));
     });
     fastify.post('get_device_info', async (req, reply) => {
         return await Device.findByPk(req.body.i_user).then(device_info => jsend.success({ device_info }));
@@ -18,12 +18,12 @@ module.exports = async (fastify, options) => {
     });
     fastify.post('update_device', async (req, reply) => {
         await Device.update(
-            {
-                name: req.body.name,
-                description: req.body.description,
-                ip: req.body.ip,
-            },
-            { where: { i_device: req.body.i_device } }
+                {
+                    name: req.body.name,
+                    description: req.body.description,
+                    ip: req.body.ip,
+                },
+                { where: { i_device: req.body.i_device } },
         );
         return jsend.success(null);
     });

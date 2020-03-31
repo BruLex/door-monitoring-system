@@ -10,8 +10,8 @@
 #include "ArduinoJson.h"
 #include <Base64.h>
 
-#include "constants.h"
-#include "main_site.h"
+#include "constants.hpp"
+#include "main_site.hpp"
 
 #define RST_PIN D3
 #define SS_PIN D4
@@ -32,16 +32,12 @@ int LOCK_STATE = 0;
 
 char *www_username = "admin";
 char *www_password = "admin";
-String serverIPAddress = "192.168.1.173:3000";
+String serverIPAddress = "192.168.31.160:3000";
 String logs = "";
 
 void changeColor(bool red, bool green)
 {
-  Serial.print("RED_PIN");
-  Serial.println(red ? "HIGH" : "LOW");
-  Serial.print("GREEN_PIN");
-  Serial.println( green ? "HIGH" : "LOW");
-  analogWrite(RED_PIN, 255);
+  analogWrite(RED_PIN, red ? 255 : 0);
   analogWrite(GREEN_PIN, green ? 255 : 0);
 }
 
@@ -71,6 +67,22 @@ void lastCardUUID()
   }
 }
 
+void registerDevice()
+{ 
+  String request = "{\"mac\": \"" + WiFi.macAddress() + "\"}";
+  String url = "http://" + serverIPAddress + REGISTER_DEVICE_REQUEST;
+  Serial.println("registerDevice::request:: " + request);
+  Serial.println("registerDevice::sendRequestTo:: " + url);
+  HTTPClient http;
+  http.begin(url);
+  http.addHeader("Content-Type", "application/json");
+  http.POST(request);
+  String payload = http.getString();
+  Serial.println("registerDevice::responce:: " + payload);
+
+  server.send(200, "application/json", http.getString());
+}
+
 void updateConfig()
 {
   for (int i = 0; i < server.args(); i++)
@@ -79,17 +91,6 @@ void updateConfig()
     if (server.argName(i) == "lock")
     {
       LOCK_STATE = server.arg(i).toInt();
-      switch (LOCK_STATE)
-      {
-      case 1:
-        break;
-              case 2:
-        break;
-              case 3:
-        break;
-              case 4:
-        break;
-      }
     }
     else if (server.argName(i) == "ip")
     {
@@ -149,7 +150,6 @@ void check_RFID()
       }
       delay(2000);
       changeColor(false, false);
-
     }
   }
 }
@@ -157,20 +157,16 @@ void check_RFID()
 void setup()
 {
   // /**
-  //  * Init devices 
+  //  * Init devices
   //  */
-  Serial.begin(115200);
+
+  pinMode(LOCK_PIN, OUTPUT);  // D0
+  pinMode(RED_PIN, OUTPUT);   //D1
+  pinMode(GREEN_PIN, OUTPUT); //D2
+
+  // Serial.begin(115200);
   // bool mountResult = SPIFFS.begin();
   // Serial.println(mountResult ? "File system mounted with success" : "Error mounting the file system");
-
-  pinMode(RED_PIN, OUTPUT); //D1
-  pinMode(GREEN_PIN, OUTPUT); //D2
-  pinMode(LOCK_PIN, OUTPUT); // D0
-
-
-
-
-
   // SPI.begin();        // Init SPI bus
   // mfrc522.PCD_Init(); // Init MFRC522
 
@@ -178,6 +174,7 @@ void setup()
   //  * Init Wifi module
   //  */
   // WiFiManager wifiManager;
+  
   // if (!wifiManager.autoConnect("AutoConnectAP"))
   // {
   //   Serial.println("Failed to connect and hit timeout");
@@ -189,13 +186,15 @@ void setup()
   // Serial.println(String("Connected, IP address: ") + WiFi.localIP().toString());
   // /**
   //  * Bind routing and start HTTP server
-  //  */ 
+  //  */
   // server.on("/ping", HTTP_ANY, handlePing);
   // server.on("/last_uuid", HTTP_ANY, lastCardUUID);
   // server.on("/update_config", HTTP_ANY, updateConfig);
+  // server.on("/begin_registration", HTTP_ANY, registerDevice);
   // server.on("/", HTTP_ANY, handleMain);
   // server.begin();
   // Serial.println("HTTP server started");
+  // Serial.println(WiFi.macAddress());
 }
 
 void loop()
@@ -208,4 +207,4 @@ void loop()
   delay(3000);
   digitalWrite(LOCK_PIN, LOW);
   changeColor(true, false);
-}
+  }

@@ -39,6 +39,6 @@ module.exports.LogDbModel = [
         uuid: {
             type: Sequelize.STRING,
             allowNull: false,
-        }
+        },
     },
 ];

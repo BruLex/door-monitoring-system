@@ -26,7 +26,7 @@ exports.updateConfigsSchema = {
                 data: {
                     type: 'object',
                     properties: {
-                        _id: {
+                        success: {
                             type: 'string',
                         },
                     },

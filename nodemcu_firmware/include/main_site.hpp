@@ -34,5 +34,14 @@ String getMainHtml(String ip, int lock)
 \
 </fieldset>\
 </form>\
+<form class=\"form-horizontal\" target=\"dummyframe\" action=\"/begin_registration\" method=\"POST\">\
+<!-- Button -->\
+<div class=\"form-group\">\
+  <label class=\"col-md-4 control-label\" for=\"submit\"></label>\
+  <div class=\"col-md-4\">\
+    <button id=\"submit\" name=\"submit\" class=\"btn btn-primary\">Register device</button>\
+  </div>\
+</div>\
+<form>\
 ";
 }

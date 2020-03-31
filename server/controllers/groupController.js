@@ -13,7 +13,7 @@ module.exports = async (fastify, options) => {
             for (let index = 0; index < req.body.allowed_devices.length; index++) {
                 const i_device = req.body.allowed_devices[index].i_device;
                 await fastify.sequelize.query(
-                    `INSERT INTO group_device_permisions VALUES(null, ${i_group}, ${i_device});`
+                        `INSERT INTO group_device_permisions VALUES(null, ${i_group}, ${i_device});`,
                 );
             }
         }
@@ -26,48 +26,48 @@ module.exports = async (fastify, options) => {
 
     fastify.post('get_group_list', async (req, reply) => {
         const group_list = await Promise.all(
-            await Group.findAll().map(async group => {
-                const group_item = {
-                    i_group: group.i_group,
-                    name: group.name,
-                    allowed_all: Boolean(group.allowed_all),
-                };
+                await Group.findAll().map(async group => {
+                    const group_item = {
+                        i_group: group.i_group,
+                        name: group.name,
+                        allowed_all: Boolean(group.allowed_all),
+                    };
 
-                if (req.body && Boolean(req.body.with_extended_info)) {
-                    group_item.users = await fastify.sequelize.query(
-                        `
+                    if (req.body && Boolean(req.body.with_extended_info)) {
+                        group_item.users = await fastify.sequelize.query(
+                                `
                 SELECT u.i_user, u.name, u.uuid
                 FROM users u
                 where u.i_group=${group.i_group}
                 `,
-                        { type: Sequelize.QueryTypes.SELECT }
-                    );
-                    group_item.allowed_devices = await fastify.sequelize.query(
-                        `
+                                { type: Sequelize.QueryTypes.SELECT },
+                        );
+                        group_item.allowed_devices = await fastify.sequelize.query(
+                                `
                 SELECT d.i_device, d.name, d.description, d.ip
                 FROM devices d inner join group_device_permisions gdp on d.i_device = gdp.i_device
                 where gdp.i_group=${group.i_group}
                 `,
-                        { type: Sequelize.QueryTypes.SELECT }
-                    );
-                }
-                return group_item;
-            })
+                                { type: Sequelize.QueryTypes.SELECT },
+                        );
+                    }
+                    return group_item;
+                }),
         );
         return jsend.success({ group_list });
     });
 
     fastify.post('update_group', async (req, reply) => {
         await Group.update(
-            { name: req.body.name, allowed_all: req.body.allowed_all ? 1 : 0 },
-            { where: { i_group: req.body.i_group } }
+                { name: req.body.name, allowed_all: req.body.allowed_all ? 1 : 0 },
+                { where: { i_group: req.body.i_group } },
         );
         await fastify.sequelize.query(`DELETE FROM group_device_permisions WHERE i_group = ${req.body.i_group}`);
         if (!req.body.allowed_all && !!req.body.allowed_devices) {
             for (let index = 0; index < req.body.allowed_devices.length; index++) {
                 const i_device = req.body.allowed_devices[index].i_device;
                 await fastify.sequelize.query(
-                    `INSERT INTO group_device_permisions VALUES(null, ${req.body.i_group}, ${i_device});`
+                        `INSERT INTO group_device_permisions VALUES(null, ${req.body.i_group}, ${i_device});`,
                 );
             }
         }

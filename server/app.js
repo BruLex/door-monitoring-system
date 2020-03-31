@@ -1,7 +1,7 @@
 'use strict';
 
 const fastify = require('fastify')({
-    logger: true
+    logger: true,
 });
 const fsequelize = require('fastify-sequelize');
 const AutoLoad = require('fastify-autoload');
@@ -10,18 +10,14 @@ const path = require('path');
 const sequelizeConfig = {
     instance: 'sequelize',
     autoConnect: true,
-    username: 'door-system',
+    username: 'door',
     password: 'door123',
     database: 'door_system',
     dialect: 'mysql',
     define: {
-        timestamps: false
-    }
+        timestamps: false,
+    },
 };
-
-fastify.register(require('fastify-mysql'), {
-    connectionString: 'mysql://door-system@localhost/door_system?password=door123'
-});
 
 fastify.register(fsequelize, sequelizeConfig);
 
@@ -35,15 +31,18 @@ fastify.register(require('fastify-cors'));
 
 fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'controllers'),
-    // options: { logLevel: 'debug' }
+    // options: { logLevel: 'debug' },
 });
 
-fastify.ready(err => console.log('Ready:', err));
+fastify.ready(err => {
+    console.log('Ready:', err);
+});
+console.log(fastify.printRoutes());
 
-fastify.listen(3000, (err, address) => {
+fastify.listen(3000, '::', (err, address) => {
     if (err) {
         fastify.log.error(err);
-        process.exit(1)
+        process.exit(1);
     }
-    fastify.log.info(`Server listening on ${ address }`)
+    fastify.log.info(`Server listening on ${ address }`);
 });
