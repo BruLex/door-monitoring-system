@@ -1,7 +1,7 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 
 @Directive({
-    selector: '[dkLoadmask]',
+    selector: '[dkLoadmask]'
 })
 export class LoadmaskDirective {
     @HostBinding('class.dk-loadmask') isEnabled = false;

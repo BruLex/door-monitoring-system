@@ -15,27 +15,27 @@ interface DoorData {
 
 enum DoorStatus {
     Offline,
-    Online,
+    Online
 }
 
 enum LockedStatus {
     Locked,
     Uocked,
-    Guard,
+    Guard
 }
 
 const STATUS_ICON = {
     locked: 'lock',
     unlocked: 'lock_open',
     guard: 'security',
-    opened: 'verified_user',
+    opened: 'verified_user'
 };
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent extends TableAbstract<DoorData> {
     loading = false;
@@ -45,21 +45,21 @@ export class DashboardComponent extends TableAbstract<DoorData> {
             mac: 'A4-71-9F-DB-1B-B4',
             status: false,
             locked: false,
-            icon: 'security',
+            icon: 'security'
         },
         { mac: 'A4-71-9F-DB-1B-B3', status: true, locked: true, icon: 'lock' },
         {
             mac: 'A4-71-9F-DB-1B-B3',
             status: false,
             locked: false,
-            icon: 'lock_open',
+            icon: 'lock_open'
         },
         {
             mac: 'A4-71-9F-DB-1B-B2',
             status: true,
             locked: false,
-            icon: 'verified_user',
-        },
+            icon: 'verified_user'
+        }
     ];
 
     constructor(private appSrv: AppService, private httpClient: HttpClient) {

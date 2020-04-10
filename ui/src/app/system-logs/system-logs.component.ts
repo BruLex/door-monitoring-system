@@ -15,7 +15,7 @@ interface LogData {
 
 @Component({
     templateUrl: './system-logs.component.html',
-    styleUrls: ['./system-logs.component.scss'],
+    styleUrls: ['./system-logs.component.scss']
 })
 export class SystemLogsComponent extends TableAbstract<LogData> implements AfterViewInit {
     dialog: MatDialog;

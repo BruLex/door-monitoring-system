@@ -13,11 +13,11 @@ const routes: Routes = [
     { path: 'groups', component: GroupsComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: '**', redirectTo: '' },
+    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}

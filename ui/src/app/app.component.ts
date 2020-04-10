@@ -13,7 +13,7 @@ interface NavItem {
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements RootComponentInterface {
     readonly navItems: NavItem[] = [
@@ -21,7 +21,7 @@ export class AppComponent implements RootComponentInterface {
         { link: '/groups', name: 'Groups' },
         { link: '/users', name: 'Users' },
         { link: '/devices', name: 'Devices' },
-        { link: '/system_logs', name: 'System logs' },
+        { link: '/system_logs', name: 'System logs' }
     ];
 
     @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;

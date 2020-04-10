@@ -1,23 +1,23 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AppService } from '../app.service';
 import { TableAbstract } from '../tools/table-abstract';
-import { DeviceModel, GroupModel, UserModel } from "../types";
-import { MatDialog } from "@angular/material/dialog";
-import { FormGroup } from "@angular/forms";
 import { createFormControl } from "../tools/validations";
+import { DeviceModel, GroupModel, UserModel } from "../types";
 
 @Component({
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    styleUrls: ['./users.component.scss']
 })
 export class UsersComponent extends TableAbstract<UserModel> {
 
     addEditUserGroup = new FormGroup({
         name: createFormControl({ type: 'str', required: true }),
-        uuid: createFormControl({ type: 'str', required: true }),
+        uuid: createFormControl({ type: 'str', required: true })
     });
 
     loading: boolean;

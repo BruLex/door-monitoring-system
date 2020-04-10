@@ -3,7 +3,7 @@ import { PopoverContent, PopoverRef } from './popover-ref';
 
 @Component({
     templateUrl: './popover.component.html',
-    styleUrls: ['./popover.component.css'],
+    styleUrls: ['./popover.component.css']
 })
 export class PopoverComponent implements OnInit {
     renderMethod: 'template' | 'component' | 'text' = 'component';
@@ -23,7 +23,7 @@ export class PopoverComponent implements OnInit {
         if (this.content instanceof TemplateRef) {
             this.renderMethod = 'template';
             this.context = {
-                close: this.popoverRef.close.bind(this.popoverRef),
+                close: this.popoverRef.close.bind(this.popoverRef)
             };
         }
 

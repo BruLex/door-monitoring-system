@@ -1,57 +1,59 @@
+import { RouteSchema } from 'fastify';
+
 const configData = {
     only_remote_confirm_mode: {
-        type: 'boolean',
+        type: 'boolean'
     },
     allowed_attempts: {
-        type: 'number',
-    },
+        type: 'number'
+    }
 };
 
-exports.updateConfigsSchema = {
+export const updateConfigsSchema: RouteSchema = {
     body: {
         type: 'object',
         properties: configData,
-        required: ['only_remote_confirm_mode', 'allowed_attempts'],
+        required: ['only_remote_confirm_mode', 'allowed_attempts']
     },
     response: {
         200: {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string',
+                    type: 'string'
                 },
                 message: {
-                    type: 'string',
+                    type: 'string'
                 },
                 data: {
                     type: 'object',
                     properties: {
                         success: {
-                            type: 'string',
-                        },
-                    },
-                },
-            },
-        },
-    },
+                            type: 'string'
+                        }
+                    }
+                }
+            }
+        }
+    }
 };
 
-exports.getConfigsSchema = {
+export const getConfigsSchema: RouteSchema = {
     response: {
         200: {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string',
+                    type: 'string'
                 },
                 message: {
-                    type: 'string',
+                    type: 'string'
                 },
                 data: {
                     type: 'object',
-                    properties: configData,
-                },
-            },
-        },
-    },
+                    properties: configData
+                }
+            }
+        }
+    }
 };

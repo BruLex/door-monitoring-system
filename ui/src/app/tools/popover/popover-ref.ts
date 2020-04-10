@@ -29,7 +29,7 @@ export class PopoverRef<T = any> {
         this.overlay.dispose();
         this.afterClosed.next({
             type,
-            data,
+            data
         });
         this.afterClosed.complete();
     }

@@ -13,7 +13,7 @@ export interface PopoverParams<T> {
 }
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class Popover {
     constructor(private overlay: Overlay, private injector: Injector) {
@@ -41,7 +41,7 @@ export class Popover {
             height,
             backdropClass: 'popover-backdrop',
             positionStrategy: this.getOverlayPosition(origin),
-            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+            scrollStrategy: this.overlay.scrollStrategies.reposition()
         });
     }
 
@@ -61,14 +61,14 @@ export class Popover {
                 originX: 'center',
                 originY: 'top',
                 overlayX: 'center',
-                overlayY: 'bottom',
+                overlayY: 'bottom'
             },
             {
                 originX: 'center',
                 originY: 'bottom',
                 overlayX: 'center',
-                overlayY: 'top',
-            },
+                overlayY: 'top'
+            }
         ];
     }
 

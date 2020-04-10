@@ -15,7 +15,7 @@ export interface DialogData {
             <button mat-button [mat-dialog-close]="false">No</button>
             <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
         </div>
-    `,
+    `
 })
 export class ConfirmDialogComponent {
 

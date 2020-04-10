@@ -8,7 +8,7 @@ import { RootComponentInterface } from './types';
 
 enum Statuses {
     Success = 'success',
-    Error = 'error',
+    Error = 'error'
 }
 
 class Response {
@@ -33,7 +33,7 @@ interface ConfirmDialogConfig {
 }
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class AppService {
     private static rootComponent: RootComponentInterface;
@@ -48,7 +48,7 @@ export class AppService {
 
     getConfig() {
         return {
-            title: this.title,
+            title: this.title
         };
     }
 
@@ -73,8 +73,8 @@ export class AppService {
     openConfirmDialog(config: ConfirmDialogConfig) {
         const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
             data: {
-                message: config.message,
-            },
+                message: config.message
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

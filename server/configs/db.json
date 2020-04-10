@@ -1,0 +1,11 @@
+{
+  "instance": "sequelize",
+  "autoConnect": true,
+  "username": "door",
+  "password": "door123",
+  "database": "door_system",
+  "dialect": "mysql",
+  "define": {
+    "timestamps": false
+  }
+}

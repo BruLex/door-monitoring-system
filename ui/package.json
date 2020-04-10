@@ -17,10 +17,9 @@
     "private": true,
     "prettier": {
         "singleQuote": true,
-        "trailingComma": "es5",
         "tabWidth": 4,
-        "useTabs": false,
-        "printWidth": 120
+        "printWidth": 120,
+        "trailingComma": "none"
     },
     "dependencies": {
         "@angular/animations": "^8.2.14",

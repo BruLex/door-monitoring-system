@@ -9,13 +9,13 @@ import { DeviceModel } from '../types';
 
 @Component({
     templateUrl: './devices.component.html',
-    styleUrls: ['./devices.component.scss'],
+    styleUrls: ['./devices.component.scss']
 })
 export class DevicesComponent extends TableAbstract<DeviceModel> {
     addGroup = new FormGroup({
         name: createFormControl({ type: 'str', required: true }),
         ip: createFormControl({ type: 'ip', required: true }),
-        description: createFormControl({ type: 'str', required: false }),
+        description: createFormControl({ type: 'str', required: false })
     });
 
     loading: boolean;

@@ -19,7 +19,7 @@ import {
     MatSlideToggleModule,
     MatSortModule,
     MatTableModule,
-    MatToolbarModule,
+    MatToolbarModule
 } from '@angular/material';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from '@angular/material/badge';
@@ -29,6 +29,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -43,7 +44,6 @@ import { LoadmaskDirective } from './tools/loadmask/loadmask.directive';
 import { PopoverComponent } from "./tools/popover/popover.component";
 import { Popover } from "./tools/popover/popover.service";
 import { UsersComponent } from './users';
-import { MatSelectModule } from "@angular/material/select";
 
 const ANGULAR_MATERIAL = [
     MatTableModule,
@@ -60,7 +60,7 @@ const ANGULAR_MATERIAL = [
     MatSlideToggleModule,
     ScrollingModule,
     MatSidenavModule,
-    MatDividerModule,
+    MatDividerModule
 ];
 
 @NgModule({
@@ -73,7 +73,7 @@ const ANGULAR_MATERIAL = [
         SystemLogsComponent,
         LoadmaskDirective,
         ConfirmDialogComponent,
-        PopoverComponent,
+        PopoverComponent
     ],
     imports: [
         ...ANGULAR_MATERIAL,
@@ -93,10 +93,10 @@ const ANGULAR_MATERIAL = [
         MatExpansionModule,
         MatAutocompleteModule,
         MatChipsModule,
-        MatSelectModule,
+        MatSelectModule
     ],
     entryComponents: [ConfirmDialogComponent, PopoverComponent],
     providers: [AppService, Popover],
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -16,7 +16,7 @@ import { DeviceModel, GroupModel } from '../types';
 
 @Component({
     templateUrl: './groups.component.html',
-    styleUrls: ['./groups.component.scss'],
+    styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent extends TableAbstract<any> {
     readonly nameControl: FormControl = createFormControl({ type: 'str', required: true });
@@ -85,18 +85,18 @@ export class GroupsComponent extends TableAbstract<any> {
                         originX: 'center',
                         originY: 'top',
                         overlayX: 'center',
-                        overlayY: 'bottom',
+                        overlayY: 'bottom'
                     },
                     {
                         originX: 'center',
                         originY: 'bottom',
                         overlayX: 'center',
-                        overlayY: 'top',
-                    },
+                        overlayY: 'top'
+                    }
                 ])
                 .withFlexibleDimensions(false)
                 .withPush(false),
-            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+            scrollStrategy: this.overlay.scrollStrategies.reposition()
         });
         this.subs.push(overlayRef.backdropClick().subscribe(() => overlayRef.dispose()));
         overlayRef.attach(cdkPortal);
