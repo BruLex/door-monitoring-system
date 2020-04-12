@@ -24,7 +24,7 @@ export class GroupsComponent extends TableAbstract<GroupModel, GroupStore> imple
     dialogEditMode: boolean;
     loading = true;
 
-    @ViewChild('addEditDialog', { static: false }) addDialogRef: TemplateRef<ElementRef>;
+    @ViewChild('addEditDialog') addDialogRef: TemplateRef<ElementRef>;
 
     myControl = new FormControl();
     doorToAdd: DeviceModel;
@@ -60,7 +60,7 @@ export class GroupsComponent extends TableAbstract<GroupModel, GroupStore> imple
         this.store.dataSource.paginator = paginator;
     }
 
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+    @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
 

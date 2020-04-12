@@ -25,13 +25,13 @@ export class DevicesComponent extends TableAbstract<DeviceModel, DeviceStore> {
     selection: SelectionModel<DeviceModel> = new SelectionModel<DeviceModel>(true, []);
     dialogEditMode: boolean;
 
-    @ViewChild('addDialog', { static: false }) addDialogRef: TemplateRef<ElementRef>;
+    @ViewChild('addDialog') addDialogRef: TemplateRef<ElementRef>;
 
     @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
         this.store.dataSource.paginator = paginator;
     }
 
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+    @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
 

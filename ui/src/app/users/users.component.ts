@@ -27,13 +27,13 @@ export class UsersComponent extends TableAbstract<UserModel, UserStore> {
     selection: SelectionModel<UserModel> = new SelectionModel<UserModel>(true, []);
     groups: GroupStore = new GroupStore();
 
-    @ViewChild('addEditDialog', { static: false }) addDialogRef: TemplateRef<ElementRef>;
+    @ViewChild('addEditDialog') addDialogRef: TemplateRef<ElementRef>;
 
     @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
         this.store.dataSource.paginator = paginator;
     }
 
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+    @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
 

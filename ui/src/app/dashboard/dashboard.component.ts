@@ -69,7 +69,7 @@ export class DashboardComponent extends TableAbstract<MonitorModel, MonitorStore
         this.store.dataSource.paginator = paginator;
     }
 
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+    @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
 }

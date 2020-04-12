@@ -22,7 +22,7 @@ interface LogData {
 export class SystemLogsComponent extends TableAbstract<LogModel, LogStore> implements AfterViewInit {
     dialog: MatDialog;
     store: LogStore = new LogStore();
-    @ViewChild(MatSort, { static: false }) set sort(sort: MatSort) {
+    @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
 
