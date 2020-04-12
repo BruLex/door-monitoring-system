@@ -1,52 +1,29 @@
-<mat-toolbar>
+<mat-toolbar class="table-control-panel">
     <mat-divider></mat-divider>
     <mat-toolbar-row>
         <span flex></span>
-        <mat-paginator [length]="modelData.length" [pageSizeOptions]="[3, 10, 20, 30, 100, 200]"></mat-paginator>
+        <button (click)="store.reload()" [matTooltip]="'Reload'" class="action-button" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <mat-paginator
+                [color]="'warn'" [length]="store.items.length"
+                [pageSizeOptions]="[3, 10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
-<table [dataSource]="dataSource" mat-table matSort matSortActive="mac" matSortDirection="desc" matSortDisableClear>
+<table
+        [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort matSortActive="name"
+        matSortDirection="desc"
+        matSortDisableClear>
 
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-        <th *matHeaderCellDef mat-header-cell>
-            <mat-checkbox
-                    (change)="$event ? masterToggle() : null"
-                    [aria-label]="checkboxLabel()"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-            >
-            </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" mat-cell>
-            <mat-checkbox
-                    (change)="$event ? selection.toggle(row) : null"
-                    (click)="$event.stopPropagation()"
-                    [aria-label]="checkboxLabel(row)"
-                    [checked]="selection.isSelected(row)">
-            </mat-checkbox>
-        </td>
+    <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Device name</th>
+        <td *matCellDef="let data" mat-cell>{{data.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="ip">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ip address</th>
+        <td *matCellDef="let data" mat-cell>{{data.ip}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="mac">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Mac address</th>
-        <td *matCellDef="let data" mat-cell>{{data.mac}}</td>
-    </ng-container>
-    <!-- Name Column -->
-    <ng-container matColumnDef="description">
-        <th *matHeaderCellDef mat-header-cell>Description</th>
-        <!--          <td mat-cell *matCellDef="let data">{{data.name}}</td>-->
-        <td *matCellDef="let data" mat-cell>Door which give access in flor #1</td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="group">
-        <th *matHeaderCellDef mat-header-cell>Group</th>
-        <!--          <td mat-cell *matCellDef="let element">{{element.weight}}</td>-->
-        <td *matCellDef="let element" mat-cell>Flor #1</td>
-    </ng-container>
-
-    <!-- Weight Column -->
     <ng-container matColumnDef="power">
         <th *matHeaderCellDef mat-header-cell>Power</th>
         <td *matCellDef="let data" mat-cell>
@@ -58,16 +35,60 @@
         </td>
     </ng-container>
 
-    <!-- Symbol Column -->
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell>Status</th>
         <td *matCellDef="let data" mat-cell>
-            <mat-icon
-                    [matTooltip]="data.locked ? 'Locked' : 'Unlocked'">
+            <mat-icon [matTooltip]="data.mode | titlecase">
                 {{ data.icon }}
             </mat-icon>
         </td>
     </ng-container>
-    <tr *matHeaderRowDef="['mac', 'description', 'group', 'power', 'status']" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: ['mac', 'description', 'group', 'power', 'status'];" mat-row></tr>
+
+    <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let element" mat-cell>
+            <button
+                    class="action-button" mat-icon-button
+                    [matTooltip]="'Change mode'"
+                    (click)="openDialog('edit', element)">
+                <mat-icon>settings</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="['name', 'ip' , 'power', 'status', 'actions']" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: ['name', 'ip', 'power', 'status', 'actions'];" mat-row></tr>
 </table>
+
+<ng-template #manageEntityDialog>
+    <h1 mat-dialog-title>{{ 'Select device mode' }}</h1>
+    <div mat-dialog-content>
+        <mat-form-field flex>
+            <mat-label>Select an option</mat-label>
+            <mat-icon [style.font-size]="'16px'" matPrefix>{{ lockModeIconMap[currentModel.mode] }}</mat-icon>
+            <mat-select [(value)]="currentModel.mode">
+                <mat-select-trigger>
+                    <span>{{currentModel.mode | titlecase}}</span>
+                </mat-select-trigger>
+                <mat-option [value]="lockModes.Guard">
+                    <mat-icon>{{ lockModeIconMap[lockModes.Guard] }}</mat-icon>
+                    <span>{{lockModes.Guard | titlecase}}</span>
+                </mat-option>
+                <mat-option [value]="lockModes.Unlocked">
+                    <mat-icon>{{ lockModeIconMap[lockModes.Unlocked] }}</mat-icon>
+                    <span>{{lockModes.Unlocked | titlecase}}</span>
+                </mat-option>
+                <mat-option [value]="lockModes.Locked">
+                    <mat-icon>{{ lockModeIconMap[lockModes.Locked] }}</mat-icon>
+                    <span>{{lockModes.Locked | titlecase}}</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button [mat-dialog-close]="false" mat-button>Close</button>
+        <button
+                [disabled]="currentModel.modelForm.invalid" [mat-dialog-close]="true"
+                mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
+    </div>
+</ng-template>

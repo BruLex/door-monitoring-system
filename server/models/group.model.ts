@@ -1,5 +1,6 @@
 import { GroupDevicePermissions } from 'models/group-device-permissions.model';
 import { BelongsToMany, Column, DefaultScope, HasMany, Model, Scopes, Table } from 'sequelize-typescript';
+
 import { Device } from './device.model';
 import { User } from './user.model';
 
@@ -27,7 +28,8 @@ export class Group extends Model<Group> {
 
     @Column({ allowNull: false, defaultValue: false }) allowed_all: boolean;
 
-    @HasMany(() => User) users: User[];
+    @HasMany(() => User, 'i_group') users: User[];
 
-    @BelongsToMany(() => Device, () => GroupDevicePermissions) allowed_devices: Device[];
+    @BelongsToMany(() => Device, () => GroupDevicePermissions)
+    allowed_devices: Device[];
 }

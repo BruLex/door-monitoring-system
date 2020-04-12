@@ -1,6 +1,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+
 import { AppService } from './app.service';
 import { RootComponentInterface } from './types';
 
@@ -25,14 +26,14 @@ export class AppComponent implements RootComponentInterface {
     ];
 
     @ViewChild('globalLoading', { static: true }) globalLoadingRef: CdkPortal;
+
+    get title(): string {
+        return this.appService.getConfig().title;
+    }
     private overlayRef: OverlayRef;
 
     constructor(private appService: AppService, private overlay: Overlay) {
         this.appService.setupRootComponent(this);
-    }
-
-    get title() {
-        return this.appService.getConfig().title;
     }
 
     showLoadmask(): void {

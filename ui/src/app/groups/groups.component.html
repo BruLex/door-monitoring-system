@@ -1,8 +1,11 @@
-<mat-toolbar>
+<mat-toolbar class="table-control-panel">
     <mat-toolbar-row>
         <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
         <button (click)="deleteModels()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
+        <button (click)="store.reload()" [matTooltip]="'Reload'" class="action-button" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
         <mat-paginator
                 [length]="store.items?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
                 pageSize="100"></mat-paginator>
@@ -10,7 +13,7 @@
 </mat-toolbar>
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" mat-table matSort
+            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort
             matSortActive="name" matSortDirection="desc" matSortDisableClear multiTemplateDataRows>
 
         <!-- Checkbox Column -->
@@ -43,22 +46,13 @@
             <td *matCellDef="let element" mat-cell>
                 <mat-icon
                     #refACl
-                    (click)="!element.allowed_all && !!element.allowed_devices?.length && showOverlay(portalACl, refACl._elementRef)"
                     [matBadgeColor]="'primary'"
+                    [matTooltip]="element.getDeviceNames()"
+                    [matTooltipClass]="'tooltip-custom'"
                     [matBadge]="element.allowed_all ? 'All' : element.allowed_devices?.length || '-'"
                     [style.cursor]="!element.allowed_all && !!element.allowed_devices?.length ? 'pointer' : null">
                     meeting_room
                 </mat-icon>
-
-                <ng-template #portalACl="cdkPortal" cdk-portal>
-                    <div class="portal">
-                        <mat-list class="popover" role="list">
-                            <mat-list-item *ngFor="let el of element.allowed_devices" class="list-item" role="listitem">
-                                Name: {{el.name}}
-                            </mat-list-item>
-                        </mat-list>
-                    </div>
-                </ng-template>
             </td>
         </ng-container>
 
@@ -67,28 +61,22 @@
             <td *matCellDef="let element" mat-cell>
                 <mat-icon
                     #refUser
-                    (click)="!!element.users?.length && showOverlay(portalUser, refUser._elementRef)"
+                    [matTooltip]="element.getUserNames()"
+                    [matTooltipClass]="'tooltip-custom'"
                     [matBadgeColor]="'primary'"
                     [matBadge]="element.users?.length || 0"
                     [style.cursor]="!!element.users?.length ? 'pointer' : null">
                     supervised_user_circle
                 </mat-icon>
-                <ng-template #portalUser="cdkPortal" cdk-portal>
-                    <div class="portal">
-                        <mat-list class="popover" role="list">
-                            <mat-list-item *ngFor="let el of element.users" class="list-item" role="listitem">
-                                Name: {{el.name}} UUID: {{el.uuid}}
-                            </mat-list-item>
-                        </mat-list>
-                    </div>
-                </ng-template>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
-                <button (click)="openDialog('edit', element)" class="action-button" mat-icon-button>
+                <button mat-icon-button class="action-button"
+                        [matTooltip]="'Edit'"
+                        (click)="openDialog('edit', element)" >
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -100,18 +88,20 @@
     </table>
 </div>
 
-<ng-template #addEditDialog>
+<ng-template #manageEntityDialog>
     <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add new group' }}</h1>
-    <div mat-dialog-content>
-        <mat-form-field>
-            <input [(ngModel)]="addEditModel.name" [formControl]="nameControl" matInput placeholder="Name">
+    <div mat-dialog-content vflex-layout>
+        <mat-form-field flex>
+            <input matInput placeholder="Name"
+                    [(ngModel)]="currentModel.name"
+                    [formControl]="currentModel.modelForm.controls['name']">
         </mat-form-field>
-        <mat-slide-toggle [(ngModel)]="addEditModel.allowed_all">Allowed all</mat-slide-toggle>
-        <ng-container *ngIf="!addEditModel.allowed_all">
+        <mat-slide-toggle flex [(ngModel)]="currentModel.allowed_all">Allowed all</mat-slide-toggle>
+        <ng-container *ngIf="!currentModel.allowed_all">
             <p>Allowed devices</p>
             <mat-divider></mat-divider>
             <div style="display: flex; flex-direction: row; align-items: center">
-                <mat-form-field>
+                <mat-form-field flex>
                     <input
                             [formControl]="myControl" [matAutocomplete]="auto" aria-label="Assignee" matInput
                             placeholder="Assignee"
@@ -132,7 +122,7 @@
             <mat-chip-list>
                 <mat-chip
                         (removed)="removeDoorFromModel(door)"
-                        *ngFor="let door of addEditModel.allowed_devices"
+                        *ngFor="let door of currentModel.allowed_devices"
                         [removable]="true">
                     {{ door.name }}
                     <mat-icon matChipRemove>cancel</mat-icon>
@@ -143,7 +133,7 @@
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
         <button
-                [disabled]="nameControl.invalid"
+                [disabled]="currentModel.modelForm.invalid"
                 [mat-dialog-close]="true"
                 mat-button>
             {{ this.dialogEditMode ? 'Save' : 'Create' }}

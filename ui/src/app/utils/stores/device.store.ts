@@ -1,5 +1,5 @@
-import { DeviceModel } from 'src/app/tools/models/device.model';
-import { Store, StoreSchema } from 'src/app/tools/store';
+import { DeviceModel } from '../models/device.model';
+import { Store, StoreSchema } from '../store';
 
 export class DeviceStore extends Store<DeviceModel> {
     schema: StoreSchema<DeviceModel> = {

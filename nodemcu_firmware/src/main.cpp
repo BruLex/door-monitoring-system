@@ -43,10 +43,12 @@ void changeColor(bool red, bool green)
 
 void handleMain()
 {
+  Serial.println('handleMain');
   server.send(200, "text/html", getMainHtml(serverIPAddress, LOCK_STATE));
 }
 void handlePing()
 {
+  Serial.println('handlePing');
   server.send(200, "application/json", "{\"status\": \"success\"}");
 }
 void lastCardUUID()
@@ -164,47 +166,47 @@ void setup()
   pinMode(RED_PIN, OUTPUT);   //D1
   pinMode(GREEN_PIN, OUTPUT); //D2
 
-  // Serial.begin(115200);
+  Serial.begin(115200);
   // bool mountResult = SPIFFS.begin();
   // Serial.println(mountResult ? "File system mounted with success" : "Error mounting the file system");
   // SPI.begin();        // Init SPI bus
   // mfrc522.PCD_Init(); // Init MFRC522
 
-  // /**
-  //  * Init Wifi module
-  //  */
-  // WiFiManager wifiManager;
+  /**
+   * Init Wifi module
+   */
+  WiFiManager wifiManager;
   
-  // if (!wifiManager.autoConnect("AutoConnectAP"))
-  // {
-  //   Serial.println("Failed to connect and hit timeout");
-  //   delay(3000);
-  //   //Reset and try again, or maybe put it to deep sleep
-  //   ESP.reset();
-  //   delay(5000);
-  // }
-  // Serial.println(String("Connected, IP address: ") + WiFi.localIP().toString());
-  // /**
-  //  * Bind routing and start HTTP server
-  //  */
-  // server.on("/ping", HTTP_ANY, handlePing);
-  // server.on("/last_uuid", HTTP_ANY, lastCardUUID);
-  // server.on("/update_config", HTTP_ANY, updateConfig);
-  // server.on("/begin_registration", HTTP_ANY, registerDevice);
-  // server.on("/", HTTP_ANY, handleMain);
-  // server.begin();
-  // Serial.println("HTTP server started");
-  // Serial.println(WiFi.macAddress());
+  if (!wifiManager.autoConnect("AutoConnectAP"))
+  {
+    Serial.println("Failed to connect and hit timeout");
+    delay(3000);
+    //Reset and try again, or maybe put it to deep sleep
+    ESP.reset();
+    delay(5000);
+  }
+  Serial.println(String("Connected, IP address: ") + WiFi.localIP().toString());
+  /**
+   * Bind routing and start HTTP server
+   */
+  server.on("/ping", HTTP_ANY, handlePing);
+  server.on("/last_uuid", HTTP_ANY, lastCardUUID);
+  server.on("/update_config", HTTP_ANY, updateConfig);
+  server.on("/begin_registration", HTTP_ANY, registerDevice);
+  server.on("/", HTTP_ANY, handleMain);
+  server.begin();
+  Serial.println("HTTP server started");
+  Serial.println(WiFi.macAddress());
 }
 
 void loop()
 {
-  // server.handleClient();
+  server.handleClient();
   // check_RFID();
-  delay(3000);
-  digitalWrite(LOCK_PIN, HIGH);
-  changeColor(false, true);
-  delay(3000);
-  digitalWrite(LOCK_PIN, LOW);
-  changeColor(true, false);
+  // delay(3000);
+  // digitalWrite(LOCK_PIN, HIGH);
+  // changeColor(false, true);
+  // delay(3000);
+  // digitalWrite(LOCK_PIN, LOW);
+  // changeColor(true, false);
   }

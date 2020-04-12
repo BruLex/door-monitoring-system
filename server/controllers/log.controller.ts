@@ -1,7 +1,9 @@
-import { Log } from '@models';
 import { FastifyInstance } from 'fastify';
 import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
+
 import * as jsend from 'jsend';
+
+import { Log } from '@models';
 
 @Controller({ route: '/logs' })
 export default class LogController {

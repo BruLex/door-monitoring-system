@@ -1,14 +1,17 @@
-<mat-toolbar>
+<mat-toolbar class="table-control-panel">
     <mat-toolbar-row>
         <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
         <button (click)="deleteModels()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
+        <button (click)="store.reload()" [matTooltip]="'Reload'" class="action-button" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
         <mat-paginator [length]="store.items?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top"
+            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" dkLoadmaskPosition="top"
             dkLoadmaskText="Getting data from the server..."
             mat-table
             matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
@@ -50,7 +53,8 @@
         <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
-                <button (click)="openDialog('edit', element)" class="action-button" mat-icon-button>
+                <button mat-icon-button class="action-button"  [matTooltip]="'Edit'"
+                        (click)="openDialog('edit', element)" >
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -62,28 +66,27 @@
 </div>
 
 
-<ng-template #addDialog>
+<ng-template #manageEntityDialog>
     <h1 mat-dialog-title>{{ dialogEditMode ? 'Edit device' : 'Add new device' }}</h1>
-    <div mat-dialog-content>
-        <form [formGroup]="addGroup">
-            <mat-form-field>
-                <input [(ngModel)]="addEditModel.name" formControlName="name" matInput placeholder="Name">
+    <div mat-dialog-content vflex-layout>
+        <form [formGroup]="currentModel.modelForm" vflex-layout>
+            <mat-form-field flex>
+                <input [(ngModel)]="currentModel.name" required formControlName="name" matInput placeholder="Name">
             </mat-form-field>
-            <mat-form-field>
-                <input [(ngModel)]="addEditModel.ip" formControlName="ip" matInput placeholder="IP address">
+            <mat-form-field flex>
+                <input [(ngModel)]="currentModel.ip" required formControlName="ip" matInput placeholder="IP address">
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field flex>
                 <input
-                        [(ngModel)]="addEditModel.description" formControlName="description" matInput
+                        [(ngModel)]="currentModel.description" formControlName="description" matInput
                         placeholder="Description">
             </mat-form-field>
         </form>
-
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
         <button
-                [disabled]="addGroup.invalid" [mat-dialog-close]="true"
+                [disabled]="currentModel.modelForm.invalid" [mat-dialog-close]="true"
                 mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
     </div>
 </ng-template>

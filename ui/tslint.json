@@ -10,6 +10,14 @@
     },
     "rules": {
         "array-type": [true, "array-simple"],
+        "typedef": [
+          true,
+          "call-signature",
+          "parameter",
+          "member-variable-declaration",
+          "property-declaration",
+          "variable-declaration"
+        ],
         "arrow-return-shorthand": true,
         "ban": [true,
             {"name": ["it", "skip"]},
@@ -71,13 +79,63 @@
         "no-any": false,
         "ordered-imports": {
             "options": {
-                "groups": [{
-                    "name": "optional rule name",
-                    "match": "^@angular",
-                    "order": 10
-                }]
+                "import-sources-order": "any",
+                "named-imports-order": "any",
+                "grouped-imports": true,
+                "groups": [
+                    {
+                        "name": "angular imports",
+                        "match": "^@angular",
+                        "order": 1
+                    },
+                    {
+                        "name": "rxjs imports",
+                        "match": "^rxjs",
+                        "order": 2
+                    },
+                    {
+                        "name": "libs imports",
+                        "match": "^(?!@|\\.).*",
+                        "order": 3
+                    },
+                    {
+                        "name": "internal path's",
+                        "match": "^(?!@angular|\\.)@.*",
+                        "order": 4
+                    }
+                ]
             }
         },
+        "member-ordering": [
+            true,
+            {
+                "order": [
+                    "public-static-field",
+                    "public-static-accessor",
+                    "public-static-method",
+                    "public-instance-field",
+                    "public-instance-accessor",
+
+                    "protected-static-field",
+                    "protected-static-accessor",
+                    "protected-static-method",
+                    "protected-instance-field",
+                    "protected-instance-accessor",
+
+                    "private-static-field",
+                    "private-static-accessor",
+                    "private-static-method",
+                    "private-instance-field",
+                    "private-instance-accessor",
+
+                    "constructor",
+
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
+        ],
         "angular-whitespace": [
             true,
             "check-interpolation"

@@ -15,7 +15,25 @@
       "node_modules/@types"
     ],
     "lib": ["es2015", "es2016.array.include", "dom"],
+    "paths": {
+      "@models": ["src/app/utils/models"],
+      "@stores": ["src/app/utils/stores"],
+      "@utils": ["src/app/utils"],
+      "@utils/*": ["src/app/utils/*"]
+    },
+    "types": []
   },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/**/*.spec.ts"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,

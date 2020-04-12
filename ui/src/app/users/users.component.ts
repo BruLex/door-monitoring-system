@@ -1,33 +1,28 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { GroupModel, UserModel } from 'src/app/tools/models';
-import { GroupStore, UserStore } from 'src/app/tools/stores';
+
+import { GroupModel, UserModel } from '@models';
+import { GroupStore, UserStore } from '@stores';
+import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
+
 import { AppService } from '../app.service';
-import { TableAbstract } from '../tools/table-abstract';
-import { createFormControl } from '../tools/validations';
+import { ApiResponse } from '../types';
 
 @Component({
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss']
+    templateUrl: './users.component.html'
 })
-export class UsersComponent extends TableAbstract<UserModel, UserStore> {
-    addEditUserGroup = new FormGroup({
-        name: createFormControl({ type: 'str', required: true }),
-        uuid: createFormControl({ type: 'str', required: true })
-    });
-
-    loading: boolean;
+export class UsersComponent extends AbstractEnityManageComponent<UserModel, UserStore> {
+    store: UserStore = new UserStore();
     dialogEditMode: boolean;
-    addEditModel: UserModel;
+    currentModel: UserModel;
 
     selection: SelectionModel<UserModel> = new SelectionModel<UserModel>(true, []);
     groups: GroupStore = new GroupStore();
 
-    @ViewChild('addEditDialog') addDialogRef: TemplateRef<ElementRef>;
+    @ViewChild('manageEntityDialog') manageEntityDialogRef: TemplateRef<ElementRef>;
 
     @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
         this.store.dataSource.paginator = paginator;
@@ -40,7 +35,7 @@ export class UsersComponent extends TableAbstract<UserModel, UserStore> {
     constructor(private appSrv: AppService, protected matDialog: MatDialog, protected cdRef: ChangeDetectorRef) {
         super('name', matDialog, cdRef);
         appSrv.setAppConfig({ title: 'Users' });
-        this.groups.reload().subscribe((resp) => {
+        this.groups.reload().onLoad.subscribe((resp: ApiResponse): void => {
             if (!resp.isSuccess) {
                 console.error(resp.message || 'Internal error');
             }
@@ -48,7 +43,7 @@ export class UsersComponent extends TableAbstract<UserModel, UserStore> {
     }
 
     displayGroupName(iGroup: number): string {
-        const group: GroupModel = this.groups.dataSource.data.find(({ i_group }) => i_group === iGroup);
+        const group: GroupModel = this.groups.dataSource.data.find(({ i_group }): boolean => i_group === iGroup);
         return group ? group.name : 'N/A';
     }
 }

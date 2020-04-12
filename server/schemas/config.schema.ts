@@ -1,6 +1,6 @@
 import { RouteSchema } from 'fastify';
 
-const configData = {
+const configData: { only_remote_confirm_mode: { type: string }; allowed_attempts: { type: string } } = {
     only_remote_confirm_mode: {
         type: 'boolean'
     },
@@ -21,7 +21,7 @@ export const updateConfigsSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 }
             }
         }
@@ -35,7 +35,7 @@ export const getConfigsSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',

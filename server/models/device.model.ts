@@ -1,4 +1,10 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
+
+enum LockMode {
+    Locked = 'LOCKED',
+    Unlocked = 'UNLOCKED',
+    Guard = 'GUARD'
+}
 
 @Table({
     tableName: 'device',
@@ -17,4 +23,17 @@ export class Device extends Model<Device> {
     @Column({ allowNull: true }) description: string;
 
     @Column({ unique: true }) ip: string;
+
+    @Column({
+        allowNull: false,
+        type: DataType.ENUM(LockMode.Locked, LockMode.Unlocked, LockMode.Guard),
+        defaultValue: LockMode.Guard
+    })
+    mode: LockMode;
+
+    status: boolean;
+
+    toJSON(): object {
+        return { ...super.toJSON(), status: this.status };
+    }
 }

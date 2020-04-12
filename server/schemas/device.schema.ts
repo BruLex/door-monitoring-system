@@ -18,18 +18,34 @@ export const deviceObjectSchema: any = {
         ip: {
             type: 'string',
             maxLength: 15
+        },
+        status: {
+            type: 'boolean'
+        },
+        mode: {
+            type: 'string',
+            enum: ['LOCKED', 'UNLOCKED', 'GUARD']
         }
     }
 };
 
 export const getDeviceListSchema: RouteSchema = {
+    body: {
+        type: 'object',
+        nullable: true,
+        properties: {
+            with_device_status: {
+                type: 'boolean'
+            }
+        }
+    },
     response: {
         '2xx': {
             type: 'object',
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -70,7 +86,7 @@ export const addDeviceSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -92,6 +108,9 @@ export const getDeviceInfoSchema: RouteSchema = {
         properties: {
             i_device: {
                 type: 'number'
+            },
+            with_device_status: {
+                type: 'boolean'
             }
         }
     },
@@ -101,7 +120,7 @@ export const getDeviceInfoSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',

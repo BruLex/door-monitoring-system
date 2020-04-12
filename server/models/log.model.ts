@@ -1,4 +1,5 @@
 import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+
 import { Device } from './device.model';
 import { Group } from './group.model';
 import { User } from './user.model';
@@ -28,4 +29,3 @@ export class Log extends Model<Log> {
     @Column device_ip: string;
     @Column uuid: string;
 }
-

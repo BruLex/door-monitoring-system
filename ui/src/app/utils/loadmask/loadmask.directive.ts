@@ -4,9 +4,9 @@ import { Directive, HostBinding, Input } from '@angular/core';
     selector: '[dkLoadmask]'
 })
 export class LoadmaskDirective {
-    @HostBinding('class.dk-loadmask') isEnabled = false;
-    @HostBinding('class.dk-loadmask-top') top = false;
-    @HostBinding('attr.dk-loadmask-text') text = '';
+    @HostBinding('class.dk-loadmask') isEnabled: boolean = false;
+    @HostBinding('class.dk-loadmask-top') top: boolean = false;
+    @HostBinding('attr.dk-loadmask-text') text: string = '';
 
     @Input() set dkLoadmask(status: boolean) {
         if (status === this.isEnabled) {

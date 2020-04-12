@@ -1,4 +1,4 @@
-import { Model, ModelSchema } from 'src/app/tools/model';
+import { Model, ModelSchema } from '../model';
 
 export class LogModel extends Model {
     i_log: number = null;

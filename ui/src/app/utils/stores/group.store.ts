@@ -1,5 +1,5 @@
-import { GroupModel } from 'src/app/tools/models/group.model';
-import { Store, StoreSchema } from 'src/app/tools/store';
+import { GroupModel } from '../models/group.model';
+import { Store, StoreSchema } from '../store';
 
 export class GroupStore extends Store<GroupModel> {
     schema: StoreSchema<GroupModel> = {

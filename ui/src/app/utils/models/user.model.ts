@@ -1,4 +1,6 @@
-import { Model, ModelSchema } from 'src/app/tools/model';
+import { creatValidators } from '@utils';
+
+import { Model, ModelSchema } from '../model';
 
 export class UserModel extends Model {
     i_user: number;
@@ -11,8 +13,8 @@ export class UserModel extends Model {
         updateProxy: 'user/update_user',
         fields: {
             i_user: { type: 'number' },
-            name: { type: 'string' },
-            uuid: { type: 'string' },
+            name: { type: 'string', validation: creatValidators({ type: 'str', required: true }) },
+            uuid: { type: 'string', validation: creatValidators({ type: 'str', required: true }) },
             i_group: { type: 'number' }
         },
         idProperty: 'i_user',

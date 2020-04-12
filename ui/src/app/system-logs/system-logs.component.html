@@ -1,6 +1,9 @@
-<mat-toolbar>
+<mat-toolbar class="table-control-panel">
     <mat-toolbar-row>
         <span flex></span>
+        <button (click)="store.reload()" [matTooltip]="'Reload'" class="action-button" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
         <mat-paginator
                 [length]="store.dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
                 pageSize="100"></mat-paginator>
@@ -9,7 +12,7 @@
 
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" mat-table
+            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table
             matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="uid">

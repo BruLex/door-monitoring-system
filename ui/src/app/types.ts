@@ -23,12 +23,12 @@ export class ApiResponse {
      */
     message?: string;
 
-    constructor(data: object) {
-        Object.keys(data).forEach((key) => (this[key] = data[key]));
+    get isSuccess(): boolean {
+        return this.status === Statuses.Success;
     }
 
-    get isSuccess() {
-        return this.status === Statuses.Success;
+    constructor(data: object) {
+        Object.keys(data).forEach((key: string): any => (this[key] = data[key]));
     }
 }
 

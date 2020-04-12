@@ -1,5 +1,5 @@
-import { UserModel } from 'src/app/tools/models/user.model';
-import { Store, StoreSchema } from 'src/app/tools/store';
+import { UserModel } from '../models/user.model';
+import { Store, StoreSchema } from '../store';
 
 export class UserStore extends Store<UserModel> {
     schema: StoreSchema<UserModel> = {

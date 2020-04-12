@@ -1,6 +1,6 @@
 @import "~@angular/material/theming";
 @import "./variables.scss";
-@import "./app/tools/styles";
+@import "./app/utils/styles";
 
 @include angular-material-theme($defaultTheme);
 @include dk-loadmask-mixin;
@@ -12,9 +12,41 @@
 [flex] {
     flex: 1;
 }
+[vflex-layout] {
+    display: flex;
+    flex-direction: column;
+    > * {
+        align-items: center;
+        display: flex;
+        &:not(:last-child) {
+            margin-bottom: 2px;
+        }
+    }
+}
+
+[mat-table] {
+    width: 100%;
+}
+.table-container {
+    height: 78vh;
+    overflow: hidden;
+}
+
+.table-control-panel {
+    background: mat-color($background, card);
+    button {
+        margin: 16px 8px;
+    }
+}
+
 
 mat-card {
     min-height: 400px;
+}
+
+[mat-dialog-content] {
+    display: flex !important;
+    min-height: 210px;
 }
 
 html, body {
@@ -42,4 +74,8 @@ body {
         right: 24px;
         width: 48px;
     }
+}
+
+::ng-deep .tooltip-custom {
+    white-space: pre-wrap;
 }

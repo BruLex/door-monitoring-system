@@ -1,11 +1,13 @@
-import { User } from '@models';
-import { addUserSchema, deleteUserSchema, getUserInfoSchema, getUserListSchema, updateUserSchema } from '@schemas';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
+
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
+
+import { User } from '@models';
+import { addUserSchema, deleteUserSchema, getUserInfoSchema, getUserListSchema, updateUserSchema } from '@schemas';
 
 @Controller({ route: '/user/' })
 export default class UserController {
@@ -21,7 +23,7 @@ export default class UserController {
         request: FastifyRequest,
         reply: FastifyReply<ServerResponse>
     ): Promise<jsend.JSendObject | FastifyReply<ServerResponse>> {
-        const { i_user } = request.body;
+        const { i_user }: any = request.body;
         const user_info: User = await User.findByPk(i_user);
         if (!user_info) {
             reply.code(404).send(jsend.error(`User with i_user: ${i_user} not found`));
@@ -46,7 +48,9 @@ export default class UserController {
             reply.code(404).send(jsend.error(`User with i_user: ${body.i_user} not found`));
             return reply;
         }
-        Object.keys(_.pick(body, ['uuid', 'name', 'i_group'])).forEach((key) => (user_info[key] = body[key]));
+        Object.keys(_.pick(body, ['uuid', 'name', 'i_group'])).forEach(
+            (key: string): any => (user_info[key] = body[key])
+        );
         user_info.save();
         return jsend.success(null);
     }

@@ -8,7 +8,7 @@
     "lint": "ng lint",
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
+    "compile": "ngcc -p .",
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
@@ -36,9 +36,9 @@
     "@types/lodash": "^4.14.149",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.5",
-    "tslib": "^1.10.0",
-    "tslint-config-prettier": "^1.18.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "typescript": "~3.7.0",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.1",
@@ -60,6 +60,6 @@
     "protractor": "^5.4.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.7.0"
+    "tslint-config-prettier": "^1.18.0"
   }
 }

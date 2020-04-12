@@ -1,5 +1,5 @@
-import { LogModel } from 'src/app/tools/models';
-import { Store, StoreSchema } from 'src/app/tools/store';
+import { LogModel } from '../models/log.model';
+import { Store, StoreSchema } from '../store';
 
 export class LogStore extends Store<LogModel> {
     schema: StoreSchema<LogModel> = {

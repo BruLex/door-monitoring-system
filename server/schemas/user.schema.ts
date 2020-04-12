@@ -28,7 +28,7 @@ export const getUserListSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -68,7 +68,7 @@ export const addUserSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -99,7 +99,7 @@ export const getUserInfoSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',

@@ -1,9 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { LogModel } from 'src/app/tools/models';
-import { LogStore } from 'src/app/tools/stores';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+
+import { AbstractEnityManageComponent } from 'src/app/utils/abstract-enity-manage.component';
+import { LogModel } from 'src/app/utils/models';
+import { LogStore } from 'src/app/utils/stores';
+
 import { AppService } from '../app.service';
-import { TableAbstract } from '../tools/table-abstract';
 
 interface LogData {
     i_log: number;
@@ -19,9 +22,10 @@ interface LogData {
     templateUrl: './system-logs.component.html',
     styleUrls: ['./system-logs.component.scss']
 })
-export class SystemLogsComponent extends TableAbstract<LogModel, LogStore> implements AfterViewInit {
+export class SystemLogsComponent extends AbstractEnityManageComponent<LogModel, LogStore> implements AfterViewInit {
     dialog: MatDialog;
     store: LogStore = new LogStore();
+
     @ViewChild(MatSort) set sort(sort: MatSort) {
         this.store.dataSource.sort = sort;
     }
@@ -31,11 +35,15 @@ export class SystemLogsComponent extends TableAbstract<LogModel, LogStore> imple
         appSrv.setAppConfig({ title: 'System Logs' });
     }
 
+    compare(a: number | string, b: number | string, isAsc: boolean): number {
+        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
     protected initSort(): void {
         this.subs.push(
-            this.store.dataSource.sort.sortChange.subscribe((sort) => {
-                const isAsc = sort.direction === 'asc';
-                this.store.dataSource.data = this.store.dataSource.data.sort((a, b) => {
+            this.store.dataSource.sort.sortChange.subscribe((sort): void => {
+                const isAsc: boolean = sort.direction === 'asc';
+                this.store.dataSource.data = this.store.dataSource.data.sort((a: LogModel, b: LogModel): number => {
                     switch (sort.active) {
                         case 'uid':
                             return this.compare(a.uuid, b.uuid, isAsc);
@@ -53,9 +61,5 @@ export class SystemLogsComponent extends TableAbstract<LogModel, LogStore> imple
                 });
             })
         );
-    }
-
-    compare(a: number | string, b: number | string, isAsc: boolean): number {
-        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 }

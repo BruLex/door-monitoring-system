@@ -1,8 +1,11 @@
-<mat-toolbar>
+<mat-toolbar class="table-control-panel">
     <mat-toolbar-row>
         <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
         <button (click)="deleteModels()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
+        <button (click)="store.reload()" [matTooltip]="'Reload'" class="action-button" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
         <mat-paginator
             #paginator [length]="store.items.length"
             [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
@@ -10,7 +13,7 @@
 </mat-toolbar>
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top"
+            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" dkLoadmaskPosition="top"
             dkLoadmaskText="Getting data from the server..."
             mat-table
             matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
@@ -53,7 +56,10 @@
         <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
-                <button (click)="openDialog('edit', element)" class="action-button" mat-icon-button>
+                <button
+                        mat-icon-button class="action-button"
+                        [matTooltip]="'Edit'"
+                        (click)="openDialog('edit', element)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -65,20 +71,20 @@
     </table>
 </div>
 
-<ng-template #addEditDialog>
+<ng-template #manageEntityDialog>
     <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit user' : 'Add new user' }}</h1>
-    <div mat-dialog-content>
-        <form [formGroup]="addEditUserGroup">
-            <mat-form-field>
-                <input [(ngModel)]="addEditModel.name" formControlName="name" matInput placeholder="Name">
+    <div mat-dialog-content vflex-layout>
+        <form [formGroup]="currentModel.modelForm" vflex-layout>
+            <mat-form-field flex>
+                <input [(ngModel)]="currentModel.name" required formControlName="name" matInput placeholder="Name">
             </mat-form-field>
-            <mat-form-field>
-                <input [(ngModel)]="addEditModel.uuid" formControlName="uuid" matInput placeholder="Card UUID">
+            <mat-form-field flex>
+                <input [(ngModel)]="currentModel.uuid" required formControlName="uuid" matInput placeholder="Card UUID">
             </mat-form-field>
         </form>
-        <mat-form-field>
+        <mat-form-field flex>
             <mat-label>Group</mat-label>
-            <mat-select [(value)]="addEditModel.i_group">
+            <mat-select [(value)]="currentModel.i_group">
                 <mat-option [value]="null">None</mat-option>
                 <mat-option *ngFor="let group of groups.items" [value]="group.i_group">
                     {{ group.name }}
@@ -89,7 +95,7 @@
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
         <button
-                [disabled]="addEditUserGroup.invalid"
+                [disabled]="currentModel.modelForm.invalid"
                 [mat-dialog-close]="true"
                 mat-button>
             {{ this.dialogEditMode ? 'Save' : 'Create' }}

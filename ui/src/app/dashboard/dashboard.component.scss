@@ -1,14 +1,6 @@
 @import "~@angular/material/_theming.scss";
 @import "./../../variables";
 
-[mat-table] {
-    width: 100%;
-}
-
-mat-toolbar {
-    background: mat-color($background, card);
-}
-
 .green-icon {
     color: mat-color($mat-green, 500);
 }

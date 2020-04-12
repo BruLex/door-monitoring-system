@@ -1,5 +1,7 @@
 import { RouteSchema } from 'fastify';
+
 import { deviceObjectSchema } from 'schemas/device.schema';
+import { userObjectSchema } from 'schemas/user.schema';
 
 const groupProperties: any = {
     type: 'object',
@@ -17,6 +19,10 @@ const groupProperties: any = {
         allowed_devices: {
             type: 'array',
             items: deviceObjectSchema
+        },
+        users: {
+            type: 'array',
+            items: userObjectSchema
         }
     }
 };
@@ -38,7 +44,7 @@ export const getGroupListSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -90,7 +96,7 @@ export const addGroupSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',
@@ -124,7 +130,7 @@ export const getGroupInfoSchema: RouteSchema = {
             properties: {
                 status: {
                     type: 'string',
-                    enum: ['success', 'fail', 'error']
+                    enum: ['success']
                 },
                 data: {
                     type: 'object',

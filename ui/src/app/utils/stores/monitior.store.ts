@@ -1,5 +1,5 @@
-import { MonitorModel } from 'src/app/tools/models/monitor.model';
-import { Store, StoreSchema } from 'src/app/tools/store';
+import { MonitorModel } from '../models/monitor.model';
+import { Store, StoreSchema } from '../store';
 
 export class MonitorStore extends Store<MonitorModel> {
     schema: StoreSchema<MonitorModel> = {

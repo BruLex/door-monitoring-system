@@ -23,12 +23,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ConfirmDialogComponent } from '@utils';
+import { LoadmaskDirective } from '@utils/loadmask';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
@@ -36,13 +41,9 @@ import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
 import { GroupsComponent } from './groups';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { ConfirmDialogComponent } from './tools/confirm-dialog.component';
-import { LoadmaskDirective } from './tools/loadmask/loadmask.directive';
-import { PopoverComponent } from './tools/popover/popover.component';
-import { Popover } from './tools/popover/popover.service';
 import { UsersComponent } from './users';
 
-const ANGULAR_MATERIAL = [
+const ANGULAR_MATERIAL: any[] = [
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,
@@ -57,7 +58,8 @@ const ANGULAR_MATERIAL = [
     MatSlideToggleModule,
     ScrollingModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSnackBarModule
 ];
 
 @NgModule({
@@ -69,8 +71,7 @@ const ANGULAR_MATERIAL = [
         UsersComponent,
         SystemLogsComponent,
         LoadmaskDirective,
-        ConfirmDialogComponent,
-        PopoverComponent
+        ConfirmDialogComponent
     ],
     imports: [
         ...ANGULAR_MATERIAL,
@@ -92,8 +93,8 @@ const ANGULAR_MATERIAL = [
         MatChipsModule,
         MatSelectModule
     ],
-    entryComponents: [ConfirmDialogComponent, PopoverComponent],
-    providers: [AppService, Popover],
+    entryComponents: [ConfirmDialogComponent],
+    providers: [AppService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
