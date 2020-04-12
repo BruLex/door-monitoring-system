@@ -1,4 +1,4 @@
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators } from '@angular/forms';
 
 
 interface ValidationConfig {
@@ -19,7 +19,7 @@ export function createFormControl(config: ValidationConfig): FormControl {
                     ...(config.required ? [Validators.required] : [])
                 ]
             );
-        case "str":
+        case 'str':
             return new FormControl('',
                 [
                     Validators.minLength(config.minLength || 0),

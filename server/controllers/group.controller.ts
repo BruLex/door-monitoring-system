@@ -34,7 +34,7 @@ export default class GroupController {
             i_group
         );
         if (!group_info) {
-            reply.code(404).send(jsend.error(`Group with i_group: ${ i_group } not found`));
+            reply.code(404).send(jsend.error(`Group with i_group: ${i_group} not found`));
             return reply;
         }
         return jsend.success({ group_info });
@@ -56,7 +56,7 @@ export default class GroupController {
         const { allowed_devices, i_group } = request.body;
         const group_info: Group = await Group.findByPk(i_group);
         if (!group_info) {
-            reply.code(404).send(jsend.error(`Group with i_group: ${ i_group } not found`));
+            reply.code(404).send(jsend.error(`Group with i_group: ${i_group} not found`));
             return reply;
         }
         Object.keys(_.pick(body, ['name', 'allowed_all'])).forEach((key) => (group_info[key] = body[key]));
@@ -81,7 +81,7 @@ export default class GroupController {
         }
         const queryInterface: QueryInterface = Group.sequelize.getQueryInterface();
         await queryInterface.bulkDelete(Group.tableName, {
-            id: { [Op.in]: groups || i_group }
+            i_group: { [Op.in]: groups || [i_group] }
         });
         return jsend.success(null);
     }

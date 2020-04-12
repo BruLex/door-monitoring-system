@@ -15,7 +15,8 @@ export const userObjectSchema: any = {
             maxLength: 255
         },
         i_group: {
-            type: 'number'
+            type: 'number',
+            nullable: true
         }
     }
 };
@@ -26,7 +27,8 @@ export const getUserListSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -65,7 +67,8 @@ export const addUserSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -95,7 +98,8 @@ export const getUserInfoSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',

@@ -1,45 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, of as observableOf } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { ConfirmDialogComponent } from "./tools/confirm-dialog.component";
-import { RootComponentInterface } from './types';
-
-enum Statuses {
-    Success = 'success',
-    Error = 'error'
-}
-
-class Response {
-    status: Statuses;
-    // tslint:disable-next-line:no-any
-    data?: any;
-    message?: string;
-
-    constructor(data: object) {
-        Object.keys(data).forEach(key => (this[key] = data[key]));
-    }
-
-    get isSuccess() {
-        return this.status === Statuses.Success;
-    }
-}
-
-interface ConfirmDialogConfig {
-    message: string;
-    onSuccess: () => void;
-    onFail?: () => void;
-}
+import { ApiResponse, ConfirmDialogConfig, RootComponentInterface } from 'src/app/types';
+import { ConfirmDialogComponent } from './tools/confirm-dialog.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
     private static rootComponent: RootComponentInterface;
+    private static _instance: AppService;
+
+    static instance(): AppService {
+        return this._instance;
+    }
+
     private title = '';
 
     constructor(private http: HttpClient, private matDialog: MatDialog) {
+        AppService._instance = this;
     }
 
     setAppConfig(config: { title: string }) {
@@ -52,10 +33,10 @@ export class AppService {
         };
     }
 
-    apiRequest(service: string, method: string, body: object = {}): Observable<Response> {
+    apiRequest(options: { url: string; body?: object }): Observable<ApiResponse> {
         return this.http
-            .post<Response>(`http://127.0.0.1:3000/api/${ service }/${ method }`, body)
-            .pipe(mergeMap(resp => observableOf(new Response(resp))));
+            .post(`http://127.0.0.1:3000/${options.url}`, options.body || {})
+            .pipe(mergeMap((resp) => observableOf(new ApiResponse(resp))));
     }
 
     setupRootComponent(rootComponent: RootComponentInterface) {
@@ -76,7 +57,7 @@ export class AppService {
                 message: config.message
             }
         });
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 config.onSuccess();
             }

@@ -9,7 +9,7 @@
     "printWidth": 120
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "dev": "ts-node -r tsconfig-paths/register app.ts",
     "start": "nodemon"
   },
@@ -22,7 +22,9 @@
     "fastify-blipp": "^2.2.1",
     "fastify-cors": "3.0.3",
     "fastify-decorators": "2.0.0-5",
+    "fastify-oas": "^2.6.2",
     "fastify-plugin": "1.6.1",
+    "fastify-swagger": "^2.5.1",
     "fs": "0.0.1-security",
     "jsend": "1.1.0",
     "mongoose": "^5.9.7",

@@ -20,18 +20,8 @@ export const updateConfigsSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
-                },
-                message: {
-                    type: 'string'
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        success: {
-                            type: 'string'
-                        }
-                    }
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 }
             }
         }
@@ -44,10 +34,8 @@ export const getConfigsSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
-                },
-                message: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',

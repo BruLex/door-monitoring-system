@@ -7,7 +7,7 @@ import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
-@Controller({ route: '/api/user/' })
+@Controller({ route: '/user/' })
 export default class UserController {
     @Inject(FastifyInstanceToken) private instance!: FastifyInstance;
 
@@ -24,7 +24,7 @@ export default class UserController {
         const { i_user } = request.body;
         const user_info: User = await User.findByPk(i_user);
         if (!user_info) {
-            reply.code(404).send(jsend.error(`User with i_user: ${ i_user } not found`));
+            reply.code(404).send(jsend.error(`User with i_user: ${i_user} not found`));
             return reply;
         }
         return jsend.success({ user_info });
@@ -32,7 +32,7 @@ export default class UserController {
 
     @POST({ url: '/get_user_list', options: { schema: getUserListSchema } })
     async getUserList(): Promise<jsend.JSendObject> {
-        return jsend.success({ user_list: User.findAll() });
+        return jsend.success({ user_list: await User.findAll() });
     }
 
     @POST({ url: '/update_user', options: { schema: updateUserSchema } })
@@ -43,7 +43,7 @@ export default class UserController {
         const body: any = request.body;
         const user_info: User = await User.findByPk(body.i_user);
         if (!user_info) {
-            reply.code(404).send(jsend.error(`User with i_user: ${ body.i_user } not found`));
+            reply.code(404).send(jsend.error(`User with i_user: ${body.i_user} not found`));
             return reply;
         }
         Object.keys(_.pick(body, ['uuid', 'name', 'i_group'])).forEach((key) => (user_info[key] = body[key]));
@@ -62,7 +62,7 @@ export default class UserController {
         }
         const queryInterface: QueryInterface = User.sequelize.getQueryInterface();
         await queryInterface.bulkDelete(User.tableName, {
-            id: { [Op.in]: users || i_user }
+            i_user: { [Op.in]: users || [i_user] }
         });
         return jsend.success(null);
     }

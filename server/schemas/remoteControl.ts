@@ -3,12 +3,12 @@ import { RouteSchema } from 'fastify';
 export const checkUID: RouteSchema = {
     body: {
         type: 'object',
+        required: ['uid'],
         properties: {
             uid: {
                 type: 'string'
             }
-        },
-        required: ['uid']
+        }
     },
     response: {
         200: {
@@ -20,12 +20,12 @@ export const checkUID: RouteSchema = {
 export const registerDevice: RouteSchema = {
     body: {
         type: 'object',
+        required: ['uid'],
         properties: {
             uid: {
                 type: 'string'
             }
-        },
-        required: ['uid']
+        }
     },
     response: {
         200: {

@@ -2,15 +2,15 @@
     <mat-toolbar-row>
         <span flex></span>
         <mat-paginator
-            [length]="dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
-            pageSize="100"></mat-paginator>
+                [length]="store.dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
+                pageSize="100"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="table-container">
     <table
-        [dataSource]="dataSource" mat-table
-        matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+            [dataSource]="store.dataSource" mat-table
+            matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="uid">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>UUID</th>

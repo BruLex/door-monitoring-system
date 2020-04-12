@@ -30,7 +30,7 @@ export default class DeviceController {
         const { i_device } = request.body;
         const device_info: Device = await Device.findByPk(i_device);
         if (!device_info) {
-            reply.code(404).send(jsend.error(`Device with i_device: ${ i_device } not found`));
+            reply.code(404).send(jsend.error(`Device with i_device: ${i_device} not found`));
             return reply;
         }
         return jsend.success({ device_info });
@@ -49,7 +49,7 @@ export default class DeviceController {
         const body: any = request.body;
         const device_info: Device = await Device.findByPk(body.i_device);
         if (!device_info) {
-            reply.code(404).send(jsend.error(`Device with i_device: ${ body.i_device } not found`));
+            reply.code(404).send(jsend.error(`Device with i_device: ${body.i_device} not found`));
             return reply;
         }
         Object.keys(_.pick(body, ['name', 'description', 'ip'])).forEach((key) => (device_info[key] = body[key]));
@@ -68,7 +68,7 @@ export default class DeviceController {
         }
         const queryInterface: QueryInterface = Device.sequelize.getQueryInterface();
         await queryInterface.bulkDelete(Device.tableName, {
-            id: { [Op.in]: devices || i_device }
+            i_device: { [Op.in]: devices || [i_device] }
         });
         return jsend.success(null);
     }

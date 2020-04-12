@@ -18,11 +18,25 @@ const sequelize: Sequelize = new Sequelize('door_system', 'door', 'door123', {
 
 const server: fastify.FastifyInstance = fastify({ logger: true });
 
+server.register(require('fastify-oas'), {
+    routePrefix: '/docs',
+    exposeRoute: true,
+    swagger: {
+        info: {
+            title: 'Door system monitoring API',
+            version: '1.0.0'
+        },
+        servers: [{ url: 'http://localhost:3000', description: 'development' }],
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json']
+    }
+});
+
 server.register(bootstrap, {
     directory: path.join(__dirname, 'controllers'),
     mask: /\.controller\./
 });
-
 server.register(require('fastify-cors'));
 
 server.setErrorHandler((error: FastifyError, request: FastifyRequest, reply: FastifyReply<ServerResponse>) =>

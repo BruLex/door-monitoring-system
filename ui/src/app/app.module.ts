@@ -1,10 +1,8 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatButtonModule,
@@ -21,16 +19,17 @@ import {
     MatTableModule,
     MatToolbarModule
 } from '@angular/material';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatChipsModule } from "@angular/material/chips";
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from "@angular/material/expansion";
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSelectModule } from "@angular/material/select";
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,10 +38,10 @@ import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
 import { GroupsComponent } from './groups';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { ConfirmDialogComponent } from "./tools/confirm-dialog.component";
+import { ConfirmDialogComponent } from './tools/confirm-dialog.component';
 import { LoadmaskDirective } from './tools/loadmask/loadmask.directive';
-import { PopoverComponent } from "./tools/popover/popover.component";
-import { Popover } from "./tools/popover/popover.service";
+import { PopoverComponent } from './tools/popover/popover.component';
+import { Popover } from './tools/popover/popover.service';
 import { UsersComponent } from './users';
 
 const ANGULAR_MATERIAL = [

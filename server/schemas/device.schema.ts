@@ -12,7 +12,8 @@ export const deviceObjectSchema: any = {
         },
         description: {
             type: 'string',
-            maxLength: 255
+            maxLength: 255,
+            nullable: true
         },
         ip: {
             type: 'string',
@@ -27,7 +28,8 @@ export const getDeviceListSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -67,7 +69,8 @@ export const addDeviceSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -97,7 +100,8 @@ export const getDeviceInfoSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',

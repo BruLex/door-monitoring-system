@@ -11,8 +11,9 @@
     <mat-sidenav-container [hasBackdrop]="true" class="sidenav-container">
         <mat-sidenav #snav [mode]="'over'" fixedTopGap="56">
             <mat-nav-list>
-                <a (click)="snav.close()" *ngFor="let content of navItems" [routerLink]="[content.link]"
-                   mat-list-item>{{content.name}}</a>
+                <a
+                        (click)="snav.close()" *ngFor="let content of navItems" [routerLink]="[content.link]"
+                        mat-list-item>{{content.name}}</a>
             </mat-nav-list>
         </mat-sidenav>
 
@@ -26,8 +27,8 @@
 <ng-template #globalLoading="cdkPortal" cdkPortal>
     <div class="load-container">
         <mat-progress-spinner
-            [color]="'primary'"
-            [mode]="'indeterminate'">
+                [color]="'primary'"
+                [mode]="'indeterminate'">
         </mat-progress-spinner>
         <div>Loading...</div>
     </div>

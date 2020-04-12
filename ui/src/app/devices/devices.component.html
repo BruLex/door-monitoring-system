@@ -1,29 +1,33 @@
 <mat-toolbar>
     <mat-toolbar-row>
         <button (click)="openDialog('add')" color="primary" mat-stroked-button>Add</button>
-        <button (click)="deleteModel()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
+        <button (click)="deleteModels()" *ngIf="selection.hasValue()" color="primary" mat-stroked-button>Delete</button>
         <span flex></span>
-        <mat-paginator [length]="dataSource.data?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
+        <mat-paginator [length]="store.items?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
-    <table [dataSource]="dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top" dkLoadmaskText="Getting data from the server..."
-           mat-table
-           matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
+    <table
+            [dataSource]="store.dataSource" [dkLoadmask]="loading" dkLoadmaskPosition="top"
+            dkLoadmaskText="Getting data from the server..."
+            mat-table
+            matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="select">
             <th *matHeaderCellDef mat-header-cell>
-                <mat-checkbox (change)="$event ? masterToggle() : null"
-                              [aria-label]="checkboxLabel()"
-                              [checked]="selection.hasValue() && isAllSelected()"
-                              [indeterminate]="selection.hasValue() && !isAllSelected()">
+                <mat-checkbox
+                        (change)="$event ? masterToggle() : null"
+                        [aria-label]="checkboxLabel()"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
             <td *matCellDef="let row" mat-cell>
-                <mat-checkbox (change)="$event ? selection.toggle(row) : null"
-                              (click)="$event.stopPropagation()"
-                              [aria-label]="checkboxLabel(row)"
-                              [checked]="selection.isSelected(row)">
+                <mat-checkbox
+                        (change)="$event ? selection.toggle(row) : null"
+                        (click)="$event.stopPropagation()"
+                        [aria-label]="checkboxLabel(row)"
+                        [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -69,14 +73,17 @@
                 <input [(ngModel)]="addEditModel.ip" formControlName="ip" matInput placeholder="IP address">
             </mat-form-field>
             <mat-form-field>
-                <input [(ngModel)]="addEditModel.description" formControlName="description" matInput
-                       placeholder="Description">
+                <input
+                        [(ngModel)]="addEditModel.description" formControlName="description" matInput
+                        placeholder="Description">
             </mat-form-field>
         </form>
 
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
-        <button [disabled]="addGroup.invalid" [mat-dialog-close]="true" mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
+        <button
+                [disabled]="addGroup.invalid" [mat-dialog-close]="true"
+                mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
     </div>
 </ng-template>

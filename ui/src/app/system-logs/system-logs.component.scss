@@ -5,9 +5,9 @@ mat-toolbar {
 mz-modal {
     ::ng-deep .modal.modal-fixed-footer .modal-content {
         height: 350px;
-        width: 700px;
         position: absolute;
         top: 10% !important;
+        width: 700px;
 
         mz-modal-content {
             display: flex;
@@ -25,8 +25,8 @@ mz-modal {
 }
 
 .table-container {
-    overflow: auto;
     height: 78vh;
+    overflow: auto;
 }
 
 [mat-table] {
@@ -54,7 +54,7 @@ button {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #2196F3;
+    background: #2196f3;
     border-radius: 10px;
 }
 

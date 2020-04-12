@@ -1,5 +1,5 @@
-@import '~@angular/material/theming';
-@import './variables.scss';
+@import "~@angular/material/theming";
+@import "./variables.scss";
 
 @include angular-material-theme($defaultTheme);
 
@@ -20,7 +20,7 @@ html, body {
 }
 
 body {
-    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
 }
 

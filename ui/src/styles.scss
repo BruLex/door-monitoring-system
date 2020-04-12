@@ -1,5 +1,5 @@
-@import '~@angular/material/theming';
-@import './variables.scss';
+@import "~@angular/material/theming";
+@import "./variables.scss";
 @import "./app/tools/styles";
 
 @include angular-material-theme($defaultTheme);
@@ -22,8 +22,8 @@ html, body {
 }
 
 body {
-    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
 }
 
 .mat-row {
@@ -38,8 +38,8 @@ body {
     }
 
     .cdk-column-actions {
-        right: 24px;
         padding: 0;
+        right: 24px;
         width: 48px;
     }
 }

@@ -11,18 +11,19 @@
     <ng-container matColumnDef="select">
         <th *matHeaderCellDef mat-header-cell>
             <mat-checkbox
-                (change)="$event ? masterToggle() : null"
-                [aria-label]="checkboxLabel()"
-                [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    (change)="$event ? masterToggle() : null"
+                    [aria-label]="checkboxLabel()"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
             >
             </mat-checkbox>
         </th>
         <td *matCellDef="let row" mat-cell>
-            <mat-checkbox (change)="$event ? selection.toggle(row) : null"
-                          (click)="$event.stopPropagation()"
-                          [aria-label]="checkboxLabel(row)"
-                          [checked]="selection.isSelected(row)">
+            <mat-checkbox
+                    (change)="$event ? selection.toggle(row) : null"
+                    (click)="$event.stopPropagation()"
+                    [aria-label]="checkboxLabel(row)"
+                    [checked]="selection.isSelected(row)">
             </mat-checkbox>
         </td>
     </ng-container>
@@ -49,8 +50,9 @@
     <ng-container matColumnDef="power">
         <th *matHeaderCellDef mat-header-cell>Power</th>
         <td *matCellDef="let data" mat-cell>
-            <mat-icon [matTooltip]="data.status ? 'Online' : 'Offline'"
-                      [ngClass]="data.status ? 'green-icon' : 'red-icon'">
+            <mat-icon
+                    [matTooltip]="data.status ? 'Online' : 'Offline'"
+                    [ngClass]="data.status ? 'green-icon' : 'red-icon'">
                 {{ data.status ? 'lens' : 'error' }}
             </mat-icon>
         </td>
@@ -61,7 +63,7 @@
         <th *matHeaderCellDef mat-header-cell>Status</th>
         <td *matCellDef="let data" mat-cell>
             <mat-icon
-                [matTooltip]="data.locked ? 'Locked' : 'Unlocked'">
+                    [matTooltip]="data.locked ? 'Locked' : 'Unlocked'">
                 {{ data.icon }}
             </mat-icon>
         </td>

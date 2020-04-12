@@ -37,7 +37,8 @@ export const getGroupListSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -88,7 +89,8 @@ export const addGroupSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
@@ -121,7 +123,8 @@ export const getGroupInfoSchema: RouteSchema = {
             type: 'object',
             properties: {
                 status: {
-                    type: 'string'
+                    type: 'string',
+                    enum: ['success', 'fail', 'error']
                 },
                 data: {
                     type: 'object',
