@@ -17,32 +17,32 @@
 
         <ng-container matColumnDef="uid">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>UUID</th>
-            <td *matCellDef="let log" mat-cell>{{log.uuid}}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.uuid }}</td>
         </ng-container>
 
         <ng-container matColumnDef="user">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
-            <td *matCellDef="let log" mat-cell>{{log.user_info || 'N/A'}}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.user_info || 'N/A' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="group">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Group</th>
-            <td *matCellDef="let log" mat-cell> {{log.group_name || 'N/A'}}</td>
+            <td *matCellDef="let log" mat-cell> {{ log.group_name || 'N/A' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="door">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Door</th>
-            <td *matCellDef="let log" mat-cell>{{log.device_name || 'N/A'}}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.device_name || 'N/A' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="time">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Time</th>
-            <td *matCellDef="let log" mat-cell>{{log.time | date :'medium'}}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.time | date :'medium' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="access">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Access</th>
-            <td *matCellDef="let log" mat-cell>{{log.access ? 'granted' : 'denied'}}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.access ? 'granted' : 'denied' }}</td>
         </ng-container>
 
         <tr *matHeaderRowDef="['uid', 'user', 'group','door', 'time', 'access']; sticky: true" mat-header-row></tr>

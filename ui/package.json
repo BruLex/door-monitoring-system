@@ -6,13 +6,8 @@
     "start": "ng serve --host 0.0.0.0 --port 4000",
     "build": "ng build --prod --aot --output-hashing none",
     "lint": "ng lint",
-    "check": "gts check",
-    "clean": "gts clean",
-    "compile": "ngcc -p .",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "lint-fix": "ng lint --fix",
+    "compile": "tsc -p ./tsconfig.json"
   },
   "private": true,
   "prettier": {

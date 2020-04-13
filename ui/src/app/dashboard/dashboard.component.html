@@ -17,11 +17,11 @@
 
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Device name</th>
-        <td *matCellDef="let data" mat-cell>{{data.name}}</td>
+        <td *matCellDef="let data" mat-cell>{{ data.name }}</td>
     </ng-container>
     <ng-container matColumnDef="ip">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Ip address</th>
-        <td *matCellDef="let data" mat-cell>{{data.ip}}</td>
+        <td *matCellDef="let data" mat-cell>{{ data.ip }}</td>
     </ng-container>
 
     <ng-container matColumnDef="power">
@@ -68,19 +68,19 @@
             <mat-icon [style.font-size]="'16px'" matPrefix>{{ lockModeIconMap[currentModel.mode] }}</mat-icon>
             <mat-select [(value)]="currentModel.mode">
                 <mat-select-trigger>
-                    <span>{{currentModel.mode | titlecase}}</span>
+                    <span>{{ currentModel.mode | titlecase }}</span>
                 </mat-select-trigger>
                 <mat-option [value]="lockModes.Guard">
                     <mat-icon>{{ lockModeIconMap[lockModes.Guard] }}</mat-icon>
-                    <span>{{lockModes.Guard | titlecase}}</span>
+                    <span>{{ lockModes.Guard | titlecase }}</span>
                 </mat-option>
                 <mat-option [value]="lockModes.Unlocked">
                     <mat-icon>{{ lockModeIconMap[lockModes.Unlocked] }}</mat-icon>
-                    <span>{{lockModes.Unlocked | titlecase}}</span>
+                    <span>{{ lockModes.Unlocked | titlecase }}</span>
                 </mat-option>
                 <mat-option [value]="lockModes.Locked">
                     <mat-icon>{{ lockModeIconMap[lockModes.Locked] }}</mat-icon>
-                    <span>{{lockModes.Locked | titlecase}}</span>
+                    <span>{{ lockModes.Locked | titlecase }}</span>
                 </mat-option>
             </mat-select>
         </mat-form-field>

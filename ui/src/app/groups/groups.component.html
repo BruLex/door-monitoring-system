@@ -38,7 +38,7 @@
 
         <ng-container matColumnDef="name">
             <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
-            <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+            <td *matCellDef="let element" mat-cell> {{ element.name }} </td>
         </ng-container>
 
         <ng-container matColumnDef="devices">
@@ -111,7 +111,7 @@
                         (optionSelected)="doorToAdd=$event.option.value"
                         [displayWith]="displayFn">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option.name}}
+                            {{ option.name }}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
