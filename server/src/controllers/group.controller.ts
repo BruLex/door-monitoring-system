@@ -6,8 +6,14 @@ import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
-import { Group, GroupDevicePermissions } from '@models';
-import { addGroupSchema, deleteGroupSchema, getGroupInfoSchema, getGroupListSchema, updateGroupSchema } from '@schemas';
+import { Group, GroupDevicePermissions } from '../models';
+import {
+    addGroupSchema,
+    deleteGroupSchema,
+    getGroupInfoSchema,
+    getGroupListSchema,
+    updateGroupSchema
+} from '../schemas';
 
 @Controller({ route: '/group' })
 export default class GroupController {

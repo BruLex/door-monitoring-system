@@ -1,7 +1,7 @@
 import { RouteSchema } from 'fastify';
 
-import { deviceObjectSchema } from 'schemas/device.schema';
-import { userObjectSchema } from 'schemas/user.schema';
+import { deviceObjectSchema } from './device.schema';
+import { userObjectSchema } from './user.schema';
 
 const groupProperties: any = {
     type: 'object',

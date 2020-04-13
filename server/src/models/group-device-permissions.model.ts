@@ -1,6 +1,7 @@
-import { Device } from 'models/device.model';
-import { Group } from 'models/group.model';
 import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+
+import { Device } from './device.model';
+import { Group } from './group.model';
 
 @Table({
     tableName: 'group_device_permission',

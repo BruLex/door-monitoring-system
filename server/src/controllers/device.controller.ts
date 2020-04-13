@@ -7,14 +7,14 @@ import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
-import { Device } from '@models';
+import { Device } from '../models';
 import {
     addDeviceSchema,
     deleteDeviceSchema,
     getDeviceInfoSchema,
     getDeviceListSchema,
     updateDeviceSchema
-} from '@schemas';
+} from '../schemas';
 
 @Controller({ route: '/device' })
 export default class DeviceController {

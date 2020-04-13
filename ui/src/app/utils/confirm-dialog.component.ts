@@ -18,6 +18,5 @@ export interface DialogData {
     `
 })
 export class ConfirmDialogComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 }

@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "prettier": {
     "singleQuote": true,
     "tabWidth": 4,
@@ -9,9 +10,11 @@
     "printWidth": 120
   },
   "scripts": {
-    "build": "rm -rf dist && tsc",
-    "dev": "ts-node -r tsconfig-paths/register app.ts",
-    "start": "nodemon"
+    "build": "rm -rf ./dist && tsc -p ./tsconfig.json --sourceMap",
+    "start": "node ./dist/app.js",
+    "dev": "nodemon",
+    "lint": "tslint -c tslint.json --project tsconfig.json 'src/**/*.ts'",
+    "lint-fix": "tslint --fix -c tslint.json -p tsconfig.json 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",
@@ -21,16 +24,11 @@
     "ajv": "6.12.0",
     "axios": "^0.19.2",
     "fastify": "2.13.0",
-    "fastify-blipp": "^2.2.1",
     "fastify-cors": "3.0.3",
     "fastify-decorators": "2.0.0-5",
     "fastify-oas": "^2.6.2",
-    "fastify-plugin": "1.6.1",
-    "fastify-swagger": "^2.5.1",
     "fs": "0.0.1-security",
     "jsend": "1.1.0",
-    "mongoose": "^5.9.7",
-    "mysql": "2.18.1",
     "mysql2": "2.1.0",
     "nodemon": "2.0.2",
     "path": "0.12.7",
@@ -53,6 +51,6 @@
     "tap": "^12.5.3",
     "tsconfig-paths": "3.9.0",
     "tslint": "^6.1.1",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-plugin-prettier": "^2.3.0"
   }
 }

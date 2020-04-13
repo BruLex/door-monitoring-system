@@ -6,8 +6,8 @@ import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
-import { User } from '@models';
-import { addUserSchema, deleteUserSchema, getUserInfoSchema, getUserListSchema, updateUserSchema } from '@schemas';
+import { User } from '../models';
+import { addUserSchema, deleteUserSchema, getUserInfoSchema, getUserListSchema, updateUserSchema } from '../schemas';
 
 @Controller({ route: '/user/' })
 export default class UserController {

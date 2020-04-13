@@ -1,6 +1,8 @@
 import * as fastify from 'fastify';
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { bootstrap } from 'fastify-decorators';
+import * as fastifyDecorators from 'fastify-decorators';
+import * as fastifyCors from 'fastify-cors';
+import * as fastifyOas from 'fastify-oas';
 
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
@@ -8,19 +10,20 @@ import * as path from 'path';
 import 'reflect-metadata';
 import { Sequelize } from 'sequelize-typescript';
 
-import * as models from '@models';
+import * as models from './models';
 
 const sequelize: Sequelize = new Sequelize('door_system', 'door', 'door123', {
     dialect: 'mysql',
     define: {
         timestamps: false
     },
+    logging: true,
     models: Object.values(models)
 });
 
 const server: fastify.FastifyInstance = fastify({ logger: true });
 
-server.register(require('fastify-oas'), {
+server.register(fastifyOas, {
     routePrefix: '/docs',
     exposeRoute: true,
     swagger: {
@@ -35,11 +38,12 @@ server.register(require('fastify-oas'), {
     }
 });
 
-server.register(bootstrap, {
+server.register(fastifyDecorators.bootstrap, {
     directory: path.join(__dirname, 'controllers'),
     mask: /\.controller\./
 });
-server.register(require('fastify-cors'));
+
+server.register(fastifyCors);
 
 server.setErrorHandler(
     (
@@ -57,17 +61,19 @@ server.setNotFoundHandler(
 
 server.ready((err: Error): void => {
     if (err) {
-        console.log('READY ERROR:', err);
+        server.log.error('READY ERROR:', err);
     }
-    console.log('Routes:', server.printRoutes());
+    console.log('ROUTES::', server.printRoutes());
 });
 
 const start: () => Promise<void> = async (): Promise<void> => {
     try {
-        await sequelize.sync({ force: false, alter: true });
+        await sequelize.sync({
+            force: false,
+            alter: false
+        });
         await server.listen(3000, '::');
     } catch (err) {
-        console.log(err);
         server.log.error(err);
         process.exit(1);
     }

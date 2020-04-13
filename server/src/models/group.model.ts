@@ -1,6 +1,6 @@
-import { GroupDevicePermissions } from 'models/group-device-permissions.model';
 import { BelongsToMany, Column, DefaultScope, HasMany, Model, Scopes, Table } from 'sequelize-typescript';
 
+import { GroupDevicePermissions } from './group-device-permissions.model';
 import { Device } from './device.model';
 import { User } from './user.model';
 

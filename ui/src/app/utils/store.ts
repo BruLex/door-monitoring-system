@@ -95,7 +95,7 @@ export abstract class Store<T extends Model> {
                     item.delete({ showLoadmask: false, showResultNotification: false })
             )
         ).pipe(
-            tap((responses) => {
+            tap(responses => {
                 const failedResponses: ApiResponse[] = responses.filter(
                     (resp: ApiResponse): boolean => !resp.isSuccess
                 );

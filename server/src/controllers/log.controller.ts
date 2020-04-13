@@ -3,7 +3,7 @@ import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorato
 
 import * as jsend from 'jsend';
 
-import { Log } from '@models';
+import { Log } from '../models';
 
 @Controller({ route: '/logs' })
 export default class LogController {

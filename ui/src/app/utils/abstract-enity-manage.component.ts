@@ -94,7 +94,7 @@ export abstract class AbstractEnityManageComponent<S extends Model, T extends St
     }
 
     deleteModels(): void {
-        const devices: number[] = this.selection.selected.map((model) => model[this.store.schema.idProperty]);
+        const devices: number[] = this.selection.selected.map(model => model[this.store.schema.idProperty]);
         this.store.bulkDelete(devices).subscribe((responses: ApiResponse[]): void => {
             const failedResponses: ApiResponse[] = responses.filter((resp: ApiResponse): boolean => !resp.isSuccess);
             if (!failedResponses.length) {

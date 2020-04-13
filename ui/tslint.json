@@ -1,8 +1,8 @@
 {
-    "extends": [
-        "tslint-config-prettier"
+    "rulesDirectory": [
+        "node_modules/codelyzer",
+        "tslint-plugin-prettier"
     ],
-    "rulesDirectory": ["node_modules/codelyzer"],
     "linterOptions": {
         "exclude": [
           "**/*.json"
@@ -139,6 +139,7 @@
         "angular-whitespace": [
             true,
             "check-interpolation"
-        ]
+        ],
+        "prettier": true
     }
 }

@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import { promises } from 'fs';
 import * as jsend from 'jsend';
 
-import { getConfigsSchema, updateConfigsSchema } from '@schemas';
+import { getConfigsSchema, updateConfigsSchema } from '../schemas';
 
 @Controller({ route: '/config' })
 export default class ConfigController {
