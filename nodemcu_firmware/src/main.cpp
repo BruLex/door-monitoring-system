@@ -8,7 +8,6 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include "ArduinoJson.h"
-#include <Base64.h>
 
 #include "constants.hpp"
 #include "main_site.hpp"
