@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "prettier": {
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "none",
-    "printWidth": 120
-  },
+  "prettier": "./prettier.config.json",
   "scripts": {
     "build": "rm -rf ./dist && tsc -p ./tsconfig.json --sourceMap",
     "start": "node ./dist/app.js",

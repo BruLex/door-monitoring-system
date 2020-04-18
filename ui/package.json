@@ -3,19 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --port 4000",
+    "start": "ng serve",
     "build": "ng build --prod --aot --output-hashing none",
     "lint": "ng lint",
     "lint-fix": "ng lint --fix",
     "compile": "tsc -p ./tsconfig.json"
   },
   "private": true,
-  "prettier": {
-    "singleQuote": true,
-    "tabWidth": 4,
-    "printWidth": 120,
-    "trailingComma": "none"
-  },
+  "prettier": "./prettier.config.json",
   "dependencies": {
     "@angular/animations": "^9.1.1",
     "@angular/cdk": "^9.2.0",

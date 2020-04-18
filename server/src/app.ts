@@ -21,7 +21,11 @@ const sequelize: Sequelize = new Sequelize('door_system', 'door', 'door123', {
     models: Object.values(models)
 });
 
-const server: fastify.FastifyInstance = fastify({ logger: true });
+const server: fastify.FastifyInstance = fastify({
+    logger: {
+        level: 'info'
+    }
+});
 
 server.register(fastifyOas, {
     routePrefix: '/docs',
@@ -72,7 +76,7 @@ const start: () => Promise<void> = async (): Promise<void> => {
             force: false,
             alter: false
         });
-        await server.listen(3000, '::');
+        await server.listen(3000, '0.0.0.0');
     } catch (err) {
         server.log.error(err);
         process.exit(1);

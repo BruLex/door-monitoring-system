@@ -1,11 +1,17 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Controller, GET, POST } from 'fastify-decorators';
+import { ALL, Controller, POST } from 'fastify-decorators';
+
+import * as jsend from 'jsend';
 
 @Controller({ route: '/remote' })
 export default class RemoteController {
-    @POST({ url: '/check_uid' })
-    async checkUID(request: FastifyRequest, reply: FastifyReply<number>): Promise<number> {
-        return 2;
+    @ALL({ url: '/check_uid' })
+    async checkUID(request: FastifyRequest, reply: FastifyReply<number>): Promise<jsend.JSendObject> {
+        if (request.body.uid === '0a049016') {
+            return jsend.success({ access_granted: true });
+        } else {
+            return jsend.error({ message: 'No granted', data: { access_granted: false } });
+        }
     }
 
     @POST({ url: '/get_allowed_uid' })
