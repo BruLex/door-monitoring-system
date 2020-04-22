@@ -1,7 +1,7 @@
 import * as fastify from 'fastify';
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import * as fastifyDecorators from 'fastify-decorators';
 import * as fastifyCors from 'fastify-cors';
+import * as fastifyDecorators from 'fastify-decorators';
 import * as fastifyOas from 'fastify-oas';
 
 import { ServerResponse } from 'http';

@@ -1,7 +1,7 @@
 import { BelongsToMany, Column, DefaultScope, HasMany, Model, Scopes, Table } from 'sequelize-typescript';
+import { Device } from './device.model';
 
 import { RoleDevicePermissions } from './role-device-permissions.model';
-import { Device } from './device.model';
 import { User } from './user.model';
 
 @DefaultScope(() => ({

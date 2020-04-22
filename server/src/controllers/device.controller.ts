@@ -1,15 +1,13 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { Controller, Inject, POST } from 'fastify-decorators';
 
 import { ServerResponse } from 'http';
+import * as ip from 'ip';
 import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 import { DeviceControlService } from 'src/services/device-control.service';
 import { Constants } from 'src/shared/constants';
-import { LockMode } from 'src/shared/types';
-import * as ip from 'ip';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Device } from '../models';
 import {
@@ -19,6 +17,7 @@ import {
     getDeviceListSchema,
     updateDeviceSchema
 } from '../schemas';
+
 export { Constants } from '../shared/constants';
 
 @Controller({ route: '/device' })

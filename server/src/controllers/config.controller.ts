@@ -1,5 +1,5 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
-import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
+import { FastifyRequest } from 'fastify';
+import { Controller, POST } from 'fastify-decorators';
 
 import * as fs from 'fs';
 import { promises } from 'fs';

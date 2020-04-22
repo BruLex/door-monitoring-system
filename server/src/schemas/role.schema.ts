@@ -1,7 +1,7 @@
 import { RouteSchema } from 'fastify';
+import { deviceObjectSchema } from './device.schema';
 
 import { response2xxFactory } from './schema.utils';
-import { deviceObjectSchema } from './device.schema';
 import { userObjectSchema } from './user.schema';
 
 const roleProperties: any = {

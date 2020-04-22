@@ -2,10 +2,10 @@ import { FastifyRequest } from 'fastify';
 import { Controller, Inject, POST } from 'fastify-decorators';
 
 import * as jsend from 'jsend';
-import { AccessLoggerService } from '../services/access-logger.service';
 import { Device, User } from '../models';
 
 import { checkCard } from '../schemas';
+import { AccessLoggerService } from '../services/access-logger.service';
 
 @Controller({ route: '/access_control' })
 export default class AccessControlController {

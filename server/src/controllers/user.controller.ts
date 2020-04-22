@@ -1,5 +1,5 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { Controller, POST } from 'fastify-decorators';
 
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
