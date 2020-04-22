@@ -41,7 +41,7 @@ import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
 import { RolesComponent } from './roles';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { UsersComponent } from './users';
+import { CardsComponent } from './cards';
 
 const ANGULAR_MATERIAL: any[] = [
     MatTableModule,
@@ -68,7 +68,7 @@ const ANGULAR_MATERIAL: any[] = [
         DashboardComponent,
         RolesComponent,
         DevicesComponent,
-        UsersComponent,
+        CardsComponent,
         SystemLogsComponent,
         LoadmaskDirective,
         ConfirmDialogComponent

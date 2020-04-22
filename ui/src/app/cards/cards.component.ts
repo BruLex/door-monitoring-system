@@ -4,22 +4,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { RoleModel, UserModel } from '@models';
-import { RoleStore, UserStore } from '@stores';
+import { RoleModel, CardModel } from '@models';
+import { RoleStore, CardStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
 
 import { AppService } from '../app.service';
 import { ApiResponse } from '../types';
 
 @Component({
-    templateUrl: './users.component.html'
+    templateUrl: './cards.component.html'
 })
-export class UsersComponent extends AbstractEnityManageComponent<UserModel, UserStore> {
-    store: UserStore = new UserStore();
+export class CardsComponent extends AbstractEnityManageComponent<CardModel, CardStore> {
+    store: CardStore = new CardStore();
     dialogEditMode: boolean;
-    currentModel: UserModel;
+    currentModel: CardModel;
 
-    selection: SelectionModel<UserModel> = new SelectionModel<UserModel>(true, []);
+    selection: SelectionModel<CardModel> = new SelectionModel<CardModel>(true, []);
     roles: RoleStore = new RoleStore();
 
     @ViewChild('manageEntityDialog') manageEntityDialogRef: TemplateRef<ElementRef>;
@@ -34,7 +34,7 @@ export class UsersComponent extends AbstractEnityManageComponent<UserModel, User
 
     constructor(private appSrv: AppService, protected matDialog: MatDialog, protected cdRef: ChangeDetectorRef) {
         super('name', matDialog, cdRef);
-        appSrv.setAppConfig({ title: 'Users' });
+        appSrv.setAppConfig({ title: 'Cards' });
         this.roles.reload().onLoad.subscribe((resp: ApiResponse): void => {
             if (!resp.isSuccess) {
                 console.error(resp.message || 'Internal error');

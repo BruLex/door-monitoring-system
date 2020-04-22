@@ -1,7 +1,7 @@
 {
   "instance": "sequelize",
   "autoConnect": true,
-  "username": "door",
+  "cardname": "door",
   "password": "door123",
   "database": "door_system",
   "dialect": "mysql",

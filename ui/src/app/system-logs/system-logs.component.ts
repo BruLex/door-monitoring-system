@@ -8,16 +8,6 @@ import { LogStore } from 'src/app/utils/stores';
 
 import { AppService } from '../app.service';
 
-interface LogData {
-    i_log: number;
-    card_info: { i_card: number; uid: string };
-    user_info: object;
-    role_info: object;
-    door_info: object;
-    time: string;
-    access: string;
-}
-
 @Component({
     templateUrl: './system-logs.component.html',
     styleUrls: ['./system-logs.component.scss']

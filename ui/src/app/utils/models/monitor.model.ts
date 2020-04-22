@@ -15,14 +15,14 @@ export enum StatusIcon {
     Locked = 'lock',
     Unlocked = 'lock_open',
     Guard = 'security',
-    Opened = 'verified_user'
+    Opened = 'verified_card'
 }
 
 export class MonitorModel extends Model {
     mac: string;
     locked: LockedStatus;
     status: DoorStatus;
-    icon: 'lock' | 'lock_open' | 'security' | 'verified_user';
+    icon: 'lock' | 'lock_open' | 'security' | 'verified_card';
     schema: ModelSchema = {
         fields: {
             mac: { type: 'string' },

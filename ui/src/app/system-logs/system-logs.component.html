@@ -20,9 +20,9 @@
             <td *matCellDef="let log" mat-cell>{{ log.uuid }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="user">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
-            <td *matCellDef="let log" mat-cell>{{ log.user_name }}</td>
+        <ng-container matColumnDef="card">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Card</th>
+            <td *matCellDef="let log" mat-cell>{{ log.card_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="role">
@@ -47,8 +47,8 @@
             </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="['uid', 'user', 'role','door', 'time', 'access']; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['uid', 'user', 'role','door', 'time', 'access'];" mat-row>
+        <tr *matHeaderRowDef="['uid', 'card', 'role','door', 'time', 'access']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['uid', 'card', 'role','door', 'time', 'access'];" mat-row>
         </tr>
     </table>
 </div>

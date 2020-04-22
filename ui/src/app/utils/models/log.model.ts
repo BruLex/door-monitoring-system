@@ -9,8 +9,8 @@ export class LogModel extends Model {
     i_role: number = null;
     role_name: string = '';
 
-    i_user: number = null;
-    user_name: string = '';
+    i_card: number = null;
+    card_name: string = '';
 
     time: Date = null;
     access: number = null;
@@ -24,8 +24,8 @@ export class LogModel extends Model {
             device_name: { type: 'string' },
             i_role: { type: 'number' },
             role_name: { type: 'string' },
-            i_user: { type: 'number' },
-            user_name: { type: 'string' },
+            i_card: { type: 'number' },
+            card_name: { type: 'string' },
             time: { type: 'string' },
             access: { type: 'number' },
             device_ip: { type: 'string' },

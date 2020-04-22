@@ -2,7 +2,7 @@ import { RouteSchema } from 'fastify';
 import { deviceObjectSchema } from './device.schema';
 
 import { response2xxFactory } from './schema.utils';
-import { userObjectSchema } from './user.schema';
+import { cardObjectSchema } from './card.schema';
 
 const roleProperties: any = {
     type: 'object',
@@ -21,9 +21,9 @@ const roleProperties: any = {
             type: 'array',
             items: deviceObjectSchema
         },
-        users: {
+        cards: {
             type: 'array',
-            items: userObjectSchema
+            items: cardObjectSchema
         }
     }
 };

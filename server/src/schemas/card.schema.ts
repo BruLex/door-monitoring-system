@@ -2,10 +2,10 @@ import { RouteSchema } from 'fastify';
 
 import { response2xxFactory } from './schema.utils';
 
-export const userObjectSchema: any = {
+export const cardObjectSchema: any = {
     type: 'object',
     properties: {
-        i_user: {
+        i_card: {
             type: 'number'
         },
         name: {
@@ -23,21 +23,21 @@ export const userObjectSchema: any = {
     }
 };
 
-export const getUserListSchema: RouteSchema = {
+export const getCardListSchema: RouteSchema = {
     response: response2xxFactory({
         data: {
             type: 'object',
             properties: {
-                user_list: {
+                card_list: {
                     type: 'array',
-                    items: userObjectSchema
+                    items: cardObjectSchema
                 }
             }
         }
     })
 };
 
-export const addUserSchema: RouteSchema = {
+export const addCardSchema: RouteSchema = {
     body: {
         type: 'object',
         required: ['name', 'uuid'],
@@ -59,7 +59,7 @@ export const addUserSchema: RouteSchema = {
         data: {
             type: 'object',
             properties: {
-                i_user: {
+                i_card: {
                     type: 'number'
                 }
             }
@@ -67,12 +67,12 @@ export const addUserSchema: RouteSchema = {
     })
 };
 
-export const getUserInfoSchema: RouteSchema = {
+export const getCardInfoSchema: RouteSchema = {
     body: {
         type: 'object',
-        required: ['i_user'],
+        required: ['i_card'],
         properties: {
-            i_user: {
+            i_card: {
                 type: 'number'
             }
         }
@@ -81,29 +81,29 @@ export const getUserInfoSchema: RouteSchema = {
         data: {
             type: 'object',
             properties: {
-                user_info: userObjectSchema
+                card_info: cardObjectSchema
             }
         }
     })
 };
 
-export const updateUserSchema: RouteSchema = {
+export const updateCardSchema: RouteSchema = {
     body: {
         type: 'object',
-        required: ['i_user'],
-        properties: userObjectSchema.properties
+        required: ['i_card'],
+        properties: cardObjectSchema.properties
     },
     response: response2xxFactory()
 };
 
-export const deleteUserSchema: RouteSchema = {
+export const deleteCardSchema: RouteSchema = {
     body: {
         type: 'object',
         properties: {
-            i_user: {
+            i_card: {
                 type: 'number'
             },
-            users: {
+            cards: {
                 type: 'array',
                 mimItems: 1,
                 items: {

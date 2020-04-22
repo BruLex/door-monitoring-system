@@ -2,17 +2,17 @@ import { BelongsTo, Column, DefaultScope, ForeignKey, Model, Scopes, Table } fro
 import { Role } from './role.model';
 
 @DefaultScope(() => ({
-    attributes: ['i_user', 'uuid', 'name', 'i_role']
+    attributes: ['i_card', 'uuid', 'name', 'i_role']
 }))
 @Scopes(() => ({
     extended_access_map: { include: [Role.scope('with_devices')] }
 }))
 @Table({
-    tableName: 'user',
-    modelName: 'user'
+    tableName: 'card',
+    modelName: 'card'
 })
-export class User extends Model<User> {
-    @Column({ primaryKey: true, autoIncrement: true }) i_user: number;
+export class Card extends Model<Card> {
+    @Column({ primaryKey: true, autoIncrement: true }) i_card: number;
     @Column uuid: string;
     @Column name: string;
     @ForeignKey(() => Role) @Column({ onDelete: 'SET NULL' }) i_role: number;

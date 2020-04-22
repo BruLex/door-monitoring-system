@@ -21,7 +21,7 @@ export class AppComponent implements RootComponentInterface {
         { link: '/dashboard', name: 'Dashboard' },
         { link: '/devices', name: 'Devices' },
         { link: '/roles', name: 'Roles' },
-        { link: '/users', name: 'Users' },
+        { link: '/cards', name: 'Cards' },
         { link: '/system_logs', name: 'System logs' }
     ];
 

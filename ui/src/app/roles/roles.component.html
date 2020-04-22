@@ -56,17 +56,17 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="users">
-            <th *matHeaderCellDef mat-header-cell>User</th>
+        <ng-container matColumnDef="cards">
+            <th *matHeaderCellDef mat-header-cell>Card</th>
             <td *matCellDef="let element" mat-cell>
                 <mat-icon
-                    #refUser
-                    [matTooltip]="element.getUserNames()"
+                    #refCard
+                    [matTooltip]="element.getCardNames()"
                     [matTooltipClass]="'tooltip-custom'"
                     [matBadgeColor]="'primary'"
-                    [matBadge]="element.users?.length || 0"
-                    [style.cursor]="!!element.users?.length ? 'pointer' : null">
-                    supervised_user_circle
+                    [matBadge]="element.cards?.length || 0"
+                    [style.cursor]="!!element.cards?.length ? 'pointer' : null">
+                    supervised_card_circle
                 </mat-icon>
             </td>
         </ng-container>
@@ -84,8 +84,8 @@
         </ng-container>
 
 
-        <tr *matHeaderRowDef="['select', 'name', 'devices', 'users', 'actions']; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['select', 'name', 'devices', 'users', 'actions'];" mat-row></tr>
+        <tr *matHeaderRowDef="['select', 'name', 'devices', 'cards', 'actions']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'devices', 'cards', 'actions'];" mat-row></tr>
     </table>
 </div>
 
