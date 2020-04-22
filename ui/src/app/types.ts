@@ -27,7 +27,7 @@ export class ApiResponse {
         return this.status === Statuses.Success;
     }
 
-    constructor(data: object) {
+    constructor(data: object = {}) {
         Object.keys(data).forEach((key: string): any => (this[key] = data[key]));
     }
 }

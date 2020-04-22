@@ -1,5 +1,7 @@
 import { RouteSchema } from 'fastify';
 
+import { response2xxFactory } from 'src/schemas/schema.utils';
+
 export const deviceObjectSchema: any = {
     type: 'object',
     properties: {
@@ -39,26 +41,17 @@ export const getDeviceListSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        device_list: {
-                            type: 'array',
-                            items: deviceObjectSchema
-                        }
-                    }
+                device_list: {
+                    type: 'array',
+                    items: deviceObjectSchema
                 }
             }
         }
-    }
+    })
 };
 
 export const addDeviceSchema: RouteSchema = {
@@ -80,25 +73,16 @@ export const addDeviceSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        i_device: {
-                            type: 'number'
-                        }
-                    }
+                i_device: {
+                    type: 'number'
                 }
             }
         }
-    }
+    })
 };
 
 export const getDeviceInfoSchema: RouteSchema = {
@@ -114,23 +98,14 @@ export const getDeviceInfoSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        device_info: deviceObjectSchema
-                    }
-                }
+                device_info: deviceObjectSchema
             }
         }
-    }
+    })
 };
 
 export const updateDeviceSchema: RouteSchema = {
@@ -139,16 +114,7 @@ export const updateDeviceSchema: RouteSchema = {
         required: ['i_device'],
         properties: deviceObjectSchema.properties
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };
 
 export const deleteDeviceSchema: RouteSchema = {
@@ -167,14 +133,5 @@ export const deleteDeviceSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };

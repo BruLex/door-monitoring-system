@@ -1,12 +1,13 @@
 import { RouteSchema } from 'fastify';
 
+import { response2xxFactory } from './schema.utils';
 import { deviceObjectSchema } from './device.schema';
 import { userObjectSchema } from './user.schema';
 
-const groupProperties: any = {
+const roleProperties: any = {
     type: 'object',
     properties: {
-        i_group: {
+        i_role: {
             type: 'number'
         },
         name: {
@@ -27,7 +28,7 @@ const groupProperties: any = {
     }
 };
 
-export const getGroupListSchema: RouteSchema = {
+export const getRoleListSchema: RouteSchema = {
     body: {
         type: 'object',
         nullable: true,
@@ -38,29 +39,20 @@ export const getGroupListSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        group_list: {
-                            type: 'array',
-                            items: groupProperties
-                        }
-                    }
+                role_list: {
+                    type: 'array',
+                    items: roleProperties
                 }
             }
         }
-    }
+    })
 };
 
-export const addGroupSchema: RouteSchema = {
+export const addRoleSchema: RouteSchema = {
     body: {
         type: 'object',
         required: ['name', 'allowed_all'],
@@ -90,33 +82,24 @@ export const addGroupSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        i_group: {
-                            type: 'number'
-                        }
-                    }
+                i_role: {
+                    type: 'number'
                 }
             }
         }
-    }
+    })
 };
 
-export const getGroupInfoSchema: RouteSchema = {
+export const getRoleInfoSchema: RouteSchema = {
     body: {
         type: 'object',
-        required: ['i_group'],
+        required: ['i_role'],
         properties: {
-            i_group: {
+            i_role: {
                 type: 'number'
             },
             extended_info: {
@@ -124,31 +107,22 @@ export const getGroupInfoSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        group_info: groupProperties
-                    }
-                }
+                role_info: roleProperties
             }
         }
-    }
+    })
 };
 
-export const updateGroupSchema: RouteSchema = {
+export const updateRoleSchema: RouteSchema = {
     body: {
         type: 'object',
-        required: ['i_group', 'name', 'allowed_all'],
+        required: ['i_role', 'name', 'allowed_all'],
         properties: {
-            ...groupProperties.properties,
+            ...roleProperties.properties,
             allowed_devices: {
                 type: 'array',
                 items: {
@@ -163,26 +137,17 @@ export const updateGroupSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };
 
-export const deleteGroupSchema: RouteSchema = {
+export const deleteRoleSchema: RouteSchema = {
     body: {
         type: 'object',
         properties: {
-            i_group: {
+            i_role: {
                 type: 'number'
             },
-            groups: {
+            roles: {
                 type: 'array',
                 mimItems: 1,
                 items: {
@@ -191,14 +156,5 @@ export const deleteGroupSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };

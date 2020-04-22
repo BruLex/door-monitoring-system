@@ -39,7 +39,7 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
-import { GroupsComponent } from './groups';
+import { RolesComponent } from './roles';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
 import { UsersComponent } from './users';
 
@@ -66,7 +66,7 @@ const ANGULAR_MATERIAL: any[] = [
     declarations: [
         AppComponent,
         DashboardComponent,
-        GroupsComponent,
+        RolesComponent,
         DevicesComponent,
         UsersComponent,
         SystemLogsComponent,

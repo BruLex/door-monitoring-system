@@ -55,8 +55,8 @@ export abstract class Store<T extends Model> {
             return this;
         }
         this.loading.next(true);
-        if (additionalParams) {
-            this.lastLoadParams = { ...(this.schema.options || {}), ...additionalParams };
+        if (additionalParams || !this.lastLoadParams) {
+            this.lastLoadParams = { ...(this.schema.options || {}), ...(additionalParams || {}) };
         }
         AppService.instance()
             .apiRequest({

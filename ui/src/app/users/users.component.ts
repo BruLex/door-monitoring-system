@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { GroupModel, UserModel } from '@models';
-import { GroupStore, UserStore } from '@stores';
+import { RoleModel, UserModel } from '@models';
+import { RoleStore, UserStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
 
 import { AppService } from '../app.service';
@@ -20,7 +20,7 @@ export class UsersComponent extends AbstractEnityManageComponent<UserModel, User
     currentModel: UserModel;
 
     selection: SelectionModel<UserModel> = new SelectionModel<UserModel>(true, []);
-    groups: GroupStore = new GroupStore();
+    roles: RoleStore = new RoleStore();
 
     @ViewChild('manageEntityDialog') manageEntityDialogRef: TemplateRef<ElementRef>;
 
@@ -35,15 +35,15 @@ export class UsersComponent extends AbstractEnityManageComponent<UserModel, User
     constructor(private appSrv: AppService, protected matDialog: MatDialog, protected cdRef: ChangeDetectorRef) {
         super('name', matDialog, cdRef);
         appSrv.setAppConfig({ title: 'Users' });
-        this.groups.reload().onLoad.subscribe((resp: ApiResponse): void => {
+        this.roles.reload().onLoad.subscribe((resp: ApiResponse): void => {
             if (!resp.isSuccess) {
                 console.error(resp.message || 'Internal error');
             }
         });
     }
 
-    displayGroupName(iGroup: number): string {
-        const group: GroupModel = this.groups.dataSource.data.find(({ i_group }): boolean => i_group === iGroup);
-        return group ? group.name : 'N/A';
+    displayRoleName(iRole: number): string {
+        const role: RoleModel = this.roles.dataSource.data.find(({ i_role }): boolean => i_role === iRole);
+        return role ? role.name : 'N/A';
     }
 }

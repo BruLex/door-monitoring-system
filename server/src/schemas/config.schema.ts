@@ -1,9 +1,8 @@
 import { RouteSchema } from 'fastify';
 
-const configData: { only_remote_confirm_mode: { type: string }; allowed_attempts: { type: string } } = {
-    only_remote_confirm_mode: {
-        type: 'boolean'
-    },
+import { response2xxFactory } from './schema.utils';
+
+const configData: object = {
     allowed_attempts: {
         type: 'number'
     }
@@ -13,35 +12,16 @@ export const updateConfigsSchema: RouteSchema = {
     body: {
         type: 'object',
         properties: configData,
-        required: ['only_remote_confirm_mode', 'allowed_attempts']
+        required: ['allowed_attempts']
     },
-    response: {
-        200: {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };
 
 export const getConfigsSchema: RouteSchema = {
-    response: {
-        200: {
+    response: response2xxFactory({
+        data: {
             type: 'object',
-            properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: configData
-                }
-            }
+            properties: configData
         }
-    }
+    })
 };

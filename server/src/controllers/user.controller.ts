@@ -11,8 +11,6 @@ import { addUserSchema, deleteUserSchema, getUserInfoSchema, getUserListSchema, 
 
 @Controller({ route: '/user/' })
 export default class UserController {
-    @Inject(FastifyInstanceToken) private instance!: FastifyInstance;
-
     @POST({ url: '/add_user', options: { schema: addUserSchema } })
     async addUser(request: FastifyRequest): Promise<jsend.JSendObject> {
         return jsend.success({ i_user: (await User.create(request.body)).i_user });
@@ -48,7 +46,7 @@ export default class UserController {
             reply.code(404).send(jsend.error(`User with i_user: ${body.i_user} not found`));
             return reply;
         }
-        Object.keys(_.pick(body, ['uuid', 'name', 'i_group'])).forEach(
+        Object.keys(_.pick(body, ['uuid', 'name', 'i_role'])).forEach(
             (key: string): any => (user_info[key] = body[key])
         );
         user_info.save();

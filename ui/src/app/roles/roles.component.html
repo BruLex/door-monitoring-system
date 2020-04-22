@@ -74,9 +74,10 @@
         <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
-                <button mat-icon-button class="action-button"
+                <button
+                        mat-icon-button class="action-button"
                         [matTooltip]="'Edit'"
-                        (click)="openDialog('edit', element)" >
+                        (click)="openDialog('edit', element)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -89,10 +90,11 @@
 </div>
 
 <ng-template #manageEntityDialog>
-    <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit group' : 'Add new group' }}</h1>
+    <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit role' : 'Add new role' }}</h1>
     <div mat-dialog-content vflex-layout>
         <mat-form-field flex>
-            <input matInput placeholder="Name"
+            <input
+                    matInput placeholder="Name"
                     [(ngModel)]="currentModel.name"
                     [formControl]="currentModel.modelForm.controls['name']">
         </mat-form-field>
@@ -100,34 +102,33 @@
         <ng-container *ngIf="!currentModel.allowed_all">
             <p>Allowed devices</p>
             <mat-divider></mat-divider>
-            <div style="display: flex; flex-direction: row; align-items: center">
-                <mat-form-field flex>
+            <mat-form-field flex>
+                <mat-chip-list #chipList>
+                    <mat-chip
+                            *ngFor="let device of currentModel.allowed_devices"
+                            [selectable]="false"
+                            [removable]="true"
+                            (removed)="removeDeviceFromModel(device)">
+                        {{ device.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
                     <input
-                            [formControl]="myControl" [matAutocomplete]="auto" aria-label="Assignee" matInput
-                            placeholder="Assignee"
-                            type="text">
-                    <mat-autocomplete
-                        #auto="matAutocomplete"
-                        (optionSelected)="doorToAdd=$event.option.value"
-                        [displayWith]="displayFn">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{ option.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-                <button (click)="addDoorToModel()" [disabled]="!doorToAdd" color="primary" mat-icon-button>
-                    <mat-icon>add_circle</mat-icon>
-                </button>
-            </div>
-            <mat-chip-list>
-                <mat-chip
-                        (removed)="removeDoorFromModel(door)"
-                        *ngFor="let door of currentModel.allowed_devices"
-                        [removable]="true">
-                    {{ door.name }}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
+                            [formControl]="myControl"
+                            [matAutocomplete]="chipAutocomplete"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matInput
+                            [placeholder]="'Assignee'"
+                            [type]="'text'">
+                </mat-chip-list>
+                <mat-autocomplete
+                    #chipAutocomplete="matAutocomplete"
+                    (optionSelected)="addDeviceToModel($event.option.value)"
+                    [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{ option.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
         </ng-container>
     </div>
     <div mat-dialog-actions>

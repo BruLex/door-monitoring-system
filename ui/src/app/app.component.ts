@@ -19,9 +19,9 @@ interface NavItem {
 export class AppComponent implements RootComponentInterface {
     readonly navItems: NavItem[] = [
         { link: '/dashboard', name: 'Dashboard' },
-        { link: '/groups', name: 'Groups' },
-        { link: '/users', name: 'Users' },
         { link: '/devices', name: 'Devices' },
+        { link: '/roles', name: 'Roles' },
+        { link: '/users', name: 'Users' },
         { link: '/system_logs', name: 'System logs' }
     ];
 

@@ -1,5 +1,7 @@
 import { RouteSchema } from 'fastify';
 
+import { response2xxFactory } from './schema.utils';
+
 export const userObjectSchema: any = {
     type: 'object',
     properties: {
@@ -14,7 +16,7 @@ export const userObjectSchema: any = {
             type: 'string',
             maxLength: 255
         },
-        i_group: {
+        i_role: {
             type: 'number',
             nullable: true
         }
@@ -22,26 +24,17 @@ export const userObjectSchema: any = {
 };
 
 export const getUserListSchema: RouteSchema = {
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        user_list: {
-                            type: 'array',
-                            items: userObjectSchema
-                        }
-                    }
+                user_list: {
+                    type: 'array',
+                    items: userObjectSchema
                 }
             }
         }
-    }
+    })
 };
 
 export const addUserSchema: RouteSchema = {
@@ -57,30 +50,21 @@ export const addUserSchema: RouteSchema = {
                 type: 'string',
                 maxLength: 255
             },
-            i_group: {
+            i_role: {
                 type: 'number'
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        i_user: {
-                            type: 'number'
-                        }
-                    }
+                i_user: {
+                    type: 'number'
                 }
             }
         }
-    }
+    })
 };
 
 export const getUserInfoSchema: RouteSchema = {
@@ -93,23 +77,14 @@ export const getUserInfoSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
+    response: response2xxFactory({
+        data: {
             type: 'object',
             properties: {
-                status: {
-                    type: 'string',
-                    enum: ['success']
-                },
-                data: {
-                    type: 'object',
-                    properties: {
-                        user_info: userObjectSchema
-                    }
-                }
+                user_info: userObjectSchema
             }
         }
-    }
+    })
 };
 
 export const updateUserSchema: RouteSchema = {
@@ -118,16 +93,7 @@ export const updateUserSchema: RouteSchema = {
         required: ['i_user'],
         properties: userObjectSchema.properties
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };
 
 export const deleteUserSchema: RouteSchema = {
@@ -146,14 +112,5 @@ export const deleteUserSchema: RouteSchema = {
             }
         }
     },
-    response: {
-        '2xx': {
-            type: 'object',
-            properties: {
-                status: {
-                    type: 'string'
-                }
-            }
-        }
-    }
+    response: response2xxFactory()
 };

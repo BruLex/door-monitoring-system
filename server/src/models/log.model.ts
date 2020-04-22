@@ -1,7 +1,7 @@
-import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 
 import { Device } from './device.model';
-import { Group } from './group.model';
+import { Role } from './role.model';
 import { User } from './user.model';
 
 @Table({
@@ -9,23 +9,20 @@ import { User } from './user.model';
     modelName: 'log'
 })
 export class Log extends Model<Log> {
-    @Column({
-        primaryKey: true,
-        autoIncrement: true
-    })
-    i_log: number;
+    @Column({ primaryKey: true, autoIncrement: true }) i_log: number;
 
-    @ForeignKey(() => Device) @Column i_device: number;
+    @ForeignKey(() => Device) @Column({ onDelete: 'SET NULL' }) i_device: number;
     @Column device_name: string;
 
-    @ForeignKey(() => Group) @Column i_group: number;
-    @Column group_name: string;
+    @ForeignKey(() => Role) @Column({ onDelete: 'SET NULL' }) i_role: number;
+    @Column role_name: string;
 
-    @ForeignKey(() => User) @Column i_user: number;
+    @ForeignKey(() => User) @Column({ onDelete: 'SET NULL' }) i_user: number;
     @Column user_name: string;
 
-    @Column time: Date;
-    @Column access: number;
+    @Column({ type: DataType.DATE }) time: Date;
+    @Column access: boolean;
     @Column device_ip: string;
     @Column uuid: string;
+    @Column error: string;
 }

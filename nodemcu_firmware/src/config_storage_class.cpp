@@ -13,6 +13,7 @@ void ConfigStorage::Load()
   DynamicJsonDocument doc(1024);
   // Parse the root object
   DeserializationError error = deserializeJson(doc, file);
+  
   if (error)
     Serial.println("ConfigStorage::load: Failed to read file, using default configuration");
   else
@@ -20,8 +21,7 @@ void ConfigStorage::Load()
   // Copy values from the JsonObject to the Config
   lockState = doc["lockState"] | default_lock_state;
   strlcpy(authHash, doc["authHash"] | default_auth_hash.c_str(), sizeof(authHash));
-  strlcpy(controlServerIp, doc["controlServerIp"] | default_remote_ip.c_str(), sizeof(controlServerIp));
-  controlServerPort = doc["controlServerPort"] | default_remote_port;
+  strlcpy(controlServerAddress, doc["controlServerAddress"] | default_remote_address.c_str(), sizeof(controlServerAddress));
   file.close();
 }
 
@@ -42,8 +42,7 @@ void ConfigStorage::Save()
   // Parse the root object
   doc["lockState"] = lockState;
   doc["authHash"] = authHash;
-  doc["controlServerIp"] = controlServerIp;
-  doc["controlServerPort"] = controlServerPort;
+  doc["controlServerAddress"] = controlServerAddress;
   // Serialize JSON to file
   if (serializeJson(doc, file) == 0)
   {

@@ -1,3 +1,4 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Overlay } from '@angular/cdk/overlay';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -10,23 +11,23 @@ import { map, startWith } from 'rxjs/operators';
 
 import { ApiResponse } from 'src/app/types';
 
-import { DeviceModel, GroupModel, UserModel } from '@models';
-import { DeviceStore, GroupStore } from '@stores';
+import { DeviceModel, RoleModel, UserModel } from '@models';
+import { DeviceStore, RoleStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils';
 
 import { AppService } from '../app.service';
 
 @Component({
-    templateUrl: './groups.component.html'
+    templateUrl: './roles.component.html'
 })
-export class GroupsComponent extends AbstractEnityManageComponent<GroupModel, GroupStore> implements OnInit {
-    store: GroupStore = new GroupStore();
+export class RolesComponent extends AbstractEnityManageComponent<RoleModel, RoleStore> implements OnInit {
+    store: RoleStore = new RoleStore();
     dialogEditMode: boolean;
 
     @ViewChild('manageEntityDialog') manageEntityDialogRef: TemplateRef<ElementRef>;
+    separatorKeysCodes: number[] = [ENTER, COMMA];
 
     myControl: FormControl = new FormControl();
-    doorToAdd: DeviceModel;
     devices: DeviceStore = new DeviceStore();
     filteredOptions: Observable<DeviceModel[]> = this.myControl.valueChanges.pipe(
         startWith(''),
@@ -58,7 +59,7 @@ export class GroupsComponent extends AbstractEnityManageComponent<GroupModel, Gr
         private overlay: Overlay
     ) {
         super('name', matDialog, cdRef);
-        appSrv.setAppConfig({ title: 'Groups' });
+        appSrv.setAppConfig({ title: 'Roles' });
     }
 
     ngOnInit(): void {
@@ -78,13 +79,12 @@ export class GroupsComponent extends AbstractEnityManageComponent<GroupModel, Gr
         return user ? user.name : undefined;
     }
 
-    addDoorToModel(): void {
-        this.currentModel.allowed_devices = [...(this.currentModel.allowed_devices || []), this.doorToAdd];
-        this.doorToAdd = null;
+    addDeviceToModel(device: DeviceModel): void {
+        this.currentModel.allowed_devices = [...(this.currentModel.allowed_devices || []), device];
         this.myControl.reset();
     }
 
-    removeDoorFromModel(door: DeviceModel): void {
+    removeDeviceFromModel(door: DeviceModel): void {
         this.currentModel.allowed_devices = this.currentModel.allowed_devices.filter(
             ({ i_device }): boolean => door.i_device !== i_device
         );

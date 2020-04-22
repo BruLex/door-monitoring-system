@@ -62,11 +62,13 @@
 
 <ng-template #manageEntityDialog>
     <h1 mat-dialog-title>{{ 'Select device mode' }}</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content vflex-layout>
         <mat-form-field flex>
             <mat-label>Select an option</mat-label>
             <mat-icon [style.font-size]="'16px'" matPrefix>{{ lockModeIconMap[currentModel.mode] }}</mat-icon>
-            <mat-select [(value)]="currentModel.mode">
+            <mat-select
+                    [disabled]="!currentModel.status"
+                    [(value)]="currentModel.mode">
                 <mat-select-trigger>
                     <span>{{ currentModel.mode | titlecase }}</span>
                 </mat-select-trigger>
@@ -84,11 +86,16 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <span *ngIf="!currentModel.status" class="cannot-apply-new-config-label">
+           <mat-icon color="warn">error</mat-icon> Cannot apply new mode for not active device
+        </span>
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
-        <button
-                [disabled]="currentModel.modelForm.invalid" [mat-dialog-close]="true"
-                mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
+        <button mat-button
+                [disabled]="!currentModel.status"
+                [mat-dialog-close]="true">
+            {{ 'Save' }}
+        </button>
     </div>
 </ng-template>

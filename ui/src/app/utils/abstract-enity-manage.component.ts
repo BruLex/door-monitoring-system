@@ -78,7 +78,7 @@ export abstract class AbstractEnityManageComponent<S extends Model, T extends St
             this.matDialog
                 .open(this.manageEntityDialogRef, { width: '500px' })
                 .afterClosed()
-                .pipe(filter((value: any | undefined): boolean => !!value))
+                .pipe(filter(value => !!value))
                 .subscribe((): void => {
                     const observableResp: Observable<ApiResponse> = this.dialogEditMode
                         ? this.currentModel.update()
@@ -86,6 +86,7 @@ export abstract class AbstractEnityManageComponent<S extends Model, T extends St
                     observableResp.subscribe((response: ApiResponse): void => {
                         if (!this.dialogEditMode && response.isSuccess) {
                             this.store.dataSource.data = [this.currentModel, ...this.store.dataSource.data];
+                            this.cdRef.detectChanges();
                             this.cdRef.markForCheck();
                         }
                     });

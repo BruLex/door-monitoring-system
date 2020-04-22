@@ -177,8 +177,26 @@ export abstract class Model {
         const data: any = {};
         Object.keys(this.schema.fields)
             .filter((field: string): boolean => ![undefined].includes(this[field]))
-            .forEach((field: string): any => Object.assign(data, { [field]: this[field] }));
+            .forEach((field: string): any => {
+                Object.assign(data, { [field]: this.serializeField(this[field], this.schema.fields[field]) });
+            });
         return data;
+    }
+
+    private serializeField(data: any, field: FieldSchemaProperty): any {
+        if (typeof field.type !== 'string') {
+            const model: Type<any> = field.type as Type<any>;
+            return (data as Model).serialize();
+        } else {
+            switch (field.type) {
+                case 'date':
+                    return new Date(data).toString();
+                case 'array':
+                    return data.map((dataItem): any => this.serializeField(dataItem, field.items));
+                default:
+                    return data;
+            }
+        }
     }
 
     private convertField(data: any, field: FieldSchemaProperty): any {

@@ -9,7 +9,7 @@ export enum LockModes {
 }
 
 enum LockIcons {
-    Locked = 'verified_user',
+    Locked = 'lock',
     Unlocked = 'lock_open',
     Guard = 'security'
 }

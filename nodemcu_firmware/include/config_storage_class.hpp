@@ -10,14 +10,13 @@ class ConfigStorage
 private:
     const String config_path = "/config.txt";
     const int default_lock_state = 0;
-    const String default_remote_ip = "192.168.31.160";
-    const int default_remote_port = 3000;
-    const String default_auth_hash = "YWRtaW46YWRtaW4="; // adminadmin
+    const String default_remote_address = "192.168.31.160:3000";
+    const String default_auth_hash = "fee275a0-8155-55fe-a071-ce7f580e1eac";
+    
 
 public:
     char authHash[512];
-    char controlServerIp[15];
-    int controlServerPort;
+    char controlServerAddress[255];
     int lockState;
 
     void Init();

@@ -22,17 +22,17 @@
 
         <ng-container matColumnDef="user">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
-            <td *matCellDef="let log" mat-cell>{{ log.user_info || 'N/A' }}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.user_name }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="group">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Group</th>
-            <td *matCellDef="let log" mat-cell> {{ log.group_name || 'N/A' }}</td>
+        <ng-container matColumnDef="role">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
+            <td *matCellDef="let log" mat-cell> {{ log.role_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="door">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Door</th>
-            <td *matCellDef="let log" mat-cell>{{ log.device_name || 'N/A' }}</td>
+            <td *matCellDef="let log" mat-cell>{{ log.device_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="time">
@@ -42,11 +42,13 @@
 
         <ng-container matColumnDef="access">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>Access</th>
-            <td *matCellDef="let log" mat-cell>{{ log.access ? 'granted' : 'denied' }}</td>
+            <td *matCellDef="let log" mat-cell>
+                <span [matTooltip]="log.error">{{ log.access ? 'granted' : 'denied' }}</span>
+            </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="['uid', 'user', 'group','door', 'time', 'access']; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['uid', 'user', 'group','door', 'time', 'access'];" mat-row>
+        <tr *matHeaderRowDef="['uid', 'user', 'role','door', 'time', 'access']; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['uid', 'user', 'role','door', 'time', 'access'];" mat-row>
         </tr>
     </table>
 </div>

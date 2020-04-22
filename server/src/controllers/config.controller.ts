@@ -9,8 +9,6 @@ import { getConfigsSchema, updateConfigsSchema } from '../schemas';
 
 @Controller({ route: '/config' })
 export default class ConfigController {
-    @Inject(FastifyInstanceToken) private instance!: FastifyInstance;
-
     @POST({ url: '/get_configs', options: { schema: getConfigsSchema } })
     async getConfigs(): Promise<jsend.JSendObject> {
         return jsend.success(JSON.parse(fs.readFileSync('../configs/config.json', { encoding: 'UTF-8' })));

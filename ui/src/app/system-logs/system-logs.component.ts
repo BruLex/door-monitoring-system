@@ -12,7 +12,7 @@ interface LogData {
     i_log: number;
     card_info: { i_card: number; uid: string };
     user_info: object;
-    group_info: object;
+    role_info: object;
     door_info: object;
     time: string;
     access: string;
@@ -47,8 +47,8 @@ export class SystemLogsComponent extends AbstractEnityManageComponent<LogModel, 
                     switch (sort.active) {
                         case 'uid':
                             return this.compare(a.uuid, b.uuid, isAsc);
-                        case 'group':
-                            return this.compare(a.group_name, b.group_name, isAsc);
+                        case 'role':
+                            return this.compare(a.role_name, b.role_name, isAsc);
                         case 'device':
                             return this.compare(a.device_name, b.device_name, isAsc);
                         case 'time':

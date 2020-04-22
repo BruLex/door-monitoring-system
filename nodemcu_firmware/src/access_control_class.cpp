@@ -23,6 +23,13 @@ void AccessControl::Lock()
     digitalWrite(LOCK_PIN, LOW);
 }
 
+void AccessControl::Block()
+{
+    ChangeColor(true, false);
+    digitalWrite(LOCK_PIN, LOW);
+}
+
+
 void AccessControl::Unlock()
 {
     ChangeColor(false, true);
@@ -44,16 +51,15 @@ void AccessControl::NextCard()
         Serial.println("AccessControl::NextCard: End reading:uid -> " + uid);
 
         HTTPClient http;
-        http.begin("http://" + String(config->controlServerIp) + ":" + config->controlServerPort + check_uid_request);
+        http.begin("http://" + String(config->controlServerAddress) + check_uuid_request);
         http.addHeader("Content-Type", "application/json");
-        int statusCode = http.POST("{\"uid\": \"" + uid + "\"}");
+        int statusCode = http.POST("{\"uuid\": \"" + uid + "\"}");
         String response = http.getString();
         Serial.print("AccessControl::NextCard::response: " + response);
         DynamicJsonDocument doc(1024);
         bool accessGranted = statusCode > 0 &&
                              String(deserializeJson(doc, response).c_str()) == String("Ok") &&
-                             String(doc["status"].as<char *>()) == String("success") &&
-                             doc["data"]["access_granted"];
+                             String(doc["status"].as<char *>()) == String("success");
 
         if (accessGranted)
         {

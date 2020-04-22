@@ -1,6 +1,6 @@
 @import "~@angular/material/theming";
 @import "./variables.scss";
-@import "./app/utils/styles";
+@import "./app/utils/loadmask/loadmask";
 
 @include angular-material-theme($defaultTheme);
 @include dk-loadmask-mixin;
@@ -16,7 +16,6 @@
     display: flex;
     flex-direction: column;
     > * {
-        align-items: center;
         display: flex;
         &:not(:last-child) {
             margin-bottom: 2px;
@@ -76,6 +75,6 @@ body {
     }
 }
 
-::ng-deep .tooltip-custom {
+.tooltip-custom {
     white-space: pre-wrap;
 }

@@ -48,9 +48,9 @@
             <td *matCellDef="let element" mat-cell>{{ element.uuid }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="group">
-            <th *matHeaderCellDef mat-header-cell>Group</th>
-            <td *matCellDef="let element" mat-cell>{{ displayGroupName(element.i_group) }}</td>
+        <ng-container matColumnDef="role">
+            <th *matHeaderCellDef mat-header-cell>Role</th>
+            <td *matCellDef="let element" mat-cell>{{ displayRoleName(element.i_role) }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -65,8 +65,8 @@
             </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="['select', 'name', 'card_uid', 'group', 'actions']" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['select', 'name', 'card_uid', 'group', 'actions'];" mat-row>
+        <tr *matHeaderRowDef="['select', 'name', 'card_uid', 'role', 'actions']" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ['select', 'name', 'card_uid', 'role', 'actions'];" mat-row>
         </tr>
     </table>
 </div>
@@ -83,11 +83,11 @@
             </mat-form-field>
         </form>
         <mat-form-field flex>
-            <mat-label>Group</mat-label>
-            <mat-select [(value)]="currentModel.i_group">
-                <mat-option [value]="null">None</mat-option>
-                <mat-option *ngFor="let group of groups.items" [value]="group.i_group">
-                    {{ group.name }}
+            <mat-label>Role</mat-label>
+            <mat-select [(value)]="currentModel.i_role">
+                <mat-option [value]="this.dialogEditMode ? null : undefined">None</mat-option>
+                <mat-option *ngFor="let role of roles.items" [value]="role.i_role">
+                    {{ role.name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>

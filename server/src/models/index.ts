@@ -1,5 +1,5 @@
 export * from './device.model';
-export * from './group.model';
+export * from 'src/models/role.model';
 export * from './log.model';
 export * from './user.model';
-export * from './group-device-permissions.model';
+export * from 'src/models/role-device-permissions.model';

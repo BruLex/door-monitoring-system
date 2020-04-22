@@ -1,11 +1,15 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { Controller, FastifyInstanceToken, Inject, POST } from 'fastify-decorators';
 
-import { AxiosInstance, AxiosResponse, default as axios } from 'axios';
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
+import { DeviceControlService } from 'src/services/device-control.service';
+import { Constants } from 'src/shared/constants';
+import { LockMode } from 'src/shared/types';
+import * as ip from 'ip';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Device } from '../models';
 import {
@@ -15,26 +19,21 @@ import {
     getDeviceListSchema,
     updateDeviceSchema
 } from '../schemas';
+export { Constants } from '../shared/constants';
 
 @Controller({ route: '/device' })
 export default class DeviceController {
-    private static async pingRemoteDevice(deviceIp: string): Promise<boolean> {
-        const client: AxiosInstance = axios.create({
-            baseURL: 'http://' + deviceIp,
-            responseType: 'json'
-        });
-        try {
-            const pingResult: AxiosResponse = await client.post<{ status: boolean }>('/ping');
-            return pingResult.data.status === 'success';
-        } catch {
-            return false;
-        }
-    }
-    @Inject(FastifyInstanceToken) private instance!: FastifyInstance;
+    @Inject(DeviceControlService) private deviceCtrlSrv!: DeviceControlService;
 
     @POST({ url: '/add_device', options: { schema: addDeviceSchema } })
     async addDevice(request: FastifyRequest): Promise<jsend.JSendObject> {
-        return jsend.success({ i_device: (await Device.create(request.body)).i_device });
+        const { body } = request;
+        // this.deviceCtrlSrv.applyConfig({
+        //     deviceIp: body.ip,
+        //     deviceMode: body.mode || LockMode.Guard,
+        //     generateToken: true
+        // });
+        return jsend.success({ i_device: (await Device.create(body)).i_device });
     }
 
     @POST({ url: '/get_device_info', options: { schema: getDeviceInfoSchema } })
@@ -49,7 +48,7 @@ export default class DeviceController {
             return reply;
         }
         if (with_device_status) {
-            device_info.status = await DeviceController.pingRemoteDevice(device_info.ip);
+            device_info.status = await this.deviceCtrlSrv.pingDevice(device_info.ip);
         }
         return jsend.success({ device_info });
     }
@@ -60,7 +59,7 @@ export default class DeviceController {
         const device_list: Device[] = await Device.findAll();
         if (with_device_status && device_list.length) {
             for (const device of device_list) {
-                device.status = await DeviceController.pingRemoteDevice(device.ip);
+                device.status = await this.deviceCtrlSrv.pingDevice(device.ip);
             }
         }
         return jsend.success({ device_list });
@@ -80,6 +79,15 @@ export default class DeviceController {
         Object.keys(_.pick(body, ['name', 'description', 'ip', 'mode'])).forEach(
             (key: string): any => (device_info[key] = body[key])
         );
+        if (body.mode) {
+            console.log(device_info.token);
+            console.log(device_info.token || Constants.defaultToken);
+            await this.deviceCtrlSrv.applyConfig({
+                deviceIp: device_info.ip,
+                deviceMode: device_info.mode,
+                token: device_info.token || Constants.defaultToken
+            });
+        }
         device_info.save();
         return jsend.success(null);
     }

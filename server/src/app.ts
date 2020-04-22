@@ -72,10 +72,7 @@ server.ready((err: Error): void => {
 
 const start: () => Promise<void> = async (): Promise<void> => {
     try {
-        await sequelize.sync({
-            force: false,
-            alter: false
-        });
+        await sequelize.sync({ force: false, alter: false });
         await server.listen(3000, '0.0.0.0');
     } catch (err) {
         server.log.error(err);

@@ -12,7 +12,6 @@ ConfigStorage config;
 WebServer webServer(&config, &server);
 AccessControl accessControl(&config);
 
-
 int currentLockState = 1;
 
 void setup()
@@ -45,11 +44,14 @@ void setup()
 
 void loop()
 {
-  if (config.lockState != 3)
-    if (config.lockState == 1)
-      accessControl.Lock();
-    else
-      accessControl.Unlock();
-  accessControl.NextCard();
+  if (config.lockState == 3)
+  {
+    accessControl.NextCard();
+    accessControl.Lock();
+  }
+  else if (config.lockState == 1)
+    accessControl.Block();
+  else
+    accessControl.Unlock();
   delay(500);
 }

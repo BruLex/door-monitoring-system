@@ -1,4 +1,4 @@
-export * from './group.model';
+export * from './role.model';
 export * from './device.model';
 export * from './log.model';
 export * from './user.model';

@@ -18,7 +18,7 @@
 class AccessControl
 {
 private:
-    const String check_uid_request = "/remote/check_uid";
+    const String check_uuid_request = "/access_control/check_card";
     WiFiClient wifi;
     ConfigStorage *config;
     MFRC522 mfrc522 = MFRC522(SS_PIN, RST_PIN);
@@ -30,6 +30,7 @@ public:
     void NextCard();
     void Unlock();
     void Lock();
+    void Block();
 
 };
 

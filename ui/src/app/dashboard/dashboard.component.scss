@@ -8,3 +8,15 @@
 .red-icon {
     color: mat-color($mat-red, 500);
 }
+
+[mat-dialog-content] {
+    display: flex !important;
+    min-height: 100px;
+}
+
+.cannot-apply-new-config-label {
+    mat-icon {
+        margin-right: 8px;
+    }
+    align-items: center;
+}

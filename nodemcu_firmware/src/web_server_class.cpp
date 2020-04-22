@@ -8,43 +8,35 @@ void WebServer::Init()
     //  * Bind routing and start HTTP server
     //  */
     server->on("/ping", HTTP_POST, [this](AsyncWebServerRequest *request) {
-        if (!request->authenticate(config->authHash))
-        {
-            request->send(403, "application/json", "{\"status\": \"error\", \"message\":\"Access denied\"}");
-            return;
-        }
-
+        Serial.println("WebServer::on(/ping): handled");
         request->send(200, "application/json", "{\"status\": \"success\"}");
     });
 
     server->on("/update_config", HTTP_POST, [this](AsyncWebServerRequest *request) {
-        if (!request->authenticate(config->authHash))
+        Serial.println("WebServer::on(/update_config): handled");
+
+        if (!request->hasHeader("TOKEN") || request->getHeader("TOKEN")->value() != String(config->authHash))
         {
+            Serial.println("WebServer::on(/update_config): Access denied");
             request->send(403, "application/json", "{\"status\": \"error\", \"message\":\"Access denied\"}");
             return;
         }
-        if (request->hasParam("lock_state", true))
+        if (request->hasParam("mode", true))
         {
-            String newParam = String(request->getParam("lock_state", true)->value());
-            Serial.println("update_config::param lock_state changed: " + String(config->lockState) + " -> " + newParam);
-            config->lockState = newParam.toInt();
+            String newParam = String(request->getParam("mode", true)->value());
+            Serial.println("WebServer::on(/update_config): param lockState changed: " + String(config->lockState) + " -> " + newParam);
+            config->lockState = newParam == "LOCKED" ? 1 : newParam == "UNLOCKED" ? 2 : 3;
         }
-        if (request->hasParam("server_ip", true))
+        if (request->hasParam("server_address", true))
         {
-            String newParam = String(request->getParam("server_ip", true)->value());
-            Serial.println("update_config::param controlServerIp changed: " + String(config->controlServerIp) + " -> " + newParam);
-            strlcpy(config->controlServerIp, newParam.c_str(), sizeof(config->controlServerIp));
+            String newParam = String(request->getParam("server_address", true)->value());
+            Serial.println("WebServer::on(/update_config): param controlServerAddress changed: " + String(config->controlServerAddress) + " -> " + newParam);
+            strlcpy(config->controlServerAddress, newParam.c_str(), sizeof(config->controlServerAddress));
         }
-        // if (request->hasParam("server_port", true))
-        // {
-        //     String newParam = String(request->getParam("server_port", true)->value());
-        //     Serial.println("update_config::param controlServerPort changed: " + String(config->controlServerPort) + " -> " + newParam);
-        //     config->controlServerPort = newParam.toInt();
-        // }
         if (request->hasParam("token", true))
         {
             String newParam = String(request->getParam("token", true)->value());
-            Serial.println("update_config::param authHash changed: " + String(config->authHash) + " -> " + newParam);
+            Serial.println("WebServer::on(/update_config): param authHash changed: " + String(config->authHash) + " -> " + newParam);
             strlcpy(config->authHash, newParam.c_str(), sizeof(config->authHash));
         }
 
