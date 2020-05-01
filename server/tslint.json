@@ -80,8 +80,8 @@
       "options": {
         "import-sources-order": "any",
         "named-imports-order": "any",
-        "roleed-imports": true,
-        "roles": [
+        "grouped-imports": true,
+        "groups": [
           {
           "name": "angular imports",
           "match": "^fastify",

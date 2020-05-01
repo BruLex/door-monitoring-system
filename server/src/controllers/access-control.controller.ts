@@ -2,13 +2,13 @@ import { FastifyRequest } from 'fastify';
 import { Controller, Inject, POST } from 'fastify-decorators';
 
 import * as jsend from 'jsend';
-import { Device, Card } from '../models';
 
+import { Device, Card } from '../models';
 import { checkCard } from '../schemas';
 import { AccessLoggerService } from '../services/access-logger.service';
 
 @Controller({ route: '/access_control' })
-export default class AccessControlController {
+export class AccessControlController {
     @Inject(AccessLoggerService) private accessLogSrv!: AccessLoggerService;
 
     @POST({ url: '/check_card', options: { schema: checkCard } })

@@ -8,7 +8,7 @@ import * as jsend from 'jsend';
 import { getConfigsSchema, updateConfigsSchema } from '../schemas';
 
 @Controller({ route: '/config' })
-export default class ConfigController {
+export class ConfigController {
     @POST({ url: '/get_configs', options: { schema: getConfigsSchema } })
     async getConfigs(): Promise<jsend.JSendObject> {
         return jsend.success(JSON.parse(fs.readFileSync('../configs/config.json', { encoding: 'UTF-8' })));

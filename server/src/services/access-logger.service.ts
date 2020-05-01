@@ -1,4 +1,5 @@
 import { Service } from 'fastify-decorators';
+
 import { Device, Log, Card } from 'src/models';
 
 @Service()

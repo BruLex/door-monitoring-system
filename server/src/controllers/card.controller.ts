@@ -10,7 +10,7 @@ import { Card } from '../models';
 import { addCardSchema, deleteCardSchema, getCardInfoSchema, getCardListSchema, updateCardSchema } from '../schemas';
 
 @Controller({ route: '/card/' })
-export default class CardController {
+export class CardController {
     @POST({ url: '/add_card', options: { schema: addCardSchema } })
     async addCard(request: FastifyRequest): Promise<jsend.JSendObject> {
         return jsend.success({ i_card: (await Card.create(request.body)).i_card });

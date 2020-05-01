@@ -1,8 +1,10 @@
-import { AxiosInstance, AxiosResponse, default as axios } from 'axios';
 import { Service } from 'fastify-decorators';
+
+import { AxiosInstance, AxiosResponse, default as axios } from 'axios';
 import * as ip from 'ip';
 import { URLSearchParams } from 'url';
 import { v4 as uuid } from 'uuid';
+
 import { Constants } from '../controllers/device.controller';
 import { DeviceApiEndpoints } from '../shared/constants';
 import { DeviceConfig, LockMode } from '../shared/types';

@@ -21,7 +21,7 @@ import {
 export { Constants } from '../shared/constants';
 
 @Controller({ route: '/device' })
-export default class DeviceController {
+export class DeviceController {
     @Inject(DeviceControlService) private deviceCtrlSrv!: DeviceControlService;
 
     @POST({ url: '/add_device', options: { schema: addDeviceSchema } })

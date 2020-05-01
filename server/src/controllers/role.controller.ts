@@ -6,11 +6,11 @@ import * as jsend from 'jsend';
 import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
-import { Role, RoleDevicePermissions } from '../models';
+import { Role, RoleDevicePermission } from '../models';
 import { addRoleSchema, deleteRoleSchema, getRoleInfoSchema, getRoleListSchema, updateRoleSchema } from '../schemas';
 
 @Controller({ route: '/role' })
-export default class RoleController {
+export class RoleController {
     @POST({ url: '/add_role', options: { schema: addRoleSchema } })
     async addRole(request: FastifyRequest): Promise<jsend.JSendObject> {
         const role: Role = await Role.create(_.pick(request.body, ['name', 'allowed_all']));
@@ -18,7 +18,7 @@ export default class RoleController {
         if (!request.body.allowed_all && !!request.body.allowed_devices) {
             for (const device of request.body.allowed_devices) {
                 const i_device: number = Number(device.i_device);
-                await RoleDevicePermissions.create({ i_role, i_device });
+                await RoleDevicePermission.create({ i_role, i_device });
             }
         }
         return jsend.success({ i_role });
@@ -61,11 +61,11 @@ export default class RoleController {
         }
         Object.keys(_.pick(body, ['name', 'allowed_all'])).forEach((key: string): any => (role_info[key] = body[key]));
         role_info.save();
-        const queryInterface: QueryInterface = RoleDevicePermissions.sequelize.getQueryInterface();
-        await queryInterface.bulkDelete(RoleDevicePermissions.tableName, { i_role });
+        const queryInterface: QueryInterface = RoleDevicePermission.sequelize.getQueryInterface();
+        await queryInterface.bulkDelete(RoleDevicePermission.tableName, { i_role });
 
         if (!role_info.allowed_all && !!allowed_devices) {
-            await RoleDevicePermissions.bulkCreate(allowed_devices.map(({ i_device }) => ({ i_device, i_role })));
+            await RoleDevicePermission.bulkCreate(allowed_devices.map(({ i_device }) => ({ i_device, i_role })));
         }
         return jsend.success(null);
     }

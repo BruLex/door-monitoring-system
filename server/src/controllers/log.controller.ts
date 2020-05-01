@@ -5,7 +5,7 @@ import * as jsend from 'jsend';
 import { Log } from '../models';
 
 @Controller({ route: '/logs' })
-export default class LogController {
+export class LogController {
     @POST({ url: '/get_system_logs' })
     async getLogs(): Promise<jsend.JSendObject> {
         return jsend.success({ logs: await Log.findAll() });

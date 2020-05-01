@@ -1,9 +1,10 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import { LockMode } from 'src/shared/types';
+
+import { LockMode } from '../shared/types';
 
 @Table({
-    tableName: 'device',
-    modelName: 'device'
+    tableName: 'devices',
+    modelName: 'devices'
 })
 export class Device extends Model<Device> {
     @Column({ primaryKey: true, autoIncrement: true }) i_device: number;

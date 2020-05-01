@@ -5,8 +5,8 @@ import { Role } from './role.model';
 import { Card } from './card.model';
 
 @Table({
-    tableName: 'log',
-    modelName: 'log'
+    tableName: 'logs',
+    modelName: 'logs'
 })
 export class Log extends Model<Log> {
     @Column({ primaryKey: true, autoIncrement: true }) i_log: number;

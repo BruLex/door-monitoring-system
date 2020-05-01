@@ -1,0 +1,17 @@
+{
+  "database": {
+    "database": "door_system",
+    "username": "door",
+    "password": "door123",
+    "sync": {
+      "force": false,
+      "alter": false
+    }
+  },
+  "server": {
+    "port": 3000,
+    "logger": {
+      "level": "info"
+    }
+  }
+}

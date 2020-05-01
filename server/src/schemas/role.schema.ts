@@ -1,6 +1,6 @@
 import { RouteSchema } from 'fastify';
-import { deviceObjectSchema } from './device.schema';
 
+import { deviceObjectSchema } from './device.schema';
 import { response2xxFactory } from './schema.utils';
 import { cardObjectSchema } from './card.schema';
 

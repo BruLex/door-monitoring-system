@@ -16,12 +16,16 @@
   "license": "ISC",
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/ws": "^7.2.4",
     "ajv": "6.12.0",
     "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "cookie": "^0.4.1",
     "fastify": "2.13.0",
     "fastify-cors": "3.0.3",
-    "fastify-decorators": "2.0.0-5",
+    "fastify-decorators": "2.0.0-7",
     "fastify-oas": "^2.6.2",
+    "fastify-websocket": "^1.1.2",
     "fs": "0.0.1-security",
     "ip": "^1.1.5",
     "jsend": "1.1.0",
@@ -34,6 +38,7 @@
     "source-map-loader": "0.2.4",
     "tslib": "1.11.1",
     "uuid": "^7.0.3",
+    "ws": "^7.2.3",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
