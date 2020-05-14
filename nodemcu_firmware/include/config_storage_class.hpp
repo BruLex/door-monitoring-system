@@ -12,12 +12,11 @@ private:
     const int default_lock_state = 0;
     const String default_remote_address = "192.168.31.160:3000";
     const String default_auth_hash = "fee275a0-8155-55fe-a071-ce7f580e1eac";
-    
 
 public:
-    char authHash[512];
+    char authHash[36];
     char controlServerAddress[255];
-    int lockState;
+    byte lockState;
 
     void Init();
     void Load();

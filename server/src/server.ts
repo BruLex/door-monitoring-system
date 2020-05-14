@@ -57,8 +57,7 @@ export class Server {
                 server: {
                     port: 3000,
                     logger: {
-                        level: 'info',
-                        file: './logs/log_' + new Date().toISOString() + '.log'
+                        level: 'info'
                     }
                 }
             },

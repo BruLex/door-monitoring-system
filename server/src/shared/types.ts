@@ -74,7 +74,7 @@ export interface ServerInstanceConfig {
         port?: number;
         logger?: {
             level: 'info' | 'error' | 'debug' | 'fatal' | 'warn' | 'trace' | 'child';
-            file: string;
+            file?: string;
         };
     };
 }

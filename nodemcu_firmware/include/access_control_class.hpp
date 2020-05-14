@@ -23,15 +23,17 @@ private:
     ConfigStorage *config;
     MFRC522 mfrc522 = MFRC522(SS_PIN, RST_PIN);
     void ChangeColor(bool red, bool green);
+    void ProcessCardIfExists();
+    void Unlock();
+    void Lock();
+    void Block();
+    bool IsCardHaveAccess(String uuid);
+    void ProcessCardIfPresent();
 
 public:
     AccessControl(ConfigStorage *cfg);
     void Init();
     void NextCard();
-    void Unlock();
-    void Lock();
-    void Block();
-
 };
 
 #endif // ACCESS_CONTROL_CLASS_H_

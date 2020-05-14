@@ -29,49 +29,65 @@ void AccessControl::Block()
     digitalWrite(LOCK_PIN, LOW);
 }
 
-
 void AccessControl::Unlock()
 {
     ChangeColor(false, true);
     digitalWrite(LOCK_PIN, HIGH);
 }
 
-void AccessControl::NextCard()
+void AccessControl::ProcessCardIfPresent()
 {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
     {
         ChangeColor(true, true);
-        String uid = "";
+        String uuid = "";
         for (byte i = 0; i < mfrc522.uid.size; i++)
         {
-            uid.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
-            uid.concat(String(mfrc522.uid.uidByte[i], HEX));
+            uuid.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
+            uuid.concat(String(mfrc522.uid.uidByte[i], HEX));
         }
         mfrc522.PICC_HaltA();
-        Serial.println("AccessControl::NextCard: End reading:uid -> " + uid);
+        Serial.println("AccessControl::NextCard: End reading:uid -> " + uuid);
 
-        HTTPClient http;
-        http.begin("http://" + String(config->controlServerAddress) + check_uuid_request);
-        http.addHeader("Content-Type", "application/json");
-        int statusCode = http.POST("{\"uuid\": \"" + uid + "\"}");
-        String response = http.getString();
-        Serial.print("AccessControl::NextCard::response: " + response);
-        DynamicJsonDocument doc(1024);
-        bool accessGranted = statusCode > 0 &&
-                             String(deserializeJson(doc, response).c_str()) == String("Ok") &&
-                             String(doc["status"].as<char *>()) == String("success");
+        bool accessGranted = IsCardHaveAccess(uuid);
 
         if (accessGranted)
-        {
-            Serial.print("AccessControl::NextCard: Access granted");
             Unlock();
-        }
         else
-        {
-            Serial.print("AccessControl::NextCard: Access denied");
             ChangeColor(true, false);
-        }
+
+        Serial.print("AccessControl::NextCard: Access " + accessGranted ? "granted" : "denied");
+
         delay(2000);
         Lock();
     }
+}
+
+bool AccessControl::IsCardHaveAccess(String uuid)
+{
+
+    HTTPClient http;
+    http.begin("http://" + String(config->controlServerAddress) + check_uuid_request);
+    http.addHeader("Content-Type", "application/json");
+    int statusCode = http.POST("{\"uuid\": \"" + uuid + "\"}");
+    String response = http.getString();
+    Serial.print("AccessControl::NextCard::response: " + response);
+    DynamicJsonDocument doc(1024);
+    return statusCode > 0 &&
+           String(deserializeJson(doc, response).c_str()) == String("Ok") &&
+           String(doc["status"].as<char *>()) == String("success");
+}
+
+void AccessControl::NextCard()
+{
+    if (config->lockState == 3)
+    {
+        ProcessCardIfPresent();
+        Lock();
+    }
+    else if (config->lockState == 1)
+        Block();
+    else
+        Unlock();
+    delay(500);
 }

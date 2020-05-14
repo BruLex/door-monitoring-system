@@ -1,27 +1,61 @@
 #include "config_storage_class.hpp"
 
-void ConfigStorage::Init(){
+void ConfigStorage::Init()
+{
   bool mountResult = SPIFFS.begin();
   Serial.println(mountResult ? "File system mounted with success" : "Error mounting the file system");
+  Load();
 }
+
 // Loads the configuration from a file
 void ConfigStorage::Load()
 {
   // Open file for reading
   File file = SPIFFS.open(config_path, "r");
   // Allocate the memory pool on the stack.
-  DynamicJsonDocument doc(1024);
+  DynamicJsonDocument doc(JSON_OBJECT_SIZE(3) + 360);
   // Parse the root object
   DeserializationError error = deserializeJson(doc, file);
-  
+
   if (error)
-    Serial.println("ConfigStorage::load: Failed to read file, using default configuration");
+    Serial.println("ConfigStorage::Load: Failed to read file, using default configuration");
   else
     serializeJson(doc, Serial);
   // Copy values from the JsonObject to the Config
   lockState = doc["lockState"] | default_lock_state;
   strlcpy(authHash, doc["authHash"] | default_auth_hash.c_str(), sizeof(authHash));
   strlcpy(controlServerAddress, doc["controlServerAddress"] | default_remote_address.c_str(), sizeof(controlServerAddress));
+  file.close();
+}
+
+bool CheckUUIDIsAllowedSaved(String uid)
+{
+  File file = SPIFFS.open("uuids", "r");
+
+  DynamicJsonDocument doc(JSON_ARRAY_SIZE(1000) + 10000);
+  DeserializationError error = deserializeJson(doc, file);
+  if (error)
+  {
+    Serial.println("ConfigStorage::CheckIdWithSaved: Failed to read file with uuids");
+    return false;
+  }
+  JsonArray array = doc.as<JsonArray>();
+  for (JsonVariant v : array)
+  {
+    if (uid == String(v.as<char *>()))
+    {
+      return true;
+    }
+  }
+  file.close();
+  return false;
+}
+
+void SaveUUIDS(char* uuid)
+{
+  SPIFFS.remove("uuids");
+  File file = SPIFFS.open("uuids", "W");
+  file.write(uuid);
   file.close();
 }
 

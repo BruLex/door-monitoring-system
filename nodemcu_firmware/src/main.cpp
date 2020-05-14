@@ -35,7 +35,6 @@ void setup()
   }
   Serial.println(String("Connected, IP address: ") + WiFi.localIP().toString());
   config.Init();
-  config.Load();
 
   accessControl.Init();
   webServer.Init();
@@ -44,14 +43,5 @@ void setup()
 
 void loop()
 {
-  if (config.lockState == 3)
-  {
     accessControl.NextCard();
-    accessControl.Lock();
-  }
-  else if (config.lockState == 1)
-    accessControl.Block();
-  else
-    accessControl.Unlock();
-  delay(500);
 }
