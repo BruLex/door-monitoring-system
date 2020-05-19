@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include "config_storage_class.hpp"
+#include "config_storage_class.h"
 
 class WebServer
 {

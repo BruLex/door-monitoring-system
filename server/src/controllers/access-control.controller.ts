@@ -4,14 +4,14 @@ import { Controller, Inject, POST } from 'fastify-decorators';
 import * as jsend from 'jsend';
 
 import { Device, Card } from '../models';
-import { checkCard } from '../schemas';
+import { AccessControlSchema } from '../schemas';
 import { AccessLoggerService } from '../services/access-logger.service';
 
 @Controller({ route: '/access_control' })
 export class AccessControlController {
     @Inject(AccessLoggerService) private accessLogSrv!: AccessLoggerService;
 
-    @POST({ url: '/check_card', options: { schema: checkCard } })
+    @POST({ url: '/check_card', options: { schema: AccessControlSchema.checkCard } })
     async checkCard(request: FastifyRequest): Promise<jsend.JSendObject> {
         const { ip, body } = request;
         const { uuid } = body;
@@ -33,8 +33,11 @@ export class AccessControlController {
         }
         this.accessLogSrv.logAction({ card, device, ip, error, uuid }).then();
         if (error) {
+            console.log(`Access denied, device_ip:${ip}, card:${uuid} reason: ` + error);
             throw Error('Access denied, reason: ' + error);
         }
+        console.log(`Access granted, device_ip:${ip}, card:${uuid}`);
+
         return jsend.success(null);
     }
 }

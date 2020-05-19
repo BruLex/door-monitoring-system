@@ -5,8 +5,9 @@ import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
 import { AppService } from 'src/app/app.service';
-import { ApiResponse } from 'src/app/types';
 import { Model } from 'src/app/utils/model';
+
+import { ApiResponse } from '@utils/types';
 
 export interface StoreSchema<T extends Model> {
     /**

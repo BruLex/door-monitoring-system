@@ -1,7 +1,6 @@
 import { RouteSchema } from 'fastify';
 
-import { response2xxFactory } from 'src/schemas/schema.utils';
-import { cardObjectSchema } from 'src/schemas/card.schema';
+import { SchemaUtils } from './schema.utils';
 
 const authHeader: object = {
     headers: {
@@ -13,67 +12,69 @@ const authHeader: object = {
     }
 };
 
-export const loginSchema: RouteSchema = {
-    body: {
-        type: 'object',
-        required: ['login', 'password'],
-        properties: {
-            login: {
-                type: 'string'
-            },
-            password: {
-                type: 'string'
-            }
-        }
-    },
-    response: response2xxFactory({
-        data: {
+export class SessionSchema {
+    static readonly loginSchema: RouteSchema = {
+        body: {
             type: 'object',
+            required: ['login', 'password'],
             properties: {
-                session: {
+                login: {
+                    type: 'string'
+                },
+                password: {
                     type: 'string'
                 }
             }
-        }
-    })
-};
-
-export const logoutSchema: RouteSchema = {
-    ...authHeader,
-    response: response2xxFactory()
-};
-
-export const changePasswordSchema: RouteSchema = {
-    body: {
-        type: 'object',
-        required: ['i_card'],
-        properties: {
-            login: {
-                type: 'string'
-            },
-            old_password: {
-                type: 'string'
-            },
-            new_password: {
-                type: 'string'
+        },
+        response: SchemaUtils.response2xxFactory({
+            data: {
+                type: 'object',
+                properties: {
+                    session: {
+                        type: 'string'
+                    }
+                }
             }
-        }
-    },
-    response: response2xxFactory()
-};
+        })
+    };
 
-export const changeMyData: RouteSchema = {
-    ...authHeader
-};
+    static readonly logoutSchema: RouteSchema = {
+        ...authHeader,
+        response: SchemaUtils.response2xxFactory()
+    };
 
-export const getMyDataSchema: RouteSchema = {
-    ...authHeader,
-    response: response2xxFactory({
-        type: 'object',
-        properties: {
-            name: {
-                type: 'number'
+    static readonly changePasswordSchema: RouteSchema = {
+        body: {
+            type: 'object',
+            required: ['i_card'],
+            properties: {
+                login: {
+                    type: 'string'
+                },
+                old_password: {
+                    type: 'string'
+                },
+                new_password: {
+                    type: 'string'
+                }
             }
-        }
-    })
-};
+        },
+        response: SchemaUtils.response2xxFactory()
+    };
+
+    static readonly changeMyData: RouteSchema = {
+        ...authHeader
+    };
+
+    static readonly getMyDataSchema: RouteSchema = {
+        ...authHeader,
+        response: SchemaUtils.response2xxFactory({
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'number'
+                }
+            }
+        })
+    };
+}

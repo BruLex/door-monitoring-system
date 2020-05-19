@@ -1,9 +1,19 @@
-import { SequelizeOptions } from 'sequelize-typescript/dist/sequelize/sequelize/sequelize-options';
+import { Card, Device } from '../models';
+import { LockMode } from './constants';
 
-export enum LockMode {
-    Locked = 'LOCKED',
-    Unlocked = 'UNLOCKED',
-    Guard = 'GUARD'
+export interface ApplyConfigOptions {
+    deviceIp: string;
+    deviceMode: LockMode;
+    generateToken?: boolean;
+    token?: string;
+}
+
+export interface LogActionOptions {
+    card?: Card;
+    device?: Device;
+    ip?: string;
+    uuid?: string;
+    error?: string;
 }
 
 export interface DeviceConfig {
@@ -68,6 +78,7 @@ export interface ServerInstanceConfig {
         };
     };
     server?: {
+        ip?: string;
         /**
          * The port of the server.
          */

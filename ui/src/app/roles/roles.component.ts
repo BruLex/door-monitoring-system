@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { ApiResponse } from 'src/app/types';
+import { ApiResponse } from '@utils/types';
 
 import { DeviceModel, RoleModel, CardModel } from '@models';
 import { DeviceStore, RoleStore } from '@stores';
@@ -31,8 +31,8 @@ export class RolesComponent extends AbstractEnityManageComponent<RoleModel, Role
     devices: DeviceStore = new DeviceStore();
     filteredOptions: Observable<DeviceModel[]> = this.myControl.valueChanges.pipe(
         startWith(''),
-        map(value => (typeof value === 'string' ? value : value?.name)),
-        map(name => (name ? this._filter(name) : this.notAddedDoors))
+        map((value) => (typeof value === 'string' ? value : value?.name)),
+        map((name) => (name ? this._filter(name) : this.notAddedDoors))
     );
 
     @ViewChild(MatPaginator, { static: true }) set paginator(paginator: MatPaginator) {
@@ -65,7 +65,7 @@ export class RolesComponent extends AbstractEnityManageComponent<RoleModel, Role
     ngOnInit(): void {
         super.ngOnInit();
         this.subs.push(
-            combineLatest([this.store.reload().onLoad, this.devices.reload().onLoad]).subscribe(responses =>
+            combineLatest([this.store.reload().onLoad, this.devices.reload().onLoad]).subscribe((responses) =>
                 responses.forEach((resp: ApiResponse): void => {
                     if (!resp.isSuccess) {
                         AppService.instance().openSnackBar(resp?.message || 'Internal error');

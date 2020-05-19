@@ -1,16 +1,11 @@
 import { Service } from 'fastify-decorators';
 
-import { Device, Log, Card } from 'src/models';
+import { Log } from '../models';
+import { LogActionOptions } from '../shared/types';
 
 @Service()
 export class AccessLoggerService {
-    async logAction(options: {
-        card?: Card;
-        device?: Device;
-        ip?: string;
-        uuid?: string;
-        error?: string;
-    }): Promise<void> {
+    async logAction(options: LogActionOptions): Promise<void> {
         const log: Log = new Log({
             device_ip: options.device?.ip || options.ip,
             device_name: options.device?.name || 'N/D',

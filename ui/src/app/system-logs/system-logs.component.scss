@@ -1,21 +1,14 @@
+@import "~@angular/material/theming";
 
 .load-message {
     font-size: 24px;
     text-align: center;
 }
 
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
+[granted] {
+    background-color: mat-color($mat-deep-orange, 500);
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-    border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #2196f3;
-    border-radius: 10px;
+[denied] {
+    background-color: mat-color($mat-light-green, A200);
 }

@@ -1,0 +1,289 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+
+skinparam groupInheritance 20
+
+enum LockMode {
+    Locked
+    Unlocked
+    Guard
+}
+interface DeviceConfig {
+    +token?: string
+    +server_address?: string
+    +mode: LockMode
+}
+enum DeviceApiEndpoints {
+    Ping
+    UpdateConfig
+}
+
+interface ServerInstanceConfig {
+    +database?: {
+        database?: string;
+        username?: string;
+        password?: string;
+        host?: string;
+        port?: number;
+        sync?: {
+            force?: boolean;
+            alter?: boolean;
+        };
+    };
+    +server?: {
+        port?: number;
+        logger?: {
+            level: 'info' | 'error' | 'debug' | 'fatal' | 'warn' | 'trace' | 'child';
+            file?: string;
+        };
+    };
+}
+interface ApplyConfigOptions {
+    deviceIp: string;
+    deviceMode: LockMode;
+    generateToken?: boolean;
+    token: string;
+}
+
+interface LogActionOptions {
+    card?: Card;
+    device?: Device;
+    ip?: string;
+    uuid?: string;
+    error?: string;
+}
+
+DeviceController *-- Constants
+DeviceControlService *-- Constants
+SessionService *-- Constants
+
+DeviceControlService *-- DeviceApiEndpoints
+Device *-UP- LockMode
+
+LogActionOptions *-- Device
+LogActionOptions *-- Card
+
+ApplyConfigOptions *-UP- LockMode
+AccessLoggerService *-UP- LogActionOptions
+
+DeviceControlService *-UP- ApplyConfigOptions
+DeviceControlService *-UP- DeviceConfig
+Server *-- ServerInstanceConfig
+
+class Constants {
+    +{static} defaultTimeout: number
+    +{static} defaultToken: string
+    +{static} timestampOneWeek: number
+}
+
+    class Device {
+        +i_device: number
+        +name: string
+        +description: string
+        +ip: string
+        +mode: LockMode
+        +token: string
+        +status: boolean
+        +toJSON(): object
+    }
+    class Card {
+        +i_card: number
+        +uuid: string
+        +name: string
+        +i_role: number
+        +role: Role
+    }
+    class RoleDevicePermission {
+        +i_role_device: number
+        +i_device: number
+        +i_role: number
+    }
+    class Role {
+        +i_role: number
+        +name: string
+        +allowed_all: boolean
+        +cards: Card[]
+        +allowed_devices: Device[]
+    }
+    class Log {
+        +i_log: number
+        +i_device: number
+        +device_name: string
+        +device: Device
+        +i_role: number
+        +role_name: string
+        +role: Role
+        +i_card: number
+        +card_name: string
+        +card: Card
+        +time: Date
+        +access: boolean
+        +device_ip: string
+        +uuid: string
+        +error: string
+    }
+    class User {
+        +i_user: number
+        +name: string
+        +login: string
+        +password: string
+    }
+    class Session {
+        +i_session: number
+        +session: string
+        +created_at: Date
+        +i_user: number
+        +user: User
+    }
+
+class SchemaUtils {
+        +{static} response2xxFactory(property?: object): { [key: string]: Object; }
+    }
+
+    
+    class DeviceSchema {
+        +{static} getDeviceListSchema: RouteSchema
+        +{static} addDeviceSchema: RouteSchema
+        +{static} getDeviceInfoSchema: RouteSchema
+        +{static} updateDeviceSchema: RouteSchema
+        +{static} deleteDeviceSchema: RouteSchema
+    }
+    class CardSchema {
+        +{static} getCardListSchema: RouteSchema
+        +{static} addCardSchema: RouteSchema
+        +{static} getCardInfoSchema: RouteSchema
+        +{static} updateCardSchema: RouteSchema
+        +{static} deleteCardSchema: RouteSchema
+    }
+    class RoleSchema {
+        +{static} getRoleListSchema: RouteSchema
+        +{static} addRoleSchema: RouteSchema
+        +{static} getRoleInfoSchema: RouteSchema
+        +{static} updateRoleSchema: RouteSchema
+        +{static} deleteRoleSchema: RouteSchema
+    }
+    class AccessControlSchema {
+        +{static} checkCard: RouteSchema
+    }
+    class LogSchema {
+        +{static} getSystemLogsSchema: RouteSchema
+    }
+    class SessionSchema {
+        +{static} loginSchema: RouteSchema
+        +{static} logoutSchema: RouteSchema
+        +{static} changePasswordSchema: RouteSchema
+        +{static} changeMyData: RouteSchema
+        +{static} getMyDataSchema: RouteSchema
+    }
+
+    class AccessLoggerService {
+        +logAction(options: LogActionOptions): Promise<void>
+    }
+
+    class SessionService {
+        +{static} checkSID(request: FastifyRequest, reply: FastifyReply): Promise<Session>
+    }
+    class DeviceControlService {
+        +pingDevice(deviceIp: string): Promise<boolean>
+        +applyConfig(options: ApplyConfigOptions): Promise<string>
+    }
+
+
+    class AccessControlController {
+        -accessLogSrv: AccessLoggerService
+        +checkCard(request: FastifyRequest): Promise<JSendObject>
+    }
+    class CardController {
+        +addCard(request: FastifyRequest): Promise<JSendObject>
+        +getCardInfo(request: FastifyRequest, reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getCardList(): Promise<JSendObject>
+        +updateCard( request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteCard(request: FastifyRequest): Promise<JSendObject>
+    }
+    class DeviceController {
+        +addDevice(request: FastifyRequest): Promise<JSendObject>
+        +getDeviceInfo(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getDeviceList(request: FastifyRequest): Promise<JSendObject>
+        +updateDevice(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteDevice(request: FastifyRequest): Promise<JSendObject>
+    }
+    class RoleController {
+        +addRole(request: FastifyRequest): Promise<JSendObject>
+        +getRoleInfo(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getRoleList(request: FastifyRequest): Promise<JSendObject>
+        +updateRole(request: FastifyRequest, reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteRole(request: FastifyRequest): Promise<JSendObject>
+    }
+    class SessionController {
+        -setSID(reply: FastifyReply, session: string): FastifyReply
+        +login(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +logout(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +change_password(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +getMyData(request: FastifyRequest, reply: FastifyReply): Promise<void>
+    }
+    class LogController {
+        +getLogs(): Promise<JSendObject>
+    }
+
+class Server {
+    -configuration: ServerInstanceConfig
+    -sequelize: Sequelize
+    -server: fastify.FastifyInstance
+    +init(): Server
+    +start(): Promise<void>
+    -registerPlugins(): void
+    -setupHandlers(): void
+}
+
+AccessLoggerService *-UP- Card
+AccessLoggerService *-UP- Device
+AccessLoggerService *-UP- Session
+
+AccessControlController *-UP- AccessLoggerService
+AccessControlController *-LEFT- Card
+AccessControlController *-LEFT- Device
+AccessControlController *-- AccessControlSchema
+
+CardController *-- CardSchema
+CardController *-LEFT- Card
+
+DeviceController *-UP- DeviceControlService
+DeviceController *-- DeviceSchema
+DeviceController *-LEFT- Device
+
+LogController *-- LogSchema
+LogController *-LEFT- Log
+
+RoleController *-- RoleSchema
+RoleController *-LEFT- Role
+RoleController *-- RoleDevicePermission
+
+SessionController *-- Session
+SessionController *-LEFT- User
+SessionController *-- SessionSchema
+SessionController *-UP- SessionService
+
+DeviceSchema *-DOWN- SchemaUtils
+CardSchema *-DOWN- SchemaUtils
+RoleSchema *-DOWN- SchemaUtils
+AccessControlSchema *-DOWN- SchemaUtils
+SessionSchema *-DOWN- SchemaUtils
+LogSchema *-DOWN- SchemaUtils
+Server *-UP- Device
+Server *-UP- Card
+Server *-UP- Role
+Server *-UP- RoleDevicePermission
+Server *-UP- Log
+Server *-UP- User
+Server *-UP- Session
+
+Server *-DOWN- AccessControlController
+Server *-DOWN- CardController
+Server *-DOWN- DeviceController
+Server *-DOWN- LogController
+Server *-DOWN- RoleController
+Server *-DOWN- SessionController
+Server *-DOWN- LogController
+@enduml

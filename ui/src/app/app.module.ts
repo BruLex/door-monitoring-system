@@ -17,6 +17,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -36,12 +37,14 @@ import { LoadmaskDirective } from '@utils/loadmask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppGuard } from './app.guard';
 import { AppService } from './app.service';
 import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
 import { RolesComponent } from './roles';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
 import { CardsComponent } from './cards';
+import { LoginComponent } from './login/login.component';
 
 const ANGULAR_MATERIAL: any[] = [
     MatTableModule,
@@ -71,7 +74,8 @@ const ANGULAR_MATERIAL: any[] = [
         CardsComponent,
         SystemLogsComponent,
         LoadmaskDirective,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        LoginComponent
     ],
     imports: [
         ...ANGULAR_MATERIAL,
@@ -91,10 +95,11 @@ const ANGULAR_MATERIAL: any[] = [
         MatExpansionModule,
         MatAutocompleteModule,
         MatChipsModule,
-        MatSelectModule
+        MatSelectModule,
+        MatMenuModule
     ],
     entryComponents: [ConfirmDialogComponent],
-    providers: [AppService],
+    providers: [AppService, AppGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

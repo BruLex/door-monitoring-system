@@ -1,0 +1,79 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+
+skinparam groupInheritance 20
+
+    class AccessControlController {
+        -accessLogSrv: AccessLoggerService
+        +checkCard(request: FastifyRequest): Promise<JSendObject>
+    }
+    class CardController {
+        +addCard(request: FastifyRequest): Promise<JSendObject>
+        +getCardInfo(request: FastifyRequest, reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getCardList(): Promise<JSendObject>
+        +updateCard( request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteCard(request: FastifyRequest): Promise<JSendObject>
+    }
+    class DeviceController {
+        +addDevice(request: FastifyRequest): Promise<JSendObject>
+        +getDeviceInfo(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getDeviceList(request: FastifyRequest): Promise<JSendObject>
+        +updateDevice(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteDevice(request: FastifyRequest): Promise<JSendObject>
+    }
+    class RoleController {
+        +addRole(request: FastifyRequest): Promise<JSendObject>
+        +getRoleInfo(request: FastifyRequest,reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +getRoleList(request: FastifyRequest): Promise<JSendObject>
+        +updateRole(request: FastifyRequest, reply: FastifyReply): Promise<JSendObject | FastifyReply>
+        +deleteRole(request: FastifyRequest): Promise<JSendObject>
+    }
+    class SessionController {
+        -setSID(reply: FastifyReply, session: string): FastifyReply
+        -removeSID(reply: FastifyReply, session: string): FastifyReply
+        -createNewSID(i_user: number): string
+        +login(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +logout(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +change_password(request: FastifyRequest, reply: FastifyReply): Promise<void>
+        +getMyData(request: FastifyRequest, reply: FastifyReply): Promise<void>
+    }
+    class LogController {
+        +getLogs(): Promise<JSendObject>
+    }
+
+
+AccessControlController *-UP- AccessLoggerService
+AccessControlController *-LEFT- Card
+AccessControlController *-LEFT- Device
+AccessControlController *-- AccessControlSchema
+
+CardController *-- CardSchema
+CardController *-LEFT- Card
+
+DeviceController *-UP- DeviceControlService
+DeviceController *-- DeviceSchema
+DeviceController *-LEFT- Device
+
+LogController *-- LogSchema
+LogController *-LEFT- Log
+
+RoleController *-- RoleSchema
+RoleController *-LEFT- Role
+RoleController *-- RoleDevicePermission
+
+SessionController *-- Session
+SessionController *-LEFT- User
+SessionController *-- SessionSchema
+SessionController *-UP- SessionService
+
+
+Server *-DOWN- AccessControlController
+Server *-UP- CardController
+Server *-UP- DeviceController
+Server *-UP- LogController
+Server *-DOWN- RoleController
+Server *-DOWN- SessionController
+Server *-DOWN- LogController
+@enduml

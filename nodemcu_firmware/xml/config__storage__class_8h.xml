@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
+  <compounddef id="config__storage__class_8h" kind="file" language="C++">
+    <compoundname>config_storage_class.h</compoundname>
+    <includes local="no">Arduino.h</includes>
+    <includes local="no">ArduinoJson.h</includes>
+    <includes local="no">FS.h</includes>
+    <includes local="yes">LittleFS.h</includes>
+    <includedby refid="access__control__class_8h" local="yes">src/access_control_class.h</includedby>
+    <includedby refid="config__storage__class_8cpp" local="yes">src/config_storage_class.cpp</includedby>
+    <includedby refid="main_8cpp" local="yes">src/main.cpp</includedby>
+    <includedby refid="web__server__class_8h" local="yes">src/web_server_class.h</includedby>
+    <incdepgraph>
+      <node id="4">
+        <label>FS.h</label>
+      </node>
+      <node id="1">
+        <label>src/config_storage_class.h</label>
+        <link refid="config__storage__class_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>LittleFS.h</label>
+      </node>
+      <node id="3">
+        <label>ArduinoJson.h</label>
+      </node>
+      <node id="2">
+        <label>Arduino.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="7">
+        <label>src/web_server_class.cpp</label>
+        <link refid="web__server__class_8cpp"/>
+      </node>
+      <node id="1">
+        <label>src/config_storage_class.h</label>
+        <link refid="config__storage__class_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="3">
+        <label>src/access_control_class.cpp</label>
+        <link refid="access__control__class_8cpp"/>
+      </node>
+      <node id="6">
+        <label>src/web_server_class.h</label>
+        <link refid="web__server__class_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>src/access_control_class.h</label>
+        <link refid="access__control__class_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>src/config_storage_class.cpp</label>
+        <link refid="config__storage__class_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="class_config_storage" prot="public">ConfigStorage</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>CONFIG_STORAGE_CLASS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CONFIG_STORAGE_CLASS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;Arduino.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;ArduinoJson.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;FS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;LittleFS.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="class_config_storage" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_config_storage" kindref="compound">ConfigStorage</ref></highlight></codeline>
+<codeline lineno="10"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>String<sp/>config_path<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;/config.txt&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>default_lock_state<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>String<sp/>default_remote_address<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;192.168.31.160:3000&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>String<sp/>default_auth_hash<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;fee275a0-8155-55fe-a071-ce7f580e1eac&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="18" refid="class_config_storage_1ad66c4c34111da48666036833951f9871" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1ad66c4c34111da48666036833951f9871" kindref="member">authHash</ref>[36];</highlight></codeline>
+<codeline lineno="19" refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" kindref="member">controlServerAddress</ref>[255];</highlight></codeline>
+<codeline lineno="20" refid="class_config_storage_1a0bfc333e4f825b504a58d7b06c7c1527" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">byte</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1a0bfc333e4f825b504a58d7b06c7c1527" kindref="member">lockState</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" kindref="member">Init</ref>();</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1ab563cad3cd0070f28b4c8d7e8c308939" kindref="member">Load</ref>();</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1a2527a4d14c235f127be533dd95d1fd64" kindref="member">Save</ref>();</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>CONFIG_STORAGE_CLASS_H_</highlight></codeline>
+    </programlisting>
+    <location file="src/config_storage_class.h"/>
+  </compounddef>
+</doxygen>

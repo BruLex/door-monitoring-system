@@ -1,0 +1,103 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+LAYOUT_LEFT_RIGHT
+skinparam groupInheritance 20
+Device *-UP- LockMode
+
+    class Device {
+        +i_device: number
+        +name: string
+        +description: string
+        +ip: string
+        +mode: LockMode
+        +token: string
+        +status: boolean
+        +toJSON(): object
+    }
+    class Card {
+        +i_card: number
+        +uuid: string
+        +name: string
+        +i_role: number
+        +role: Role
+    }
+    class RoleDevicePermission {
+        +i_role_device: number
+        +i_device: number
+        +i_role: number
+    }
+    class Role {
+        +i_role: number
+        +name: string
+        +allowed_all: boolean
+        +cards: Card[]
+        +allowed_devices: Device[]
+    }
+    class Log {
+        +i_log: number
+        +i_device: number
+        +device_name: string
+        +device: Device
+        +i_role: number
+        +role_name: string
+        +role: Role
+        +i_card: number
+        +card_name: string
+        +card: Card
+        +time: Date
+        +access: boolean
+        +device_ip: string
+        +uuid: string
+        +error: string
+    }
+    class User {
+        +i_user: number
+        +name: string
+        +login: string
+        +password: string
+    }
+    class Session {
+        +i_session: number
+        +session: string
+        +created_at: Date
+        +i_user: number
+        +user: User
+    }
+
+Card *-- Role
+Role *-- Card
+Role *-- Device
+Log *-- Device
+Log *-- Role
+Log *-- Card
+Session *-- User
+
+AccessLoggerService *-- Card
+AccessLoggerService *-- Device
+AccessLoggerService *-- Session
+
+AccessControlController *-- Card
+AccessControlController *-- Device
+
+CardController *-- Card
+
+DeviceController *-- Device
+
+LogController *-- Log
+
+RoleController *-- Role
+
+SessionController *-- Session
+SessionController *-- User
+
+Server *-- Device
+Server *-- Card
+Server *-- Role
+Server *-- RoleDevicePermission
+Server *-- Log
+Server *-- User
+Server *-- Session
+
+@enduml

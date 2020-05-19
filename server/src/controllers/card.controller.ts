@@ -7,16 +7,23 @@ import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
 import { Card } from '../models';
-import { addCardSchema, deleteCardSchema, getCardInfoSchema, getCardListSchema, updateCardSchema } from '../schemas';
+import { CardSchema } from '../schemas';
+import { SessionService } from '../services/session-service';
 
 @Controller({ route: '/card/' })
 export class CardController {
-    @POST({ url: '/add_card', options: { schema: addCardSchema } })
+    @POST({
+        url: '/add_card',
+        options: { schema: CardSchema.addCardSchema }
+    })
     async addCard(request: FastifyRequest): Promise<jsend.JSendObject> {
         return jsend.success({ i_card: (await Card.create(request.body)).i_card });
     }
 
-    @POST({ url: '/get_card_info', options: { schema: getCardInfoSchema } })
+    @POST({
+        url: '/get_card_info',
+        options: { schema: CardSchema.getCardInfoSchema }
+    })
     async getCardInfo(
         request: FastifyRequest,
         reply: FastifyReply<ServerResponse>
@@ -30,12 +37,18 @@ export class CardController {
         return jsend.success({ card_info });
     }
 
-    @POST({ url: '/get_card_list', options: { schema: getCardListSchema } })
+    @POST({
+        url: '/get_card_list',
+        options: { schema: CardSchema.getCardListSchema }
+    })
     async getCardList(): Promise<jsend.JSendObject> {
         return jsend.success({ card_list: await Card.findAll() });
     }
 
-    @POST({ url: '/update_card', options: { schema: updateCardSchema } })
+    @POST({
+        url: '/update_card',
+        options: { schema: CardSchema.updateCardSchema }
+    })
     async updateCard(
         request: FastifyRequest,
         reply: FastifyReply<ServerResponse>
@@ -53,7 +66,10 @@ export class CardController {
         return jsend.success(null);
     }
 
-    @POST({ url: '/delete_card', options: { schema: deleteCardSchema } })
+    @POST({
+        url: '/delete_card',
+        options: { schema: CardSchema.deleteCardSchema }
+    })
     async deleteCard(request: FastifyRequest): Promise<jsend.JSendObject> {
         const { cards, i_card }: any = request.body;
         if (cards && i_card) {

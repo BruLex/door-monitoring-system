@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
+  <compounddef id="config__storage__class_8cpp" kind="file" language="C++">
+    <compoundname>config_storage_class.cpp</compoundname>
+    <includes refid="config__storage__class_8h" local="yes">config_storage_class.h</includes>
+    <incdepgraph>
+      <node id="5">
+        <label>FS.h</label>
+      </node>
+      <node id="2">
+        <label>config_storage_class.h</label>
+        <link refid="config__storage__class_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>LittleFS.h</label>
+      </node>
+      <node id="4">
+        <label>ArduinoJson.h</label>
+      </node>
+      <node id="3">
+        <label>Arduino.h</label>
+      </node>
+      <node id="1">
+        <label>src/config_storage_class.cpp</label>
+        <link refid="config__storage__class_8cpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="config__storage__class_8h" kindref="compound">config_storage_class.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3" refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" kindref="member">ConfigStorage::Init</ref>()</highlight></codeline>
+<codeline lineno="4"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>mountResult<sp/>=<sp/>LittleFS.begin();</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"><sp/><sp/>Serial.println(mountResult<sp/>?<sp/></highlight><highlight class="stringliteral">&quot;File<sp/>system<sp/>mounted<sp/>with<sp/>success&quot;</highlight><highlight class="normal"><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;Error<sp/>mounting<sp/>the<sp/>file<sp/>system&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/><ref refid="class_config_storage_1ab563cad3cd0070f28b4c8d7e8c308939" kindref="member">Load</ref>();</highlight></codeline>
+<codeline lineno="8"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Loads<sp/>the<sp/>configuration<sp/>from<sp/>a<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="class_config_storage_1ab563cad3cd0070f28b4c8d7e8c308939" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1ab563cad3cd0070f28b4c8d7e8c308939" kindref="member">ConfigStorage::Load</ref>()</highlight></codeline>
+<codeline lineno="12"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Open<sp/>file<sp/>for<sp/>reading</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/>File<sp/>file<sp/>=<sp/>LittleFS.open(config_path,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Allocate<sp/>the<sp/>memory<sp/>pool<sp/>on<sp/>the<sp/>stack.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/>DynamicJsonDocument<sp/>doc(JSON_OBJECT_SIZE(3)<sp/>+<sp/>360);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Parse<sp/>the<sp/>root<sp/>object</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/>DeserializationError<sp/>error<sp/>=<sp/>deserializeJson(doc,<sp/>file);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>Serial.println(</highlight><highlight class="stringliteral">&quot;ConfigStorage::Load:<sp/>Failed<sp/>to<sp/>read<sp/>file,<sp/>using<sp/>default<sp/>configuration&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>serializeJson(doc,<sp/>Serial);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Copy<sp/>values<sp/>from<sp/>the<sp/>JsonObject<sp/>to<sp/>the<sp/>Config</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><ref refid="class_config_storage_1a0bfc333e4f825b504a58d7b06c7c1527" kindref="member">lockState</ref><sp/>=<sp/>doc[</highlight><highlight class="stringliteral">&quot;lockState&quot;</highlight><highlight class="normal">]<sp/>|<sp/>default_lock_state;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/>strlcpy(<ref refid="class_config_storage_1ad66c4c34111da48666036833951f9871" kindref="member">authHash</ref>,<sp/>doc[</highlight><highlight class="stringliteral">&quot;authHash&quot;</highlight><highlight class="normal">]<sp/>|<sp/>default_auth_hash.c_str(),<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="class_config_storage_1ad66c4c34111da48666036833951f9871" kindref="member">authHash</ref>));</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/>strlcpy(<ref refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" kindref="member">controlServerAddress</ref>,<sp/>doc[</highlight><highlight class="stringliteral">&quot;controlServerAddress&quot;</highlight><highlight class="normal">]<sp/>|<sp/>default_remote_address.c_str(),<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" kindref="member">controlServerAddress</ref>));</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/>file.close();</highlight></codeline>
+<codeline lineno="29"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">//<sp/>bool<sp/>CheckUUIDIsAllowedSaved(String<sp/>uid)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//<sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>File<sp/>file<sp/>=<sp/>SPIFFS.open(&quot;uuids&quot;,<sp/>&quot;r&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>DynamicJsonDocument<sp/>doc(JSON_ARRAY_SIZE(1000)<sp/>+<sp/>10000);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>DeserializationError<sp/>error<sp/>=<sp/>deserializeJson(doc,<sp/>file);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>if<sp/>(error)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>Serial.println(&quot;ConfigStorage::CheckIdWithSaved:<sp/>Failed<sp/>to<sp/>read<sp/>file<sp/>with<sp/>uuids&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>return<sp/>false;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>JsonArray<sp/>array<sp/>=<sp/>doc.as&lt;JsonArray&gt;();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>for<sp/>(JsonVariant<sp/>v<sp/>:<sp/>array)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>if<sp/>(uid<sp/>==<sp/>String(v.as&lt;char<sp/>*&gt;()))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>true;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>file.close();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>return<sp/>false;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">//<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//<sp/>void<sp/>SaveUUIDS(char*<sp/>uuid)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//<sp/>{</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>SPIFFS.remove(&quot;uuids&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>File<sp/>file<sp/>=<sp/>SPIFFS.open(&quot;uuids&quot;,<sp/>&quot;W&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>file.write(uuid);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>file.close();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">//<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Saves<sp/>the<sp/>configuration<sp/>to<sp/>a<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="class_config_storage_1a2527a4d14c235f127be533dd95d1fd64" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_config_storage_1a2527a4d14c235f127be533dd95d1fd64" kindref="member">ConfigStorage::Save</ref>()</highlight></codeline>
+<codeline lineno="64"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Delete<sp/>existing<sp/>file,<sp/>otherwise<sp/>the<sp/>configuration<sp/>is<sp/>appended<sp/>to<sp/>the<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>LittleFS.remove(config_path);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Open<sp/>file<sp/>for<sp/>writing</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>File<sp/>file<sp/>=<sp/>LittleFS.open(config_path,<sp/></highlight><highlight class="stringliteral">&quot;w&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!file)</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>Serial.println(</highlight><highlight class="stringliteral">&quot;ConfigStorage::save:<sp/>Failed<sp/>to<sp/>create<sp/>file&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Allocate<sp/>the<sp/>memory<sp/>pool<sp/>on<sp/>the<sp/>stack</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>DynamicJsonDocument<sp/>doc(1024);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Parse<sp/>the<sp/>root<sp/>object</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>doc[</highlight><highlight class="stringliteral">&quot;lockState&quot;</highlight><highlight class="normal">]<sp/>=<sp/><ref refid="class_config_storage_1a0bfc333e4f825b504a58d7b06c7c1527" kindref="member">lockState</ref>;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/>doc[</highlight><highlight class="stringliteral">&quot;authHash&quot;</highlight><highlight class="normal">]<sp/>=<sp/><ref refid="class_config_storage_1ad66c4c34111da48666036833951f9871" kindref="member">authHash</ref>;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>doc[</highlight><highlight class="stringliteral">&quot;controlServerAddress&quot;</highlight><highlight class="normal">]<sp/>=<sp/><ref refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" kindref="member">controlServerAddress</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Serialize<sp/>JSON<sp/>to<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(serializeJson(doc,<sp/>file)<sp/>==<sp/>0)</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>Serial.println(F(</highlight><highlight class="stringliteral">&quot;ConfigStorage::save:<sp/>Failed<sp/>to<sp/>write<sp/>to<sp/>file&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>file.close();</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/config_storage_class.cpp"/>
+  </compounddef>
+</doxygen>

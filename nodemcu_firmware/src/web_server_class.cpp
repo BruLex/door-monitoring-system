@@ -1,4 +1,4 @@
-#include "web_server_class.hpp"
+#include "web_server_class.h"
 
 WebServer::WebServer(ConfigStorage *cfg, AsyncWebServer *srv) : config(cfg), server(srv) {}
 
@@ -14,6 +14,9 @@ void WebServer::Init()
 
     server->on("/update_config", HTTP_POST, [this](AsyncWebServerRequest *request) {
         Serial.println("WebServer::on(/update_config): handled");
+        Serial.println(String(config->authHash));
+        Serial.println(request->getHeader("TOKEN")->value());
+        Serial.println(request->getHeader("TOKEN")->value() != String(config->authHash));
 
         if (!request->hasHeader("TOKEN") || request->getHeader("TOKEN")->value() != String(config->authHash))
         {
@@ -26,6 +29,7 @@ void WebServer::Init()
             String newParam = String(request->getParam("mode", true)->value());
             Serial.println("WebServer::on(/update_config): param lockState changed: " + String(config->lockState) + " -> " + newParam);
             config->lockState = newParam == "LOCKED" ? 1 : newParam == "UNLOCKED" ? 2 : 3;
+            Serial.println("WebServer::on(/update_config): param lockState new state: " + String(config->lockState));
         }
         if (request->hasParam("server_address", true))
         {

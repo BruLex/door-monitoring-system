@@ -1,10 +1,25 @@
-<div class="app-container" ngxLoadingMask>
+<div class="app-container" ngxLoadingMask *ngIf="showNavigation">
     <mat-toolbar color="primary">
         <mat-toolbar-row>
             <button (click)="snav.toggle()" mat-icon-button>
                 <mat-icon>menu</mat-icon>
             </button>
             <h1 class="brand-logo">{{ title }}</h1>
+            <span flex></span>
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>settings</mat-icon>
+            </button>
+            <mat-menu #appMenu="matMenu">
+                <mat-optgroup>Signed in as <b>{{ username }}</b></mat-optgroup>
+                <button mat-menu-item (click)="openChangePasswordDlg(changePasswordDlg)">
+                    <mat-icon>build</mat-icon>
+                    <span>Change password</span>
+                </button>
+                <button mat-menu-item (click)="makeLogout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
         </mat-toolbar-row>
     </mat-toolbar>
 
@@ -12,8 +27,11 @@
         <mat-sidenav #snav [mode]="'over'" fixedTopGap="56">
             <mat-nav-list>
                 <a
-                        (click)="snav.close()" *ngFor="let content of navItems" [routerLink]="[content.link]"
-                        mat-list-item>{{ content.name }}</a>
+                    mat-list-item *ngFor="let content of navItems"
+                    [routerLink]="[content.link]"
+                    (click)="snav.close()">
+                    {{ content.name }}
+                </a>
             </mat-nav-list>
         </mat-sidenav>
 
@@ -22,15 +40,47 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
-
+<router-outlet *ngIf="!showNavigation"></router-outlet>
 
 <ng-template #globalLoading="cdkPortal" cdkPortal>
     <div class="load-container">
         <mat-progress-spinner
-                [color]="'primary'"
-                [mode]="'indeterminate'">
+            [color]="'primary'"
+            [mode]="'indeterminate'">
         </mat-progress-spinner>
         <div>Loading...</div>
     </div>
 </ng-template>
 
+
+<ng-template #changePasswordDlg>
+    <h1 mat-dialog-title>Change password</h1>
+    <div mat-dialog-content vflex-layout>
+        <form [formGroup]="changePasswordFormGroup" vflex-layout>
+            <mat-form-field flex>
+                <input
+                    [(ngModel)]="changePasswordObj.old_password" required formControlName="old_password" matInput
+                    [autocomplete]="'off'"
+                    placeholder="Old password">
+                <mat-error>
+                    <span *ngIf="changePasswordFormGroup.get('old_password').errors?.required">Field is required</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field flex>
+                <input
+                    [(ngModel)]="changePasswordObj.new_password" [autocomplete]="'newpassword'" required formControlName="new_password" matInput
+                    placeholder="New Password">
+                <mat-error>
+                    <span *ngIf="changePasswordFormGroup.get('new_password').errors?.required">Field is required</span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+        <mat-error>
+            <span *ngIf="hintError">{{hintError}}</span>
+        </mat-error>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false">Close</button>
+        <button mat-button [disabled]="changePasswordFormGroup.invalid" (click)="changePassword()">Save</button>
+    </div>
+</ng-template>

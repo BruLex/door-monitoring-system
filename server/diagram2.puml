@@ -1,0 +1,88 @@
+@startuml
+enum LockMode {
+}
+enum DeviceApiEndpoints {
+
+}
+interface DeviceConfig {
+}
+interface ServerInstanceConfig {
+}
+interface ApplyConfigOptions {
+}
+
+DeviceController *-- Constants
+DeviceControlService *-- Constants
+SessionService *-- Constants
+
+DeviceControlService *-- DeviceApiEndpoints
+Device *-UP- LockMode
+
+LogActionOptions *-- Device
+LogActionOptions *-- Card
+
+ApplyConfigOptions *-UP- LockMode
+AccessLoggerService *-UP- LogActionOptions
+
+DeviceControlService *-UP- ApplyConfigOptions
+DeviceControlService *-UP- DeviceConfig
+Server *-- ServerInstanceConfig
+
+Card *-- Role
+Role *-- Card
+Role *-- Device
+Log *-- Device
+Log *-- Role
+Log *-- Card
+Session *-- User
+
+AccessLoggerService *-UP- Card
+AccessLoggerService *-UP- Device
+AccessLoggerService *-UP- Session
+
+AccessControlController *-UP- AccessLoggerService
+AccessControlController *-LEFT- Card
+AccessControlController *-LEFT- Device
+AccessControlController *-- AccessControlSchema
+
+CardController *-- CardSchema
+CardController *-LEFT- Card
+
+DeviceController *-UP- DeviceControlService
+DeviceController *-- DeviceSchema
+DeviceController *-LEFT- Device
+
+LogController *-- LogSchema
+LogController *-LEFT- Log
+
+RoleController *-- RoleSchema
+RoleController *-LEFT- Role
+RoleController *-- RoleDevicePermission
+
+SessionController *-- Session
+SessionController *-LEFT- User
+SessionController *-- SessionSchema
+SessionController *-UP- SessionService
+
+DeviceSchema *-DOWN- SchemaUtils
+CardSchema *-DOWN- SchemaUtils
+RoleSchema *-DOWN- SchemaUtils
+AccessControlSchema *-DOWN- SchemaUtils
+SessionSchema *-DOWN- SchemaUtils
+LogSchema *-DOWN- SchemaUtils
+Server *-UP- Device
+Server *-UP- Card
+Server *-UP- Role
+Server *-UP- RoleDevicePermission
+Server *-UP- Log
+Server *-UP- User
+Server *-UP- Session
+
+Server *-DOWN- AccessControlController
+Server *-DOWN- CardController
+Server *-DOWN- DeviceController
+Server *-DOWN- LogController
+Server *-DOWN- RoleController
+Server *-DOWN- SessionController
+Server *-DOWN- LogController
+@enduml

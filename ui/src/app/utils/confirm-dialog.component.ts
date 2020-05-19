@@ -13,7 +13,7 @@ export interface DialogData {
         </div>
         <div mat-dialog-actions>
             <button mat-button [mat-dialog-close]="false">No</button>
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+            <button mat-button [mat-dialog-close]="true">Yes</button>
         </div>
     `
 })

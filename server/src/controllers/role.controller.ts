@@ -7,11 +7,15 @@ import * as _ from 'lodash';
 import { Op, QueryInterface } from 'sequelize';
 
 import { Role, RoleDevicePermission } from '../models';
-import { addRoleSchema, deleteRoleSchema, getRoleInfoSchema, getRoleListSchema, updateRoleSchema } from '../schemas';
+import { RoleSchema } from '../schemas';
+import { SessionService } from '../services/session-service';
 
 @Controller({ route: '/role' })
 export class RoleController {
-    @POST({ url: '/add_role', options: { schema: addRoleSchema } })
+    @POST({
+        url: '/add_role',
+        options: { schema: RoleSchema.addRoleSchema }
+    })
     async addRole(request: FastifyRequest): Promise<jsend.JSendObject> {
         const role: Role = await Role.create(_.pick(request.body, ['name', 'allowed_all']));
         const { i_role } = role;
@@ -24,7 +28,10 @@ export class RoleController {
         return jsend.success({ i_role });
     }
 
-    @POST({ url: '/get_role_info', options: { schema: getRoleInfoSchema } })
+    @POST({
+        url: '/get_role_info',
+        options: { schema: RoleSchema.getRoleInfoSchema }
+    })
     async getRoleInfo(
         request: FastifyRequest,
         reply: FastifyReply<ServerResponse>
@@ -40,14 +47,20 @@ export class RoleController {
         return jsend.success({ role_info });
     }
 
-    @POST({ url: '/get_role_list', options: { schema: getRoleListSchema } })
+    @POST({
+        url: '/get_role_list',
+        options: { schema: RoleSchema.getRoleListSchema }
+    })
     async getRoleList(request: FastifyRequest): Promise<jsend.JSendObject> {
         return jsend.success({
             role_list: await Role.scope(request.body.extended_info ? 'extended' : 'defaultScope').findAll()
         });
     }
 
-    @POST({ url: '/update_role', options: { schema: updateRoleSchema } })
+    @POST({
+        url: '/update_role',
+        options: { schema: RoleSchema.updateRoleSchema }
+    })
     async updateRole(
         request: FastifyRequest,
         reply: FastifyReply<ServerResponse>
@@ -70,7 +83,10 @@ export class RoleController {
         return jsend.success(null);
     }
 
-    @POST({ url: '/delete_role', options: { schema: deleteRoleSchema } })
+    @POST({
+        url: '/delete_role',
+        options: { schema: RoleSchema.deleteRoleSchema }
+    })
     async deleteRole(request: FastifyRequest): Promise<jsend.JSendObject> {
         const { roles, i_role }: any = request.body;
         if (roles && i_role) {

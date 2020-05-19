@@ -1,0 +1,88 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class AccessControl {
+	+AccessControl(ConfigStorage* cfg)
+	-config : ConfigStorage*
+	-mfrc522 : MFRC522
+	-wifi : WiFiClient
+	-IsCardHaveAccess(String uuid) : bool
+	-check_uuid_request : const String
+	-Block() : void
+	-ChangeColor(bool red, bool green) : void
+	+Init() : void
+	-Lock() : void
+	+NextCard() : void
+	-ProcessCardIfExists() : void
+	-ProcessCardIfPresent() : void
+	-Unlock() : void
+}
+
+
+class ConfigStorage {
+	+lockState : byte
+	+authHash : char
+	+controlServerAddress : char
+	-config_path : const String
+	-default_auth_hash : const String
+	-default_remote_address : const String
+	-default_lock_state : const int
+	+Init() : void
+	+Load() : void
+	+Save() : void
+}
+
+
+class Main {
+	-accessControl : AccessControl
+	-server : AsyncWebServer
+	-config : ConfigStorage
+	-dns : DNSServer
+	-webServer : WebServer
+	+Init() : void
+	+loop() : void
+}
+
+
+class WebServer {
+	+WebServer(ConfigStorage* cfg, AsyncWebServer* srv)
+	-server : AsyncWebServer*
+	-config : ConfigStorage*
+	+Init() : void
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+AccessControl o-- ConfigStorage
+
+
+Main *-- AccessControl
+
+
+Main *-- ConfigStorage
+
+
+Main *-- WebServer
+
+
+WebServer o-- ConfigStorage
+
+
+
+
+
+@enduml

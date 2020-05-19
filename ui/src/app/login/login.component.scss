@@ -1,0 +1,27 @@
+@import '../../variables';
+
+:host {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+
+    mat-card {
+        @include mat-elevation(24);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 450px;
+        min-height: 250px;
+        text-align: center;
+
+
+        mat-card-actions {
+            width: 100%;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

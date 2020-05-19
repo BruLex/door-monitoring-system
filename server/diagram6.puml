@@ -1,0 +1,81 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+
+skinparam groupInheritance 20
+
+enum LockMode {
+    Locked
+    Unlocked
+    Guard
+}
+interface DeviceConfig {
+    +token?: string
+    +server_address?: string
+    +mode: LockMode
+}
+enum DeviceApiEndpoints {
+    Ping
+    UpdateConfig
+}
+
+interface ServerInstanceConfig {
+    +database?: {
+        database?: string;
+        username?: string;
+        password?: string;
+        host?: string;
+        port?: number;
+        sync?: {
+            force?: boolean;
+            alter?: boolean;
+        };
+    };
+    +server?: {
+        port?: number;
+        logger?: {
+            level: 'info' | 'error' | 'debug' | 'fatal' | 'warn' | 'trace' | 'child';
+            file?: string;
+        };
+    };
+}
+interface ApplyConfigOptions {
+    deviceIp: string;
+    deviceMode: LockMode;
+    generateToken?: boolean;
+    token: string;
+}
+
+interface LogActionOptions {
+    card?: Card;
+    device?: Device;
+    ip?: string;
+    uuid?: string;
+    error?: string;
+}
+
+DeviceController *-- Constants
+DeviceControlService *-- Constants
+SessionService *-- Constants
+
+DeviceControlService *-- DeviceApiEndpoints
+Device *-UP- LockMode
+
+LogActionOptions *-- Device
+LogActionOptions *-- Card
+
+ApplyConfigOptions *-UP- LockMode
+AccessLoggerService *-UP- LogActionOptions
+
+DeviceControlService *-UP- ApplyConfigOptions
+DeviceControlService *-UP- DeviceConfig
+Server *-- ServerInstanceConfig
+
+class Constants {
+    +{static} defaultTimeout: number
+    +{static} defaultToken: string
+    +{static} timestampOneWeek: number
+}
+
+@enduml

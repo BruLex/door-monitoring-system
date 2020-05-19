@@ -9,7 +9,7 @@ import { RoleStore, CardStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
 
 import { AppService } from '../app.service';
-import { ApiResponse } from '../types';
+import { ApiResponse } from '@utils/types';
 
 @Component({
     templateUrl: './cards.component.html'

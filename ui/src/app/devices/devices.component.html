@@ -65,20 +65,19 @@
     </table>
 </div>
 
-
 <ng-template #manageEntityDialog>
     <h1 mat-dialog-title>{{ dialogEditMode ? 'Edit device' : 'Add new device' }}</h1>
     <div mat-dialog-content vflex-layout>
         <form [formGroup]="currentModel.modelForm" vflex-layout>
             <mat-form-field flex>
-                <input [(ngModel)]="currentModel.name" required formControlName="name" matInput placeholder="Name">
+                <input [(ngModel)]="currentModel.name" required [autocomplete]="'off'" formControlName="name" matInput placeholder="Name">
             </mat-form-field>
             <mat-form-field flex>
-                <input [(ngModel)]="currentModel.ip" required formControlName="ip" matInput placeholder="IP address">
+                <input [(ngModel)]="currentModel.ip" required [autocomplete]="'off'" formControlName="ip" matInput placeholder="IP address">
             </mat-form-field>
             <mat-form-field flex>
                 <input
-                        [(ngModel)]="currentModel.description" formControlName="description" matInput
+                        [(ngModel)]="currentModel.description" [autocomplete]="'off'" formControlName="description" matInput
                         placeholder="Description">
             </mat-form-field>
         </form>

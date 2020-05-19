@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
 import { AppService } from 'src/app/app.service';
-import { ApiResponse } from 'src/app/types';
+
+import { ApiResponse } from '@utils/types';
 
 export interface FieldSchemaProperty {
     type: Type<Model> | String;

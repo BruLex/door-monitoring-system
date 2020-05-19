@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-import { LockMode } from '../shared/types';
+import { LockMode } from '../shared/constants';
 
 @Table({
     tableName: 'devices',

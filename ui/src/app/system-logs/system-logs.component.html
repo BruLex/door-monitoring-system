@@ -11,44 +11,46 @@
 </mat-toolbar>
 
 <div class="table-container">
-    <table
+    <mat-table
             [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table
             matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="uid">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>UUID</th>
-            <td *matCellDef="let log" mat-cell>{{ log.uuid }}</td>
+            <mat-header-cell *matHeaderCellDef  mat-sort-header>UUID</mat-header-cell>
+            <mat-cell *matCellDef="let log">{{ log.uuid }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="card">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Card</th>
-            <td *matCellDef="let log" mat-cell>{{ log.card_name }}</td>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Card</mat-header-cell>
+            <mat-cell *matCellDef="let log" >{{ log.card_name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="role">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
-            <td *matCellDef="let log" mat-cell> {{ log.role_name }}</td>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+            <mat-cell *matCellDef="let log"> {{ log.role_name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="door">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Door</th>
-            <td *matCellDef="let log" mat-cell>{{ log.device_name }}</td>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Door</mat-header-cell>
+            <mat-cell *matCellDef="let log" >{{ log.device_name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="time">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Time</th>
-            <td *matCellDef="let log" mat-cell>{{ log.time | date :'medium' }}</td>
+            <mat-header-cell *matHeaderCellDef  mat-sort-header>Time</mat-header-cell>
+            <mat-cell *matCellDef="let log">{{ log.time | date :'medium' }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="access">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header>Access</th>
-            <td *matCellDef="let log" mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Access</mat-header-cell>
+            <mat-cell *matCellDef="let log">
                 <span [matTooltip]="log.error">{{ log.access ? 'granted' : 'denied' }}</span>
-            </td>
+            </mat-cell>
         </ng-container>
 
-        <tr *matHeaderRowDef="['uid', 'card', 'role','door', 'time', 'access']; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: ['uid', 'card', 'role','door', 'time', 'access'];" mat-row>
-        </tr>
-    </table>
+        <mat-header-row *matHeaderRowDef="['uid', 'card', 'role','door', 'time', 'access']; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let log; columns: ['uid', 'card', 'role','door', 'time', 'access'];"
+            [attr.granted]="log.access ? null : ''"
+            [attr.denied]="log.access ? '' : null">
+        </mat-row>
+    </mat-table>
 </div>

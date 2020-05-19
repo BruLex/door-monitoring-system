@@ -1,13 +1,13 @@
-import { BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, DefaultScope, ForeignKey, Model, Scopes, Table } from 'sequelize-typescript';
 
 import { Role } from './role.model';
 
-// @DefaultScope(() => ({
-//     attributes: ['i_card', 'uuid', 'name', 'i_role']
-// }))
-// @Scopes(() => ({
-//     extended_access_map: { include: [Role.scope('with_devices')] }
-// }))
+@DefaultScope(() => ({
+    attributes: ['i_card', 'uuid', 'name', 'i_role']
+}))
+@Scopes(() => ({
+    extended_access_map: { include: [Role.scope('with_devices')] }
+}))
 @Table({
     tableName: 'cards',
     modelName: 'cards'

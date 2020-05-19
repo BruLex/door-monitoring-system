@@ -5,40 +5,37 @@ import * as fastifyDecorators from 'fastify-decorators';
 import * as oas from 'fastify-oas';
 import * as wsPlugin from 'fastify-websocket';
 
+import * as ip from 'ip';
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
 import { merge } from 'lodash';
 import 'reflect-metadata';
-import { Sequelize } from 'sequelize-typescript';
-import { ModelCtor } from 'sequelize-typescript/dist/model/model/model';
+import { ModelCtor, Sequelize } from 'sequelize-typescript';
 import { ServerInstanceConfig } from 'src/shared/types';
 
 import {
     AccessControlController,
     CardController,
-    ConfigController,
     DeviceController,
     LogController,
     RoleController,
-    SessionController,
-    WebSocketController
+    SessionController
 } from './controllers';
 import { User, Session, Log, Device, Card, Role, RoleDevicePermission } from './models';
+import { SessionService } from './services/session-service';
 
-const DATABASE_MODELS: ModelCtor[] = [User, Session, Log, Device, Card, Role, RoleDevicePermission];
+const DATABASE_MODELS: ModelCtor[] = [Role, User, Session, Log, Device, Card, RoleDevicePermission];
 const CONTROLLERS: any[] = [
     AccessControlController,
     CardController,
-    ConfigController,
     DeviceController,
     LogController,
     RoleController,
-    SessionController,
-    WebSocketController
+    SessionController
 ];
 
 export class Server {
-    private readonly configuration: ServerInstanceConfig;
+    readonly configuration: ServerInstanceConfig;
     private sequelize: Sequelize;
     private server: fastify.FastifyInstance;
 
@@ -55,6 +52,7 @@ export class Server {
                     }
                 },
                 server: {
+                    ip: ip.address(),
                     port: 3000,
                     logger: {
                         level: 'info'
@@ -69,6 +67,7 @@ export class Server {
         this.server = fastify({
             logger: this.configuration.server.logger
         });
+        this.server.decorate('serverConfig', this.configuration);
         this.sequelize = new Sequelize({
             dialect: 'mysql',
             define: { timestamps: false },
@@ -113,7 +112,10 @@ export class Server {
             controllers: CONTROLLERS
         });
 
-        this.server.register(fastifyCors);
+        this.server.register(fastifyCors, {
+            origin: 'http://127.0.0.1:4200',
+            credentials: true
+        });
     }
 
     private setupHandlers(): void {
@@ -124,7 +126,7 @@ export class Server {
             }
             console.log('ROUTES::', this.server.printRoutes());
         });
-
+        this.server.addHook('preHandler', SessionService.checkSID);
         this.server.setErrorHandler(
             (error: FastifyError, request: FastifyRequest, reply: FastifyReply<ServerResponse>) =>
                 reply.code(error.statusCode || 500).send(jsend.error({ message: error.message }))

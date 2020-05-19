@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.18">
+  <compound refid="class_access_control" kind="class"><name>AccessControl</name>
+    <member refid="class_access_control_1a378e6b12f5667e6cce401f79683bc3ac" kind="variable"><name>check_uuid_request</name></member>
+    <member refid="class_access_control_1aa8d9c6c82d4c320c927497a60c797687" kind="variable"><name>wifi</name></member>
+    <member refid="class_access_control_1aea902add4bc7ad2e68b8b500eb8de698" kind="variable"><name>config</name></member>
+    <member refid="class_access_control_1ad40256e9d726b8900153ae2d6c9d7f29" kind="variable"><name>mfrc522</name></member>
+    <member refid="class_access_control_1a97f11585196775132bc150f2e2834234" kind="function"><name>ChangeColor</name></member>
+    <member refid="class_access_control_1a6e307674ecb7a9a8f6e4187760460aa4" kind="function"><name>ProcessCardIfExists</name></member>
+    <member refid="class_access_control_1a144900ee74e42507c47ccc459cd0bfdd" kind="function"><name>Unlock</name></member>
+    <member refid="class_access_control_1a2361155ce0437cd56457da34e6e7d7e1" kind="function"><name>Lock</name></member>
+    <member refid="class_access_control_1a1c58bdbeb243dc7a74fae6127ebb02f1" kind="function"><name>Block</name></member>
+    <member refid="class_access_control_1a680f29b5ba2a6a756a38563ec9499265" kind="function"><name>IsCardHaveAccess</name></member>
+    <member refid="class_access_control_1a29d5a620af07c77acf86f907ee6a95a4" kind="function"><name>ProcessCardIfPresent</name></member>
+    <member refid="class_access_control_1afe296192e5b8839f6437181d751bdf64" kind="function"><name>AccessControl</name></member>
+    <member refid="class_access_control_1a3dcb6b1a7436599ad7a5328ed60ede0d" kind="function"><name>Init</name></member>
+    <member refid="class_access_control_1a86ca8261b478add076390a0d2298e130" kind="function"><name>NextCard</name></member>
+  </compound>
+  <compound refid="class_config_storage" kind="class"><name>ConfigStorage</name>
+    <member refid="class_config_storage_1a672b998940414983ee4cc7c8ebcd2b27" kind="variable"><name>config_path</name></member>
+    <member refid="class_config_storage_1ad756f5f135ff1f57d38213e4633be5b6" kind="variable"><name>default_lock_state</name></member>
+    <member refid="class_config_storage_1ace7975d463f3e8a620c61f6b680dfee1" kind="variable"><name>default_remote_address</name></member>
+    <member refid="class_config_storage_1a57b6104e03f029120dbc3baab1d07e22" kind="variable"><name>default_auth_hash</name></member>
+    <member refid="class_config_storage_1ad66c4c34111da48666036833951f9871" kind="variable"><name>authHash</name></member>
+    <member refid="class_config_storage_1a59d2e07964a9ba1fef414f2cbd1e3ec5" kind="variable"><name>controlServerAddress</name></member>
+    <member refid="class_config_storage_1a0bfc333e4f825b504a58d7b06c7c1527" kind="variable"><name>lockState</name></member>
+    <member refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" kind="function"><name>Init</name></member>
+    <member refid="class_config_storage_1ab563cad3cd0070f28b4c8d7e8c308939" kind="function"><name>Load</name></member>
+    <member refid="class_config_storage_1a2527a4d14c235f127be533dd95d1fd64" kind="function"><name>Save</name></member>
+  </compound>
+  <compound refid="class_web_server" kind="class"><name>WebServer</name>
+    <member refid="class_web_server_1a05eb5c01a7a5f19de6700b7a20fc6e61" kind="variable"><name>config</name></member>
+    <member refid="class_web_server_1adddeccb901839cc1f91049a5bce2587e" kind="variable"><name>server</name></member>
+    <member refid="class_web_server_1a8b0abb27b50ef422fad607fb7e02820c" kind="function"><name>WebServer</name></member>
+    <member refid="class_web_server_1a1c50cbf4cd91db9b5f5f7f671efbc56a" kind="function"><name>Init</name></member>
+  </compound>
+  <compound refid="access__control__class_8cpp" kind="file"><name>access_control_class.cpp</name>
+  </compound>
+  <compound refid="access__control__class_8h" kind="file"><name>access_control_class.h</name>
+    <member refid="access__control__class_8h_1a36932b0e869e0114f32e255f61306d6b" kind="define"><name>RST_PIN</name></member>
+    <member refid="access__control__class_8h_1a86fac98c9b4c98a3e50fc45440878391" kind="define"><name>SS_PIN</name></member>
+    <member refid="access__control__class_8h_1a9b8c6a744f21ca81f09f5e0e97f097c4" kind="define"><name>LOCK_PIN</name></member>
+    <member refid="access__control__class_8h_1abb59794325aa606c6b13c60dd6c7ab5f" kind="define"><name>RED_PIN</name></member>
+    <member refid="access__control__class_8h_1a6bbd71033d7bc9fd6244ee5341a9dc93" kind="define"><name>GREEN_PIN</name></member>
+  </compound>
+  <compound refid="config__storage__class_8cpp" kind="file"><name>config_storage_class.cpp</name>
+  </compound>
+  <compound refid="config__storage__class_8h" kind="file"><name>config_storage_class.h</name>
+  </compound>
+  <compound refid="main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" kind="variable"><name>dns</name></member>
+    <member refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" kind="variable"><name>config</name></member>
+    <member refid="main_8cpp_1a69c5d0cf20e88bb02c506b44ceb5ef80" kind="variable"><name>currentLockState</name></member>
+    <member refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" kind="function"><name>server</name></member>
+    <member refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" kind="function"><name>setup</name></member>
+    <member refid="main_8cpp_1afe461d27b9c48d5921c00d521181f12f" kind="function"><name>loop</name></member>
+  </compound>
+  <compound refid="web__server__class_8cpp" kind="file"><name>web_server_class.cpp</name>
+  </compound>
+  <compound refid="web__server__class_8h" kind="file"><name>web_server_class.h</name>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>src</name>
+  </compound>
+</doxygenindex>

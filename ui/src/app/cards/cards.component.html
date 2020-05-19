@@ -76,10 +76,10 @@
     <div mat-dialog-content vflex-layout>
         <form [formGroup]="currentModel.modelForm" vflex-layout>
             <mat-form-field flex>
-                <input [(ngModel)]="currentModel.name" required formControlName="name" matInput placeholder="Name">
+                <input [(ngModel)]="currentModel.name" [autocomplete]="'off'" required formControlName="name" matInput placeholder="Name">
             </mat-form-field>
             <mat-form-field flex>
-                <input [(ngModel)]="currentModel.uuid" required formControlName="uuid" matInput placeholder="Card UUID">
+                <input [(ngModel)]="currentModel.uuid" [autocomplete]="'off'" required formControlName="uuid" matInput placeholder="Card UUID">
             </mat-form-field>
         </form>
         <mat-form-field flex>

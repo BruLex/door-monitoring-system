@@ -1,4 +1,4 @@
-#include "access_control_class.hpp"
+#include "access_control_class.h"
 
 AccessControl::AccessControl(ConfigStorage *cfg) : config(cfg) {}
 
@@ -56,7 +56,7 @@ void AccessControl::ProcessCardIfPresent()
         else
             ChangeColor(true, false);
 
-        Serial.print("AccessControl::NextCard: Access " + accessGranted ? "granted" : "denied");
+        Serial.println("AccessControl::NextCard: Access " + accessGranted ? "granted" : "denied");
 
         delay(2000);
         Lock();
@@ -71,7 +71,7 @@ bool AccessControl::IsCardHaveAccess(String uuid)
     http.addHeader("Content-Type", "application/json");
     int statusCode = http.POST("{\"uuid\": \"" + uuid + "\"}");
     String response = http.getString();
-    Serial.print("AccessControl::NextCard::response: " + response);
+    Serial.println("AccessControl::NextCard::response: " + response);
     DynamicJsonDocument doc(1024);
     return statusCode > 0 &&
            String(deserializeJson(doc, response).c_str()) == String("Ok") &&

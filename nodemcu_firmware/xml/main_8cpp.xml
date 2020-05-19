@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
+  <compounddef id="main_8cpp" kind="file" language="C++">
+    <compoundname>main.cpp</compoundname>
+    <includes local="no">Arduino.h</includes>
+    <includes local="no">ESPAsyncWiFiManager.h</includes>
+    <includes refid="access__control__class_8h" local="yes">access_control_class.h</includes>
+    <includes refid="config__storage__class_8h" local="yes">config_storage_class.h</includes>
+    <includes refid="web__server__class_8h" local="yes">web_server_class.h</includes>
+    <incdepgraph>
+      <node id="11">
+        <label>FS.h</label>
+      </node>
+      <node id="6">
+        <label>SPI.h</label>
+      </node>
+      <node id="5">
+        <label>MFRC522.h</label>
+      </node>
+      <node id="10">
+        <label>config_storage_class.h</label>
+        <link refid="config__storage__class_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>ESPAsyncWebServer.h</label>
+      </node>
+      <node id="12">
+        <label>LittleFS.h</label>
+      </node>
+      <node id="8">
+        <label>ESP8266WiFi.h</label>
+      </node>
+      <node id="1">
+        <label>src/main.cpp</label>
+        <link refid="main_8cpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ArduinoJson.h</label>
+      </node>
+      <node id="2">
+        <label>Arduino.h</label>
+      </node>
+      <node id="7">
+        <label>ESP8266HTTPClient.h</label>
+      </node>
+      <node id="14">
+        <label>ESPAsyncTCP.h</label>
+      </node>
+      <node id="13">
+        <label>web_server_class.h</label>
+        <link refid="web__server__class_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>ESPAsyncWiFiManager.h</label>
+      </node>
+      <node id="4">
+        <label>access_control_class.h</label>
+        <link refid="access__control__class_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" prot="public" static="no" mutable="no">
+        <type>DNSServer</type>
+        <definition>DNSServer dns</definition>
+        <argsstring></argsstring>
+        <name>dns</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.cpp" line="9" column="11" bodyfile="src/main.cpp" bodystart="9" bodyend="-1"/>
+        <referencedby refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" compoundref="main_8cpp" startline="17" endline="42">setup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="main_8cpp_1ab77407514a6329935387ab41112a6ae0" prot="public" static="no" mutable="no">
+        <type><ref refid="class_config_storage" kindref="compound">ConfigStorage</ref></type>
+        <definition>AccessControl accessControl &amp; config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.cpp" line="11" column="15" bodyfile="src/main.cpp" bodystart="11" bodyend="-1"/>
+        <referencedby refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" compoundref="main_8cpp" startline="17" endline="42">setup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="main_8cpp_1a69c5d0cf20e88bb02c506b44ceb5ef80" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int currentLockState</definition>
+        <argsstring></argsstring>
+        <name>currentLockState</name>
+        <initializer>= 1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.cpp" line="15" column="5" bodyfile="src/main.cpp" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>AsyncWebServer</type>
+        <definition>AsyncWebServer server</definition>
+        <argsstring>(80)</argsstring>
+        <name>server</name>
+        <param>
+          <type>80</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.cpp" line="8" column="16" declfile="src/main.cpp" declline="8" declcolumn="16"/>
+        <referencedby refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" compoundref="main_8cpp" startline="17" endline="42">setup</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setup</definition>
+        <argsstring>()</argsstring>
+        <name>setup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>Init Wifi module</para>
+        </inbodydescription>
+        <location file="src/main.cpp" line="17" column="6" bodyfile="src/main.cpp" bodystart="17" bodyend="42"/>
+        <references refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" compoundref="main_8cpp" startline="11">config</references>
+        <references refid="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" compoundref="main_8cpp" startline="9">dns</references>
+        <references refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" compoundref="config__storage__class_8cpp" startline="3" endline="8">ConfigStorage::Init</references>
+        <references refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1">server</references>
+      </memberdef>
+      <memberdef kind="function" id="main_8cpp_1afe461d27b9c48d5921c00d521181f12f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void loop</definition>
+        <argsstring>()</argsstring>
+        <name>loop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.cpp" line="44" column="6" bodyfile="src/main.cpp" bodystart="44" bodyend="47"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;Arduino.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;ESPAsyncWiFiManager.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="access__control__class_8h" kindref="compound">access_control_class.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="config__storage__class_8h" kindref="compound">config_storage_class.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="web__server__class_8h" kindref="compound">web_server_class.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" refkind="member"><highlight class="normal">AsyncWebServer<sp/><ref refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" kindref="member">server</ref>(80);</highlight></codeline>
+<codeline lineno="9" refid="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" refkind="member"><highlight class="normal">DNSServer<sp/><ref refid="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" kindref="member">dns</ref>;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" refkind="member"><highlight class="normal"><ref refid="class_config_storage" kindref="compound">ConfigStorage</ref><sp/><ref refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" kindref="member">config</ref>;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><ref refid="class_web_server" kindref="compound">WebServer</ref><sp/>webServer(&amp;<ref refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" kindref="member">config</ref>,<sp/>&amp;<ref refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" kindref="member">server</ref>);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><ref refid="class_access_control" kindref="compound">AccessControl</ref><sp/>accessControl(&amp;<ref refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" kindref="member">config</ref>);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="main_8cpp_1a69c5d0cf20e88bb02c506b44ceb5ef80" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="main_8cpp_1a69c5d0cf20e88bb02c506b44ceb5ef80" kindref="member">currentLockState</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" kindref="member">setup</ref>()</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>/**</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/><sp/>*<sp/>Init<sp/>devices</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/>Serial.begin(115200);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/>AsyncWiFiManager<sp/>wifiManager(&amp;<ref refid="main_8cpp_1a85f30d66aa1231313c8553fd485b22b1" kindref="member">server</ref>,<sp/>&amp;<ref refid="main_8cpp_1a0fc192fea6e455adf73f7e0312973d46" kindref="member">dns</ref>);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!wifiManager.autoConnect(</highlight><highlight class="stringliteral">&quot;AutoConnectAP&quot;</highlight><highlight class="normal">))</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>Serial.println(</highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>connect<sp/>and<sp/>hit<sp/>timeout&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>delay(3000);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//Reset<sp/>and<sp/>try<sp/>again,<sp/>or<sp/>maybe<sp/>put<sp/>it<sp/>to<sp/>deep<sp/>sleep</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP.reset();</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>delay(5000);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/>Serial.println(String(</highlight><highlight class="stringliteral">&quot;Connected,<sp/>IP<sp/>address:<sp/>&quot;</highlight><highlight class="normal">)<sp/>+<sp/>WiFi.localIP().toString());</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><ref refid="main_8cpp_1ab77407514a6329935387ab41112a6ae0" kindref="member">config</ref>.<ref refid="class_config_storage_1ad945748493eb5d877e3c95d50693f7a1" kindref="member">Init</ref>();</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/>accessControl.Init();</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/>webServer.Init();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/>Serial.println(</highlight><highlight class="stringliteral">&quot;HTTP<sp/>server<sp/>started&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="main_8cpp_1afe461d27b9c48d5921c00d521181f12f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="main_8cpp_1afe461d27b9c48d5921c00d521181f12f" kindref="member">loop</ref>()</highlight></codeline>
+<codeline lineno="45"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>accessControl.NextCard();</highlight></codeline>
+<codeline lineno="47"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/main.cpp"/>
+  </compounddef>
+</doxygen>

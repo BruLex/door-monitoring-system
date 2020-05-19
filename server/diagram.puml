@@ -1,0 +1,128 @@
+@startuml
+enum LockMode {
+    Locked
+    Unlocked
+    Guard
+}
+interface DeviceConfig {
+    +token?: string
+    +server_address?: string
+    +mode: LockMode
+}
+interface ServerInstanceConfig {
+    +database?: { database?: string; username?: string; password?: string; host?: string; port?: number; sync?: { force?: boolean; alter?: boolean; }; }
+    +server?: { port?: number; logger?: { level: "info" | "error" | "debug" | "fatal" | "warn" | "trace" | "child"; file?: string; }; }
+}
+class Device extends Model {
+    +i_device: number
+    +name: string
+    +description: string
+    +ip: string
+    +mode: LockMode
+    +token: string
+    +status: boolean
+    +toJSON(): object
+}
+class Card extends Model {
+    +i_card: number
+    +uuid: string
+    +name: string
+    +i_role: number
+    +role: Role
+}
+class RoleDevicePermission extends Model {
+    +i_role_device: number
+    +i_device: number
+    +i_role: number
+}
+class Role extends Model {
+    +i_role: number
+    +name: string
+    +allowed_all: boolean
+    +cards: Card[]
+    +allowed_devices: Device[]
+}
+class Log extends Model {
+    +i_log: number
+    +i_device: number
+    +device_name: string
+    +device: Device
+    +i_role: number
+    +role_name: string
+    +role: Role
+    +i_card: number
+    +card_name: string
+    +card: Card
+    +time: Date
+    +access: boolean
+    +device_ip: string
+    +uuid: string
+    +error: string
+}
+class User extends Model {
+    +i_user: number
+    +name: string
+    +login: string
+    +password: string
+}
+class Session extends Model {
+    +i_session: number
+    +session: string
+    +created_at: Date
+    +i_user: number
+    +user: User
+}
+class SchemaUtils {
+    +{static} response2xxFactory(property?: object): { [key: string]: Object; }
+}
+class DeviceSchema {
+    +{static} getDeviceListSchema: RouteSchema
+    +{static} addDeviceSchema: RouteSchema
+    +{static} getDeviceInfoSchema: RouteSchema
+    +{static} updateDeviceSchema: RouteSchema
+    +{static} deleteDeviceSchema: RouteSchema
+}
+class CardSchema {
+    +{static} getCardListSchema: RouteSchema
+    +{static} addCardSchema: RouteSchema
+    +{static} getCardInfoSchema: RouteSchema
+    +{static} updateCardSchema: RouteSchema
+    +{static} deleteCardSchema: RouteSchema
+}
+class RoleSchema {
+    +{static} getRoleListSchema: RouteSchema
+    +{static} addRoleSchema: RouteSchema
+    +{static} getRoleInfoSchema: RouteSchema
+    +{static} updateRoleSchema: RouteSchema
+    +{static} deleteRoleSchema: RouteSchema
+}
+class AccessControlSchema {
+    +{static} checkCard: RouteSchema
+}
+class SessionSchema {
+    +{static} loginSchema: RouteSchema
+    +{static} logoutSchema: RouteSchema
+    +{static} changePasswordSchema: RouteSchema
+    +{static} changeMyData: RouteSchema
+    +{static} getMyDataSchema: RouteSchema
+}
+class AccessLoggerService {
+    +logAction(options: { card?: Card; device?: Device; ip?: string; uuid?: string; error?: string; }): Promise<void>
+}
+class AccessControlController {
+    -accessLogSrv: AccessLoggerService
+    +checkCard(request: FastifyRequest<IncomingMessage, DefaultQuery, DefaultParams, DefaultHeaders, any>): Promise<JSendObject>
+}
+DeviceConfig *-- LockMode
+Device *-- LockMode
+Card *-- Role
+Role *-- Card
+Role *-- Device
+Log *-- Device
+Log *-- Role
+Log *-- Card
+Session *-- User
+AccessLoggerService *-- Card
+AccessLoggerService *-- Device
+AccessControlController *-- AccessLoggerService
+@enduml

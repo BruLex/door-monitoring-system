@@ -1,0 +1,45 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+LAYOUT_LEFT_RIGHT
+
+enum DeviceApiEndpoints {
+
+}
+interface DeviceConfig {
+}
+
+interface ApplyConfigOptions {
+}
+
+skinparam groupInheritance 20
+
+    class AccessLoggerService {
+        +logAction(options: LogActionOptions): Promise<void>
+    }
+
+    class SessionService {
+        +{static} checkSID(request: FastifyRequest, reply: FastifyReply): Promise<Session>
+    }
+    class DeviceControlService {
+        +pingDevice(deviceIp: string): Promise<boolean>
+        +applyConfig(options: ApplyConfigOptions): Promise<string>
+    }
+
+
+AccessLoggerService *-- Card
+AccessLoggerService *-- Device
+AccessLoggerService *-- Session
+
+AccessControlController --* AccessLoggerService
+
+DeviceController --* DeviceControlService
+
+SessionController --* SessionService
+
+DeviceControlService *-- Constants
+SessionService *-- Constants
+DeviceControlService *-- DeviceApiEndpoints
+DeviceControlService *-- ApplyConfigOptions
+DeviceControlService *-- DeviceConfig
+@enduml

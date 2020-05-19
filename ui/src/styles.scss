@@ -45,7 +45,7 @@ mat-card {
 
 [mat-dialog-content] {
     display: flex !important;
-    min-height: 210px;
+    overflow: unset !important;
 }
 
 html, body {

@@ -7,7 +7,7 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
-#include "config_storage_class.hpp"
+#include "config_storage_class.h"
 
 #define RST_PIN D3
 #define SS_PIN D4
