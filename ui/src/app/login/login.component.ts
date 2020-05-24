@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -30,13 +30,13 @@ export class LoginComponent {
         appSrv.setAppConfig({ title: 'Login', showNavigation: false });
     }
 
-    openSnackBar(message: string, action?: string) {
+    openSnackBar(message: string, action?: string): void {
         this.snackBar.open(message, action || 'Close', {
             duration: 3000
         });
     }
 
-    makeLogin() {
+    makeLogin(): void {
         const login: string = this.login;
         const password: string = this.password;
         if (!login || !password) {

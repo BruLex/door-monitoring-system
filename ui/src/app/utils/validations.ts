@@ -13,6 +13,7 @@ export function createFormControl(config: ValidationConfig): FormControl {
     const validator: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null = creatValidators(config);
     return validator ? new FormControl('', validator) : null;
 }
+
 export function creatValidators(config: ValidationConfig): ValidatorFn | ValidatorFn[] | AbstractControlOptions | null {
     switch (config.type) {
         case 'ip':

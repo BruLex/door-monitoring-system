@@ -1,65 +1,12 @@
 @startuml
-interface RootComponentInterface {
-    +showLoadmask(): void
-    +hideLoadmask(): void
-}
-enum Statuses {
-    Success
-    Error
-}
-class ApiResponse {
-    +status: Statuses
-    +data?: any
-    +message?: string
-    +isSuccess: boolean
-}
-interface ConfirmDialogConfig {
-    +message: string
-    +onSuccess: () => void
-    +onFail?: () => void
-}
-interface DialogData {
-    +message: string
-}
-class ConfirmDialogComponent {
-    +data: DialogData
-}
-interface AppConfig {
-    +title: string
-    +showNavigation: boolean
-    +username: string
-}
-class AppService {
-    -title: string
-    -username: string
-    -showNavigation: boolean
-    -http: HttpClient
-    -matDialog: MatDialog
-    -snackBar: MatSnackBar
-    +setAppConfig(config: Partial<Pick<AppConfig, "title" | "showNavigation">>): void
-    +getConfig(): AppConfig
-    +apiRequest(options: { url: string; body?: object; }): Observable<ApiResponse>
-    +fetchUserData(): Observable<ApiResponse>
-    +setupRootComponent(rootComponent: RootComponentInterface): void
-    +showLoadmask(): void
-    +hideLoadmask(): void
-    +openSnackBar(message: string): void
-    +openConfirmDialog(config: ConfirmDialogConfig): void
-    +{static} instance(): AppService
-    -{static} rootComponent: RootComponentInterface
-    -{static} _instance: AppService
-}
-class AppGuard implements CanActivate {
-    -router: Router
-    -appService: AppService
-    +canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>
-}
 interface FieldSchemaProperty {
     +type: String | Type<Model>
     +validation?: ValidatorFn | ValidatorFn[] | AbstractControlOptions
     +items?: { type: String | Type<Model>; }
 }
-interface FieldSchema
+interface FieldSchema {
+    [fieldName: string]: FieldSchemaProperty
+}
 interface ModelSchema {
     +addProxy?: string
     +infoProxy?: string
@@ -91,10 +38,6 @@ interface StoreSchema<T extends Model> {
     +rootProperty: string
     +options?: { [key: string]: any; }
 }
-interface DefaultActionOptions {
-    +showLoadmask?: boolean
-    +showResultNotification?: boolean
-}
 abstract class Store<T extends Model> {
     +{abstract} schema: StoreSchema<T>
     +loading: BehaviorSubject<boolean>
@@ -104,36 +47,6 @@ abstract class Store<T extends Model> {
     -lastLoadParams: object
     +reload(additionalParams?: any): this
     +bulkDelete(ids: number[], options?: DefaultActionOptions): Observable<ApiResponse[]>
-}
-abstract class AbstractEnityManageComponent<S extends Model, T extends Store<S>> implements OnDestroy, OnInit, AfterViewInit {
-    +{abstract} sort: MatSort
-    +store: T
-    +manageEntityDialogRef: TemplateRef<ElementRef<any>>
-    +currentModel: S
-    +dialogEditMode: boolean
-    +selection: SelectionModel<S>
-    +subs: Subscription[]
-    -mainKey: string
-    #matDialog?: MatDialog
-    #cdRef?: ChangeDetectorRef
-    +ngOnInit(): void
-    +ngAfterViewInit(): void
-    +ngOnDestroy(): void
-    +isAllSelected(): boolean
-    +masterToggle(): void
-    +checkboxLabel(row?: S): string
-    +openDialog(mode: "edit" | "add", model?: S): void
-    +deleteModels(): void
-    #initSort(): void
-    #compare(a: string | number, b: string | number, isAsc: boolean): number
-}
-interface ValidationConfig {
-    +default?: any
-    +type: "ip" | "str"
-    +required?: boolean
-    +minLength?: number
-    +maxLength?: number
-    +notEqualTo?: string[]
 }
 enum LockModes {
     Locked
@@ -187,28 +100,7 @@ class LogModel extends Model {
     +error: string
     +schema: ModelSchema
 }
-enum DoorStatus {
-    Offline
-    Online
-}
-enum LockedStatus {
-    Locked
-    Unlocked
-    Guard
-}
-enum StatusIcon {
-    Locked
-    Unlocked
-    Guard
-    Opened
-}
-class MonitorModel extends Model {
-    +mac: string
-    +locked: LockedStatus
-    +status: DoorStatus
-    +icon: "lock" | "lock_open" | "security" | "verified_card"
-    +schema: ModelSchema
-}
+
 class DeviceStore extends Store {
     +schema: StoreSchema<DeviceModel>
 }
@@ -221,101 +113,15 @@ class LogStore extends Store {
 class CardStore extends Store {
     +schema: StoreSchema<CardModel>
 }
-class MonitorStore extends Store {
-    +schema: StoreSchema<MonitorModel>
+
+class ApiResponse {
+    status: Statuses
+    data?: any
+    message?: string
+    isSuccess(): boolean
+    constructor(data: object)
 }
-class DashboardComponent extends AbstractEnityManageComponent {
-    +lockModes: typeof LockModes
-    +lockModeIconMap: { [key: string]: LockIcons; }
-    +store: DeviceStore
-    +manageEntityDialogRef: TemplateRef<ElementRef<any>>
-    +paginator: MatPaginator
-    +sort: MatSort
-    -appSrv: AppService
-    #matDialog: MatDialog
-    #cdRef: ChangeDetectorRef
-    +ngOnInit(): void
-}
-class DevicesComponent extends AbstractEnityManageComponent {
-    +store: DeviceStore
-    +selection: SelectionModel<DeviceModel>
-    +dialogEditMode: boolean
-    +manageEntityDialogRef: TemplateRef<ElementRef<any>>
-    +paginator: MatPaginator
-    +sort: MatSort
-    -appSrv: AppService
-    #matDialog: MatDialog
-    #cdRef: ChangeDetectorRef
-}
-class LoginComponent {
-    +errorHint: string
-    +login: string
-    +password: string
-    +formGroup: FormGroup
-    +loginInput: ElementRef<any>
-    +passInput: ElementRef<any>
-    +newLoginInput: ElementRef<any>
-    +newPassInput: ElementRef<any>
-    +newReEnterPassInput: ElementRef<any>
-    -snackBar: MatSnackBar
-    -router: Router
-    -appSrv: AppService
-    +openSnackBar(message: string, action?: string): void
-    +makeLogin(): void
-}
-class RolesComponent extends AbstractEnityManageComponent implements OnInit {
-    +store: RoleStore
-    +dialogEditMode: boolean
-    +manageEntityDialogRef: TemplateRef<ElementRef<any>>
-    +separatorKeysCodes: number[]
-    +myControl: FormControl
-    +devices: DeviceStore
-    +filteredOptions: Observable<DeviceModel[]>
-    +paginator: MatPaginator
-    +sort: MatSort
-    +notAddedDoors: DeviceModel[]
-    #matDialog: MatDialog
-    #cdRef: ChangeDetectorRef
-    -appSrv: AppService
-    -overlay: Overlay
-    +ngOnInit(): void
-    +displayFn(card?: CardModel): string
-    +addDeviceToModel(device: DeviceModel): void
-    +removeDeviceFromModel(door: DeviceModel): void
-    -_filter(name: string): any[]
-}
-class SystemLogsComponent extends AbstractEnityManageComponent implements AfterViewInit {
-    +dialog: MatDialog
-    +store: LogStore
-    +sort: MatSort
-    -appSrv: AppService
-    +compare(a: string | number, b: string | number, isAsc: boolean): number
-    #initSort(): void
-}
-class CardsComponent extends AbstractEnityManageComponent {
-    +store: CardStore
-    +dialogEditMode: boolean
-    +currentModel: CardModel
-    +selection: SelectionModel<CardModel>
-    +roles: RoleStore
-    +manageEntityDialogRef: TemplateRef<ElementRef<any>>
-    +paginator: MatPaginator
-    +sort: MatSort
-    -appSrv: AppService
-    #matDialog: MatDialog
-    #cdRef: ChangeDetectorRef
-    +displayRoleName(iRole: number): string
-}
-class AppRoutingModule {
-    +routes: Routes
-}
-ApiResponse *-- Statuses
-ConfirmDialogComponent *-- DialogData
-AppService *-- AppConfig
-AppService *-- ApiResponse
-AppService *-- RootComponentInterface
-AppService *-- ConfirmDialogConfig
-AppGuard *-- AppService
+
 FieldSchemaProperty *-- Model
 ModelSchema *-- FieldSchema
 Model *-- ModelSchema
@@ -333,9 +139,6 @@ RoleModel *-- DeviceModel
 RoleModel *-- CardModel
 RoleModel *-- ModelSchema
 LogModel *-- ModelSchema
-MonitorModel *-- LockedStatus
-MonitorModel *-- DoorStatus
-MonitorModel *-- ModelSchema
 DeviceStore *-- StoreSchema
 DeviceStore *-- DeviceModel
 RoleStore *-- StoreSchema
@@ -344,25 +147,5 @@ LogStore *-- StoreSchema
 LogStore *-- LogModel
 CardStore *-- StoreSchema
 CardStore *-- CardModel
-MonitorStore *-- StoreSchema
-MonitorStore *-- MonitorModel
-DashboardComponent *-- LockModes
-DashboardComponent *-- LockIcons
-DashboardComponent *-- DeviceStore
-DashboardComponent *-- AppService
-DevicesComponent *-- DeviceStore
-DevicesComponent *-- DeviceModel
-DevicesComponent *-- AppService
-LoginComponent *-- AppService
-RolesComponent *-- RoleStore
-RolesComponent *-- DeviceStore
-RolesComponent *-- DeviceModel
-RolesComponent *-- AppService
-RolesComponent *-- CardModel
-SystemLogsComponent *-- LogStore
-SystemLogsComponent *-- AppService
-CardsComponent *-- CardStore
-CardsComponent *-- CardModel
-CardsComponent *-- RoleStore
-CardsComponent *-- AppService
+
 @enduml

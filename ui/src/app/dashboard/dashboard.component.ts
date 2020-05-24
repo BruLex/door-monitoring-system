@@ -10,11 +10,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { ApiResponse } from '@utils/types';
-
 import { DeviceModel, LOCK_MODE_ICON_MAP, LockModes } from '@models';
 import { DeviceStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
+import { ApiResponse } from '@utils/types';
 
 import { AppService } from '../app.service';
 

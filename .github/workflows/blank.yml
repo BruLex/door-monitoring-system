@@ -6,40 +6,40 @@ jobs:
   check-ui:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v1.1.0
-    - name: Install packages
-      run: cd ./ui && npm install
-    - name: Run project linter
-      run: cd ./ui && npm run lint
-    - name: Run project compiler
-      run: cd ./ui && npm run compile
+      - uses: actions/checkout@v1
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v1.1.0
+      - name: Install packages
+        run: cd ./ui && npm install
+      - name: Run project linter
+        run: cd ./ui && npm run lint
+      - name: Run project compiler
+        run: cd ./ui && npm run compile
   check-server:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v1.1.0
-    - name: Install packages
-      run: cd ./server && npm install
-    - name: Run project linter
-      run: cd ./server && npm run lint
-    - name: Run project compiler
-      run: cd ./server && npm run build
+      - uses: actions/checkout@v1
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v1.1.0
+      - name: Install packages
+        run: cd ./server && npm install
+      - name: Run project linter
+        run: cd ./server && npm run lint
+      - name: Run project compiler
+        run: cd ./server && npm run build
   check-nodemcu-firmware:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.7]
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Python for use with actions
-      uses: actions/setup-python@v1
-    - name: Install platformio
-      run: |
-        python -m pip install --upgrade pip
-        pip install platformio
-        python -m platformio lib install
-    - name: Run project build
-      run: cd ./nodemcu_firmware && python -m platformio run
+      - uses: actions/checkout@v1
+      - name: Setup Python for use with actions
+        uses: actions/setup-python@v1
+      - name: Install platformio
+        run: |
+          python -m pip install --upgrade pip
+          pip install platformio
+          python -m platformio lib install
+      - name: Run project build
+        run: cd ./nodemcu_firmware && python -m platformio run

@@ -1,8 +1,8 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 
+import { Card } from './card.model';
 import { Device } from './device.model';
 import { Role } from './role.model';
-import { Card } from './card.model';
 
 @Table({
     tableName: 'logs',

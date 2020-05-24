@@ -6,5 +6,8 @@
   "ignore": [
     "**/*.spec.ts"
   ],
+  "env": {
+    "DEV_MODE": true
+  },
   "exec": "ts-node -r tsconfig-paths/register ./src/app.ts"
 }

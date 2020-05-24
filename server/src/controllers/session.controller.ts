@@ -1,16 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Controller, POST } from 'fastify-decorators';
 
-import { hashSync as hashText, compareSync as compareHash } from 'bcrypt';
+import { compareSync as compareHash, hashSync as hashText } from 'bcrypt';
 import { serialize as serializeCookie } from 'cookie';
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
 import { QueryInterface } from 'sequelize';
-import { v4 as uuid } from 'uuid';
+import * as uuid from 'uuid-random';
 
-import { SessionService } from '../services/session-service';
 import { Session, User } from '../models';
 import { SessionSchema } from '../schemas';
+import { SessionService } from '../services/session-service';
 
 const LOGIN_ERROR: string = 'Login or password is incorrect';
 const CHANGE_PASSWORD_ERROR: string = 'login field or session header should be present in request';
@@ -80,10 +80,12 @@ export class SessionController {
         reply.header('Set-Cookie', serializeCookie('SID', session, { maxAge: 60 * 60 * 24 * 7 * 2, path: '/' }));
         return reply;
     }
+
     private removeSID(reply: FastifyReply<ServerResponse>, session: string): FastifyReply<ServerResponse> {
         reply.header('Set-Cookie', serializeCookie('SID', session, { expires: new Date(1970), path: '/' }));
         return reply;
     }
+
     private createNewSID(i_user: number): string {
         // gen new seession
         const session: string = uuid();

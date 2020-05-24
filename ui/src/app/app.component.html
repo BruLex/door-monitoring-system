@@ -1,4 +1,4 @@
-<div class="app-container" ngxLoadingMask *ngIf="showNavigation">
+<div *ngIf="showNavigation" class="app-container" ngxLoadingMask>
     <mat-toolbar color="primary">
         <mat-toolbar-row>
             <button (click)="snav.toggle()" mat-icon-button>
@@ -6,16 +6,16 @@
             </button>
             <h1 class="brand-logo">{{ title }}</h1>
             <span flex></span>
-            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <button [matMenuTriggerFor]="appMenu" mat-icon-button>
                 <mat-icon>settings</mat-icon>
             </button>
             <mat-menu #appMenu="matMenu">
                 <mat-optgroup>Signed in as <b>{{ username }}</b></mat-optgroup>
-                <button mat-menu-item (click)="openChangePasswordDlg(changePasswordDlg)">
+                <button (click)="openChangePasswordDlg(changePasswordDlg)" mat-menu-item>
                     <mat-icon>build</mat-icon>
                     <span>Change password</span>
                 </button>
-                <button mat-menu-item (click)="makeLogout()">
+                <button (click)="makeLogout()" mat-menu-item>
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Logout</span>
                 </button>
@@ -27,9 +27,9 @@
         <mat-sidenav #snav [mode]="'over'" fixedTopGap="56">
             <mat-nav-list>
                 <a
-                    mat-list-item *ngFor="let content of navItems"
+                    (click)="snav.close()" *ngFor="let content of navItems"
                     [routerLink]="[content.link]"
-                    (click)="snav.close()">
+                    mat-list-item>
                     {{ content.name }}
                 </a>
             </mat-nav-list>
@@ -59,28 +59,29 @@
         <form [formGroup]="changePasswordFormGroup" vflex-layout>
             <mat-form-field flex>
                 <input
-                    [(ngModel)]="changePasswordObj.old_password" required formControlName="old_password" matInput
-                    [autocomplete]="'off'"
-                    placeholder="Old password">
+                    [(ngModel)]="changePasswordObj.old_password" [autocomplete]="'off'" formControlName="old_password" matInput
+                    placeholder="Old password"
+                    required>
                 <mat-error>
                     <span *ngIf="changePasswordFormGroup.get('old_password').errors?.required">Field is required</span>
                 </mat-error>
             </mat-form-field>
             <mat-form-field flex>
                 <input
-                    [(ngModel)]="changePasswordObj.new_password" [autocomplete]="'newpassword'" required formControlName="new_password" matInput
-                    placeholder="New Password">
+                    [(ngModel)]="changePasswordObj.new_password" [autocomplete]="'newpassword'" formControlName="new_password"
+                    matInput placeholder="New Password"
+                    required>
                 <mat-error>
                     <span *ngIf="changePasswordFormGroup.get('new_password').errors?.required">Field is required</span>
                 </mat-error>
             </mat-form-field>
         </form>
         <mat-error>
-            <span *ngIf="hintError">{{hintError}}</span>
+            <span *ngIf="hintError">{{ hintError }}</span>
         </mat-error>
     </div>
-    <div mat-dialog-actions align="end">
-        <button mat-button [mat-dialog-close]="false">Close</button>
-        <button mat-button [disabled]="changePasswordFormGroup.invalid" (click)="changePassword()">Save</button>
+    <div align="end" mat-dialog-actions>
+        <button [mat-dialog-close]="false" mat-button>Close</button>
+        <button (click)="changePassword()" [disabled]="changePasswordFormGroup.invalid" mat-button>Save</button>
     </div>
 </ng-template>

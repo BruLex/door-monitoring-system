@@ -5,24 +5,24 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <mat-paginator
-                [length]="store.dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
-                pageSize="100"></mat-paginator>
+            [length]="store.dataSource.data.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
+            pageSize="100"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="table-container">
     <mat-table
-            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table
-            matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+        [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table
+        matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="uid">
-            <mat-header-cell *matHeaderCellDef  mat-sort-header>UUID</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>UUID</mat-header-cell>
             <mat-cell *matCellDef="let log">{{ log.uuid }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="card">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Card</mat-header-cell>
-            <mat-cell *matCellDef="let log" >{{ log.card_name }}</mat-cell>
+            <mat-cell *matCellDef="let log">{{ log.card_name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="role">
@@ -32,11 +32,11 @@
 
         <ng-container matColumnDef="door">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Door</mat-header-cell>
-            <mat-cell *matCellDef="let log" >{{ log.device_name }}</mat-cell>
+            <mat-cell *matCellDef="let log">{{ log.device_name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="time">
-            <mat-header-cell *matHeaderCellDef  mat-sort-header>Time</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
             <mat-cell *matCellDef="let log">{{ log.time | date :'medium' }}</mat-cell>
         </ng-container>
 
@@ -46,11 +46,19 @@
                 <span [matTooltip]="log.error">{{ log.access ? 'granted' : 'denied' }}</span>
             </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="reason">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Reason</mat-header-cell>
+            <mat-cell *matCellDef="let log">
+                <span [matTooltip]="log.error">{{ log.error }}</span>
+            </mat-cell>
+        </ng-container>
 
-        <mat-header-row *matHeaderRowDef="['uid', 'card', 'role','door', 'time', 'access']; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let log; columns: ['uid', 'card', 'role','door', 'time', 'access'];"
-            [attr.granted]="log.access ? null : ''"
-            [attr.denied]="log.access ? '' : null">
+        <mat-header-row
+            *matHeaderRowDef="['uid', 'card', 'role','door', 'time', 'access', 'reason']; sticky: true"></mat-header-row>
+        <mat-row
+            *matRowDef="let log; columns: ['uid', 'card', 'role','door', 'time', 'access', 'reason'];"
+            [attr.denied]="log.access ? '' : null"
+            [attr.granted]="log.access ? null : ''">
         </mat-row>
     </mat-table>
 </div>

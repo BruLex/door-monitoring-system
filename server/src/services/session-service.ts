@@ -5,25 +5,25 @@ import { parse as parseCookie } from 'cookie';
 import { ServerResponse } from 'http';
 import * as jsend from 'jsend';
 
-import { Constants } from '../shared/constants';
 import { Session } from '../models';
+import { Constants } from '../shared/constants';
 
 @Service()
 export class SessionService {
     static async getCurrentSession(request: FastifyRequest): Promise<Session> {
         const cookie: string = request.headers['cookie'];
         if (!cookie) {
-            return new Promise(null);
+            return;
         }
         const SID: string = parseCookie(cookie)['SID'];
         if (!SID) {
-            return new Promise(null);
+            return;
         }
         return Session.findOne({ where: { session: SID } });
     }
 
     static async checkSID(request: FastifyRequest, reply: FastifyReply<ServerResponse>): Promise<Session> {
-        if (request.raw.url.match(/\/session\/(login|change_password)/)) {
+        if (request.raw.url.match(/^(\/session\/(login|change_password)|\/access_control\/check_card|\/ui)/)) {
             return;
         }
         const session: Session = await SessionService.getCurrentSession(request);

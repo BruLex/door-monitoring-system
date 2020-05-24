@@ -2,12 +2,11 @@
 
 void ConfigStorage::Init()
 {
-    bool mountResult = LittleFS.begin();
+  bool mountResult = LittleFS.begin();
   Serial.println(mountResult ? "File system mounted with success" : "Error mounting the file system");
   Load();
 }
 
-// Loads the configuration from a file
 void ConfigStorage::Load()
 {
   // Open file for reading
@@ -16,9 +15,8 @@ void ConfigStorage::Load()
   DynamicJsonDocument doc(JSON_OBJECT_SIZE(3) + 360);
   // Parse the root object
   DeserializationError error = deserializeJson(doc, file);
-
   if (error)
-    Serial.println("ConfigStorage::Load: Failed to read file, using default configuration");
+    Serial.println("ConfigStorage::Load: Failed to read, default configuration will be used");
   else
     serializeJson(doc, Serial);
   Serial.println();
@@ -27,6 +25,31 @@ void ConfigStorage::Load()
   strlcpy(authHash, doc["authHash"] | default_auth_hash.c_str(), sizeof(authHash));
   strlcpy(controlServerAddress, doc["controlServerAddress"] | default_remote_address.c_str(), sizeof(controlServerAddress));
   file.close();
+}
+
+void ConfigStorage::Save()
+{
+    // Delete existing file, otherwise the configuration is appended to the file
+    LittleFS.remove(config_path);
+    // Open file for writing
+    File file = LittleFS.open(config_path, "w");
+    if (!file)
+    {
+        Serial.println("ConfigStorage::save: File cannot be created");
+        return;
+    }
+    // Create dinamic dict and allocated needed mamory
+    DynamicJsonDocument doc(1024);
+    // Parse config
+    doc["lockState"] = lockState;
+    doc["authHash"] = authHash;
+    doc["controlServerAddress"] = controlServerAddress;
+    // Serialize config as json to file
+    if (serializeJson(doc, file) == 0)
+    {
+        Serial.println(F("ConfigStorage::save: Cannot save file"));
+    }
+    file.close();
 }
 
 // bool CheckUUIDIsAllowedSaved(String uid)
@@ -60,28 +83,4 @@ void ConfigStorage::Load()
 //   file.close();
 // }
 
-// Saves the configuration to a file
-void ConfigStorage::Save()
-{
-  // Delete existing file, otherwise the configuration is appended to the file
-  LittleFS.remove(config_path);
-  // Open file for writing
-  File file = LittleFS.open(config_path, "w");
-  if (!file)
-  {
-    Serial.println("ConfigStorage::save: Failed to create file");
-    return;
-  }
-  // Allocate the memory pool on the stack
-  DynamicJsonDocument doc(1024);
-  // Parse the root object
-  doc["lockState"] = lockState;
-  doc["authHash"] = authHash;
-  doc["controlServerAddress"] = controlServerAddress;
-  // Serialize JSON to file
-  if (serializeJson(doc, file) == 0)
-  {
-    Serial.println(F("ConfigStorage::save: Failed to write to file"));
-  }
-  file.close();
-}
+

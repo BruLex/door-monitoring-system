@@ -1,6 +1,6 @@
 import { creatValidators } from '@utils';
 
-import { Model, ModelSchema } from '../model';
+import { Model, ModelSchema } from './model';
 
 export enum LockModes {
     Locked = 'LOCKED',
@@ -19,6 +19,7 @@ export const LOCK_MODE_ICON_MAP: { [key: string]: LockIcons } = {
     [LockModes.Unlocked]: LockIcons.Unlocked,
     [LockModes.Guard]: LockIcons.Guard
 };
+
 export class DeviceModel extends Model {
     i_device: number = null;
     name: string = '';

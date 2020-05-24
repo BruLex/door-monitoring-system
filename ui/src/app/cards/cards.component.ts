@@ -4,12 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { RoleModel, CardModel } from '@models';
-import { RoleStore, CardStore } from '@stores';
+import { CardModel, RoleModel } from '@models';
+import { CardStore, RoleStore } from '@stores';
 import { AbstractEnityManageComponent } from '@utils/abstract-enity-manage.component';
+import { ApiResponse } from '@utils/types';
 
 import { AppService } from '../app.service';
-import { ApiResponse } from '@utils/types';
 
 @Component({
     templateUrl: './cards.component.html'

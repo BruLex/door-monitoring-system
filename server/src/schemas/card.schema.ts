@@ -22,6 +22,7 @@ export const cardObjectSchema: any = {
         }
     }
 };
+
 export class CardSchema {
     static readonly getCardListSchema: RouteSchema = {
         response: SchemaUtils.response2xxFactory({

@@ -8,7 +8,6 @@ import { Op, QueryInterface } from 'sequelize';
 
 import { Card } from '../models';
 import { CardSchema } from '../schemas';
-import { SessionService } from '../services/session-service';
 
 @Controller({ route: '/card/' })
 export class CardController {

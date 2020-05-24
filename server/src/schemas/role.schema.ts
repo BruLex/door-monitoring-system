@@ -1,8 +1,8 @@
 import { RouteSchema } from 'fastify';
 
+import { cardObjectSchema } from './card.schema';
 import { deviceObjectSchema } from './device.schema';
 import { SchemaUtils } from './schema.utils';
-import { cardObjectSchema } from './card.schema';
 
 export const roleObjectSchema: any = {
     type: 'object',
@@ -27,6 +27,7 @@ export const roleObjectSchema: any = {
         }
     }
 };
+
 export class RoleSchema {
     static readonly getRoleListSchema: RouteSchema = {
         body: {

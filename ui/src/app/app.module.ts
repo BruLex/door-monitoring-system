@@ -39,12 +39,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppGuard } from './app.guard';
 import { AppService } from './app.service';
+import { CardsComponent } from './cards';
 import { DashboardComponent } from './dashboard';
 import { DevicesComponent } from './devices';
+import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles';
 import { SystemLogsComponent } from './system-logs/system-logs.component';
-import { CardsComponent } from './cards';
-import { LoginComponent } from './login/login.component';
 
 const ANGULAR_MATERIAL: any[] = [
     MatTableModule,

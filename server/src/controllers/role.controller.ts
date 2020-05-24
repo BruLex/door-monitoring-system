@@ -8,7 +8,6 @@ import { Op, QueryInterface } from 'sequelize';
 
 import { Role, RoleDevicePermission } from '../models';
 import { RoleSchema } from '../schemas';
-import { SessionService } from '../services/session-service';
 
 @Controller({ route: '/role' })
 export class RoleController {

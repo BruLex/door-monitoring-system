@@ -1,27 +1,32 @@
 <mat-card>
     <mat-card-content>
         <span class="mat-display-2">Welcome</span>
-            <form  class="login-form" [formGroup]="formGroup" vflex-layout>
-                <mat-form-field flex>
-                    <input #loginInput [(ngModel)]="login" [autocomplete]="'off'" required formControlName="login" matInput placeholder="Login">
-                    <mat-error>
-                        <span *ngIf="formGroup.get('login').errors?.required">Field is required</span>
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field flex>
-                    <input #passInput [(ngModel)]="password" [autocomplete]="'off'" required formControlName="password" matInput [type]="'password'" placeholder="Password">
-                    <mat-error>
-                        <span *ngIf="formGroup.get('password').errors?.required">Field is required</span>
-                    </mat-error>
-                </mat-form-field>
-            </form>
+        <form [formGroup]="formGroup" class="login-form" vflex-layout>
+            <mat-form-field flex>
+                <input
+                    #loginInput [(ngModel)]="login" [autocomplete]="'off'" formControlName="login" matInput placeholder="Login"
+                    required>
+                <mat-error>
+                    <span *ngIf="formGroup.get('login').errors?.required">Field is required</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field flex>
+                <input
+                    #passInput [(ngModel)]="password" [autocomplete]="'off'" [type]="'password'" formControlName="password"
+                    matInput placeholder="Password" required>
+                <mat-error>
+                    <span *ngIf="formGroup.get('password').errors?.required">Field is required</span>
+                </mat-error>
+            </mat-form-field>
+        </form>
         <mat-hint *ngIf="errorHint">
-            <mat-error>{{errorHint}}</mat-error>
+            <mat-error>{{ errorHint }}</mat-error>
         </mat-hint>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button flex color="primary"
-                (click)="makeLogin()">
+        <button
+            (click)="makeLogin()" color="primary" flex
+            mat-raised-button>
             Login
         </button>
     </mat-card-actions>

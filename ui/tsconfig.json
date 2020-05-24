@@ -14,12 +14,24 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": ["es2015", "es2016.array.include", "dom"],
+    "lib": [
+      "es2015",
+      "es2016.array.include",
+      "dom"
+    ],
     "paths": {
-      "@models": ["src/app/utils/models"],
-      "@stores": ["src/app/utils/stores"],
-      "@utils": ["src/app/utils"],
-      "@utils/*": ["src/app/utils/*"]
+      "@models": [
+        "src/app/utils/models"
+      ],
+      "@stores": [
+        "src/app/utils/stores"
+      ],
+      "@utils": [
+        "src/app/utils"
+      ],
+      "@utils/*": [
+        "src/app/utils/*"
+      ]
     },
     "types": []
   },

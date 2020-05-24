@@ -1,6 +1,6 @@
 import { creatValidators } from '@utils';
 
-import { Model, ModelSchema } from '../model';
+import { Model, ModelSchema } from './model';
 
 export class CardModel extends Model {
     i_card: number;

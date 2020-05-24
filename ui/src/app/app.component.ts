@@ -45,6 +45,7 @@ export class AppComponent implements RootComponentInterface {
     get title(): string {
         return this.appService.getConfig().title;
     }
+
     get username(): string {
         return this.appService.getConfig().username;
     }
@@ -52,9 +53,9 @@ export class AppComponent implements RootComponentInterface {
     get showNavigation(): boolean {
         return this.appService.getConfig().showNavigation;
     }
-
     private overlayRef: OverlayRef;
     private subs: Subscription[] = [];
+
     constructor(
         private appService: AppService,
         private matDialog: MatDialog,

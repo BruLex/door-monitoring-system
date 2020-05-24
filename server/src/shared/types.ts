@@ -21,7 +21,6 @@ export interface DeviceConfig {
      * Decoded base64 login and password for device
      */
     token?: string;
-
     /**
      * Current server address
      */
@@ -38,12 +37,10 @@ export interface ServerInstanceConfig {
          * The name of the database
          */
         database?: string;
-
         /**
          * The username which is used to authenticate against the database.
          */
         username?: string;
-
         /**
          * The password which is used to authenticate against the database.
          */
@@ -54,21 +51,18 @@ export interface ServerInstanceConfig {
          * @default 'localhost'
          */
         host?: string;
-
         /**
          * The port of the relational database.
          */
         port?: number;
-
         /**
          * Default options for sequelize.sync
          */
         sync?: {
             /**
-             * If force is true, each DAO will do DROP TABLE IF EXISTS ..., before it tries to create its own table
+             * If force is true, each DAO will do DROP TABLE IF EXISTS , before it tries to create its own table
              */
             force?: boolean;
-
             /**
              * If alter is true, each DAO will do ALTER TABLE ... CHANGE ...
              * Alters tables to fit models. Not recommended for production use.

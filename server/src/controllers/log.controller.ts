@@ -4,7 +4,6 @@ import * as jsend from 'jsend';
 
 import { Log } from '../models';
 import { LogSchema } from '../schemas/log.schema';
-import { SessionService } from '../services/session-service';
 
 @Controller({ route: '/logs' })
 export class LogController {

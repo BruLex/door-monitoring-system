@@ -1,8 +1,8 @@
 import { creatValidators } from '@utils';
 
-import { Model, ModelSchema } from '../model';
-import { DeviceModel } from './device.model';
 import { CardModel } from './card.model';
+import { DeviceModel } from './device.model';
+import { Model, ModelSchema } from './model';
 
 export class RoleModel extends Model {
     i_role: number = null;
@@ -34,10 +34,7 @@ export class RoleModel extends Model {
             return 'No devices';
         }
 
-        return (
-            'Name \t\t IP\n' +
-            this.allowed_devices?.map((item: DeviceModel): string => item.name + ' \t ' + item.ip).join('\n')
-        );
+        return this.allowed_devices?.map((item: DeviceModel): string => item.name + ' \t ' + item.ip).join('\n');
     }
 
     getCardNames(): string {
@@ -45,9 +42,6 @@ export class RoleModel extends Model {
             return 'No cards';
         }
 
-        return (
-            'Name \t\t UUID\n' +
-            this.cards?.map((item: CardModel): string => item.name + ' \t ' + item.uuid || 'Not set').join('\n')
-        );
+        return this.cards?.map((item: CardModel): string => item.name + ' \t ' + item.uuid || 'Not set').join('\n');
     }
 }

@@ -6,14 +6,14 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <mat-paginator
-                [color]="'warn'" [length]="store.items.length"
-                [pageSizeOptions]="[3, 10, 20, 30, 100, 200]"></mat-paginator>
+            [color]="'warn'" [length]="store.items.length"
+            [pageSizeOptions]="[3, 10, 20, 30, 100, 200]"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <table
-        [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort matSortActive="name"
-        matSortDirection="desc"
-        matSortDisableClear>
+    [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort matSortActive="name"
+    matSortDirection="desc"
+    matSortDisableClear>
 
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Device name</th>
@@ -28,8 +28,8 @@
         <th *matHeaderCellDef mat-header-cell>Power</th>
         <td *matCellDef="let data" mat-cell>
             <mat-icon
-                    [matTooltip]="data.status ? 'Online' : 'Offline'"
-                    [ngClass]="data.status ? 'green-icon' : 'red-icon'">
+                [matTooltip]="data.status ? 'Online' : 'Offline'"
+                [ngClass]="data.status ? 'green-icon' : 'red-icon'">
                 {{ data.status ? 'lens' : 'error' }}
             </mat-icon>
         </td>
@@ -48,9 +48,9 @@
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let element" mat-cell>
             <button
-                    class="action-button" mat-icon-button
-                    [matTooltip]="'Change mode'"
-                    (click)="openDialog('edit', element)">
+                (click)="openDialog('edit', element)" [matTooltip]="'Change mode'"
+                class="action-button"
+                mat-icon-button>
                 <mat-icon>settings</mat-icon>
             </button>
         </td>
@@ -67,8 +67,8 @@
             <mat-label>Select an option</mat-label>
             <mat-icon [style.font-size]="'16px'" matPrefix>{{ lockModeIconMap[currentModel.mode] }}</mat-icon>
             <mat-select
-                    [disabled]="!currentModel.status"
-                    [(value)]="currentModel.mode">
+                [(value)]="currentModel.mode"
+                [disabled]="!currentModel.status">
                 <mat-select-trigger>
                     <span>{{ currentModel.mode | titlecase }}</span>
                 </mat-select-trigger>
@@ -92,9 +92,10 @@
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
-        <button mat-button
-                [disabled]="!currentModel.status"
-                [mat-dialog-close]="true">
+        <button
+            [disabled]="!currentModel.status"
+            [mat-dialog-close]="true"
+            mat-button>
             {{ 'Save' }}
         </button>
     </div>

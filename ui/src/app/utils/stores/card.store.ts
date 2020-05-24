@@ -1,5 +1,5 @@
 import { CardModel } from '../models/card.model';
-import { Store, StoreSchema } from '../store';
+import { Store, StoreSchema } from './store';
 
 export class CardStore extends Store<CardModel> {
     schema: StoreSchema<CardModel> = {

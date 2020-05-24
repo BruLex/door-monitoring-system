@@ -8,6 +8,7 @@ import { catchError, mergeMap, tap } from 'rxjs/operators';
 
 import { ApiResponse, ConfirmDialogConfig, RootComponentInterface } from '@utils/types';
 
+import { environment } from '../environments/environment';
 import { ConfirmDialogComponent } from './utils/confirm-dialog.component';
 
 export interface AppConfig {
@@ -15,6 +16,7 @@ export interface AppConfig {
     showNavigation: boolean;
     username: string;
 }
+
 @Injectable({
     providedIn: 'root'
 })
@@ -47,7 +49,7 @@ export class AppService {
 
     apiRequest(options: { url: string; body?: object }): Observable<ApiResponse> {
         return this.http
-            .post(`http://127.0.0.1:3000/${options.url}`, options.body || {}, {
+            .post(`${environment.production ? '' : 'http://127.0.0.1:3000'}/${options.url}`, options.body || {}, {
                 withCredentials: true,
                 observe: 'response'
             })
@@ -59,7 +61,7 @@ export class AppService {
 
     fetchUserData(): Observable<ApiResponse> {
         return this.apiRequest({ url: 'session/get_my_data' }).pipe(
-            tap((resp) => {
+            tap(resp => {
                 if (resp.isSuccess) {
                     this.username = resp.data.name;
                 }

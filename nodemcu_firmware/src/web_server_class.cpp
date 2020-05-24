@@ -9,15 +9,17 @@ void WebServer::Init()
     //  */
     server->on("/ping", HTTP_POST, [this](AsyncWebServerRequest *request) {
         Serial.println("WebServer::on(/ping): handled");
+        if (!request->hasHeader("TOKEN") || request->getHeader("TOKEN")->value() != String(config->authHash))
+        {
+            Serial.println("WebServer::on(/ping): Access denied");
+            request->send(403, "application/json", "{\"status\": \"error\", \"message\":\"Access denied\"}");
+            return;
+        }
         request->send(200, "application/json", "{\"status\": \"success\"}");
     });
 
     server->on("/update_config", HTTP_POST, [this](AsyncWebServerRequest *request) {
         Serial.println("WebServer::on(/update_config): handled");
-        Serial.println(String(config->authHash));
-        Serial.println(request->getHeader("TOKEN")->value());
-        Serial.println(request->getHeader("TOKEN")->value() != String(config->authHash));
-
         if (!request->hasHeader("TOKEN") || request->getHeader("TOKEN")->value() != String(config->authHash))
         {
             Serial.println("WebServer::on(/update_config): Access denied");

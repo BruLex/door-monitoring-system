@@ -3,7 +3,7 @@ import { Controller, Inject, POST } from 'fastify-decorators';
 
 import * as jsend from 'jsend';
 
-import { Device, Card } from '../models';
+import { Card, Device } from '../models';
 import { AccessControlSchema } from '../schemas';
 import { AccessLoggerService } from '../services/access-logger.service';
 
@@ -28,10 +28,13 @@ export class AccessControlController {
             error = 'UUID is not registered';
         } else if (!card.i_role) {
             error = 'Role for card not specified';
-        } else if (card.role.allowed_devices.every(({ i_device }) => i_device !== device.i_device)) {
-            error = 'Device not in scope of allowed for your role';
+        } else if (
+            !card.role.allowed_all &&
+            card.role.allowed_devices.every(({ i_device }) => i_device !== device.i_device)
+        ) {
+            error = 'Device not in scope of allowed in assigned role';
         }
-        this.accessLogSrv.logAction({ card, device, ip, error, uuid }).then();
+        await this.accessLogSrv.logAction({ card, device, ip, error, uuid });
         if (error) {
             console.log(`Access denied, device_ip:${ip}, card:${uuid} reason: ` + error);
             throw Error('Access denied, reason: ' + error);

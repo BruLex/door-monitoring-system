@@ -12,11 +12,14 @@
 [flex] {
     flex: 1;
 }
+
 [vflex-layout] {
     display: flex;
     flex-direction: column;
+
     > * {
         display: flex;
+
         &:not(:last-child) {
             margin-bottom: 2px;
         }
@@ -26,6 +29,7 @@
 [mat-table] {
     width: 100%;
 }
+
 .table-container {
     height: 78vh;
     overflow: hidden;
@@ -33,6 +37,7 @@
 
 .table-control-panel {
     background: mat-color($background, card);
+
     button {
         margin: 16px 8px;
     }

@@ -8,8 +8,8 @@ import { filter } from 'rxjs/operators';
 
 import { reverse, sortBy } from 'lodash';
 
-import { Model } from '@utils/model';
-import { Store } from '@utils/store';
+import { Model } from '@utils/models/model';
+import { Store } from '@utils/stores/store';
 
 import { AppService } from '../app.service';
 import { ApiResponse } from './types';
@@ -78,7 +78,7 @@ export abstract class AbstractEnityManageComponent<S extends Model, T extends St
             this.matDialog
                 .open(this.manageEntityDialogRef, { width: '500px' })
                 .afterClosed()
-                .pipe(filter((value) => !!value))
+                .pipe(filter(value => !!value))
                 .subscribe((): void => {
                     const observableResp: Observable<ApiResponse> = this.dialogEditMode
                         ? this.currentModel.update()
@@ -95,7 +95,7 @@ export abstract class AbstractEnityManageComponent<S extends Model, T extends St
     }
 
     deleteModels(): void {
-        const devices: number[] = this.selection.selected.map((model) => model[this.store.schema.idProperty]);
+        const devices: number[] = this.selection.selected.map(model => model[this.store.schema.idProperty]);
         this.store.bulkDelete(devices).subscribe((responses: ApiResponse[]): void => {
             const failedResponses: ApiResponse[] = responses.filter((resp: ApiResponse): boolean => !resp.isSuccess);
             if (!failedResponses.length) {

@@ -50,6 +50,7 @@ export const logObjectSchema: any = {
         }
     }
 };
+
 export class LogSchema {
     static readonly getSystemLogsSchema: RouteSchema = {
         response: SchemaUtils.response2xxFactory({

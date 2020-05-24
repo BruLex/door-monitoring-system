@@ -1,5 +1,5 @@
 import { RoleModel } from '../models/role.model';
-import { Store, StoreSchema } from '../store';
+import { Store, StoreSchema } from './store';
 
 export class RoleStore extends Store<RoleModel> {
     schema: StoreSchema<RoleModel> = {

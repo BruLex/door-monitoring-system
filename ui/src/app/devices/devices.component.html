@@ -11,26 +11,26 @@
 </mat-toolbar>
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" dkLoadmaskPosition="top"
-            dkLoadmaskText="Getting data from the server..."
-            mat-table
-            matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
+        [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" dkLoadmaskPosition="top"
+        dkLoadmaskText="Getting data from the server..."
+        mat-table
+        matSort matSortActive="name" matSortDirection="desc" matSortDisableClear>
 
         <ng-container matColumnDef="select">
             <th *matHeaderCellDef mat-header-cell>
                 <mat-checkbox
-                        (change)="$event ? masterToggle() : null"
-                        [aria-label]="checkboxLabel()"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    (change)="$event ? masterToggle() : null"
+                    [aria-label]="checkboxLabel()"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
             <td *matCellDef="let row" mat-cell>
                 <mat-checkbox
-                        (change)="$event ? selection.toggle(row) : null"
-                        (click)="$event.stopPropagation()"
-                        [aria-label]="checkboxLabel(row)"
-                        [checked]="selection.isSelected(row)">
+                    (change)="$event ? selection.toggle(row) : null"
+                    (click)="$event.stopPropagation()"
+                    [aria-label]="checkboxLabel(row)"
+                    [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -53,8 +53,9 @@
         <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
-                <button mat-icon-button class="action-button"  [matTooltip]="'Edit'"
-                        (click)="openDialog('edit', element)" >
+                <button
+                    (click)="openDialog('edit', element)" [matTooltip]="'Edit'" class="action-button"
+                    mat-icon-button>
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -70,22 +71,26 @@
     <div mat-dialog-content vflex-layout>
         <form [formGroup]="currentModel.modelForm" vflex-layout>
             <mat-form-field flex>
-                <input [(ngModel)]="currentModel.name" required [autocomplete]="'off'" formControlName="name" matInput placeholder="Name">
-            </mat-form-field>
-            <mat-form-field flex>
-                <input [(ngModel)]="currentModel.ip" required [autocomplete]="'off'" formControlName="ip" matInput placeholder="IP address">
+                <input
+                    [(ngModel)]="currentModel.name" [autocomplete]="'off'" formControlName="name" matInput placeholder="Name"
+                    required>
             </mat-form-field>
             <mat-form-field flex>
                 <input
-                        [(ngModel)]="currentModel.description" [autocomplete]="'off'" formControlName="description" matInput
-                        placeholder="Description">
+                    [(ngModel)]="currentModel.ip" [autocomplete]="'off'" formControlName="ip" matInput placeholder="IP address"
+                    required>
+            </mat-form-field>
+            <mat-form-field flex>
+                <input
+                    [(ngModel)]="currentModel.description" [autocomplete]="'off'" formControlName="description" matInput
+                    placeholder="Description">
             </mat-form-field>
         </form>
     </div>
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
         <button
-                [disabled]="currentModel.modelForm.invalid" [mat-dialog-close]="true"
-                mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
+            [disabled]="currentModel.modelForm.invalid" [mat-dialog-close]="true"
+            mat-button>{{ dialogEditMode ? 'Save' : 'Create' }}</button>
     </div>
 </ng-template>

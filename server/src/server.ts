@@ -4,14 +4,15 @@ import * as fastifyCors from 'fastify-cors';
 import * as fastifyDecorators from 'fastify-decorators';
 import * as oas from 'fastify-oas';
 import * as wsPlugin from 'fastify-websocket';
+import * as fastifyStatic from 'fastify-static';
 
-import * as ip from 'ip';
 import { ServerResponse } from 'http';
+import * as ip from 'ip';
 import * as jsend from 'jsend';
 import { merge } from 'lodash';
+import * as path from 'path';
 import 'reflect-metadata';
 import { ModelCtor, Sequelize } from 'sequelize-typescript';
-import { ServerInstanceConfig } from 'src/shared/types';
 
 import {
     AccessControlController,
@@ -21,8 +22,9 @@ import {
     RoleController,
     SessionController
 } from './controllers';
-import { User, Session, Log, Device, Card, Role, RoleDevicePermission } from './models';
+import { Card, Device, Log, Role, RoleDevicePermission, Session, User } from './models';
 import { SessionService } from './services/session-service';
+import { ServerInstanceConfig } from './shared/types';
 
 const DATABASE_MODELS: ModelCtor[] = [Role, User, Session, Log, Device, Card, RoleDevicePermission];
 const CONTROLLERS: any[] = [
@@ -116,10 +118,16 @@ export class Server {
             origin: 'http://127.0.0.1:4200',
             credentials: true
         });
+        if (!process.env.DEV_MODE) {
+            this.server.register(fastifyStatic, {
+                root: path.join(__dirname + '/ui_dist'),
+                prefix: '/ui/'
+            });
+        }
     }
 
     private setupHandlers(): void {
-        this.server.ready((err: Error): void => {
+        this.server.ready((err) => {
             if (err) {
                 this.server.log.error('READY ERROR:', err);
                 console.log('READY ERROR:', err);
@@ -128,15 +136,16 @@ export class Server {
         });
         this.server.addHook('preHandler', SessionService.checkSID);
         this.server.setErrorHandler(
-            (error: FastifyError, request: FastifyRequest, reply: FastifyReply<ServerResponse>) =>
-                reply.code(error.statusCode || 500).send(jsend.error({ message: error.message }))
+            (error: FastifyError, request: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+                console.log(error);
+                reply.code(error.statusCode || 500).send(jsend.error({ message: error.message }));
+            }
         );
 
-        this.server.setNotFoundHandler(
-            (request: FastifyRequest, reply: FastifyReply<ServerResponse>): fastify.FastifyReply<ServerResponse> =>
-                reply.code(404).send(jsend.error({ message: 'Not found' }))
+        this.server.setNotFoundHandler((request, reply) =>
+            reply.sendFile('index.html', path.join(__dirname + '/ui_dist'))
         );
-        process.on('uncaughtException', (error: Error): void => console.error(error));
-        process.on('unhandledRejection', (error: Error): void => console.error(error));
+        process.on('uncaughtException', (error) => console.error(error));
+        process.on('unhandledRejection', (error) => console.error(error));
     }
 }

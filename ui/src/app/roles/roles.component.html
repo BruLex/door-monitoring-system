@@ -7,31 +7,31 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <mat-paginator
-                [length]="store.items?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
-                pageSize="100"></mat-paginator>
+            [length]="store.items?.length" [pageSizeOptions]="[10, 20, 30, 100, 200]"
+            pageSize="100"></mat-paginator>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="table-container">
     <table
-            [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort
-            matSortActive="name" matSortDirection="desc" matSortDisableClear multiTemplateDataRows>
+        [dataSource]="store.dataSource" [dkLoadmask]="store.loading | async" mat-table matSort
+        matSortActive="name" matSortDirection="desc" matSortDisableClear multiTemplateDataRows>
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th *matHeaderCellDef mat-header-cell>
                 <mat-checkbox
-                        (change)="$event && masterToggle()"
-                        [aria-label]="checkboxLabel()"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    (change)="$event && masterToggle()"
+                    [aria-label]="checkboxLabel()"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
             </th>
             <td *matCellDef="let row" mat-cell>
                 <mat-checkbox
-                        (change)="$event ? selection.toggle(row) : null"
-                        (click)="$event.stopPropagation()"
-                        [aria-label]="checkboxLabel(row)"
-                        [checked]="selection.isSelected(row)">
+                    (change)="$event ? selection.toggle(row) : null"
+                    (click)="$event.stopPropagation()"
+                    [aria-label]="checkboxLabel(row)"
+                    [checked]="selection.isSelected(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -42,14 +42,14 @@
         </ng-container>
 
         <ng-container matColumnDef="devices">
-            <th *matHeaderCellDef mat-header-cell>Allowed door devices</th>
+            <th *matHeaderCellDef mat-header-cell>Allowed devices</th>
             <td *matCellDef="let element" mat-cell>
                 <mat-icon
                     #refACl
                     [matBadgeColor]="'primary'"
-                    [matTooltip]="element.getDeviceNames()"
-                    [matTooltipClass]="'tooltip-custom'"
                     [matBadge]="element.allowed_all ? 'All' : element.allowed_devices?.length || '-'"
+                    [matTooltipClass]="'tooltip-custom'"
+                    [matTooltip]="element.getDeviceNames()"
                     [style.cursor]="!element.allowed_all && !!element.allowed_devices?.length ? 'pointer' : null">
                     meeting_room
                 </mat-icon>
@@ -57,14 +57,14 @@
         </ng-container>
 
         <ng-container matColumnDef="cards">
-            <th *matHeaderCellDef mat-header-cell>Card</th>
+            <th *matHeaderCellDef mat-header-cell>Cards with role</th>
             <td *matCellDef="let element" mat-cell>
                 <mat-icon
                     #refCard
-                    [matTooltip]="element.getCardNames()"
-                    [matTooltipClass]="'tooltip-custom'"
                     [matBadgeColor]="'primary'"
                     [matBadge]="element.cards?.length || 0"
+                    [matTooltipClass]="'tooltip-custom'"
+                    [matTooltip]="element.getCardNames()"
                     [style.cursor]="!!element.cards?.length ? 'pointer' : null">
                     supervised_user_circle
                 </mat-icon>
@@ -75,9 +75,9 @@
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let element" mat-cell>
                 <button
-                        mat-icon-button class="action-button"
-                        [matTooltip]="'Edit'"
-                        (click)="openDialog('edit', element)">
+                    (click)="openDialog('edit', element)" [matTooltip]="'Edit'"
+                    class="action-button"
+                    mat-icon-button>
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -93,32 +93,33 @@
     <h1 mat-dialog-title>{{ this.dialogEditMode ? 'Edit role' : 'Add new role' }}</h1>
     <div mat-dialog-content vflex-layout>
         <mat-form-field flex>
-            <input [autocomplete]="'off'"
-                    matInput placeholder="Name"
-                    [(ngModel)]="currentModel.name"
-                    [formControl]="currentModel.modelForm.controls['name']">
+            <input
+                [(ngModel)]="currentModel.name"
+                [autocomplete]="'off'" [formControl]="currentModel.modelForm.controls['name']"
+                matInput
+                placeholder="Name">
         </mat-form-field>
-        <mat-slide-toggle flex [(ngModel)]="currentModel.allowed_all">Allowed all</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="currentModel.allowed_all" flex>Allowed all</mat-slide-toggle>
         <ng-container *ngIf="!currentModel.allowed_all">
             <p>Allowed devices</p>
             <mat-divider></mat-divider>
             <mat-form-field flex>
                 <mat-chip-list #chipList>
                     <mat-chip
-                            *ngFor="let device of currentModel.allowed_devices"
-                            [selectable]="false"
-                            [removable]="true"
-                            (removed)="removeDeviceFromModel(device)">
+                        (removed)="removeDeviceFromModel(device)"
+                        *ngFor="let device of currentModel.allowed_devices"
+                        [removable]="true"
+                        [selectable]="false">
                         {{ device.name }}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                     <input
-                            [formControl]="myControl"
-                            [matAutocomplete]="chipAutocomplete"
-                            [matChipInputFor]="chipList"
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matInput
-                            [placeholder]="'Assignee'"
-                            [type]="'text'">
+                        [formControl]="myControl"
+                        [matAutocomplete]="chipAutocomplete"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [placeholder]="'Assignee'"
+                        [type]="'text'"
+                        matInput>
                 </mat-chip-list>
                 <mat-autocomplete
                     #chipAutocomplete="matAutocomplete"
@@ -134,9 +135,9 @@
     <div mat-dialog-actions>
         <button [mat-dialog-close]="false" mat-button>Close</button>
         <button
-                [disabled]="currentModel.modelForm.invalid"
-                [mat-dialog-close]="true"
-                mat-button>
+            [disabled]="currentModel.modelForm.invalid"
+            [mat-dialog-close]="true"
+            mat-button>
             {{ this.dialogEditMode ? 'Save' : 'Create' }}
         </button>
     </div>

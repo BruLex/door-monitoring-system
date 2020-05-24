@@ -20,6 +20,6 @@ export class AccessLoggerService {
             uuid: options?.card?.uuid || options.uuid || 'N/D'
         });
 
-        log.save();
+        await log.save();
     }
 }

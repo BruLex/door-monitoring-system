@@ -10,7 +10,6 @@ import { Op, QueryInterface } from 'sequelize';
 import { Device } from '../models';
 import { DeviceSchema } from '../schemas';
 import { DeviceControlService } from '../services/device-control.service';
-import { SessionService } from '../services/session-service';
 import { LockMode } from '../shared/constants';
 
 @Controller({ route: '/device' })
@@ -47,7 +46,7 @@ export class DeviceController {
             return reply;
         }
         if (with_device_status) {
-            device_info.status = await this.deviceControlService.pingDevice(device_info.ip);
+            device_info.status = await this.deviceControlService.pingDevice(device_info.ip, device_info.token);
         }
         return jsend.success({ device_info });
     }
@@ -61,7 +60,7 @@ export class DeviceController {
         const device_list: Device[] = await Device.findAll();
         if (with_device_status && device_list.length) {
             for (const device of device_list) {
-                device.status = await this.deviceControlService.pingDevice(device.ip);
+                device.status = await this.deviceControlService.pingDevice(device.ip, device.token);
             }
         }
         return jsend.success({ device_list });
@@ -84,12 +83,14 @@ export class DeviceController {
         Object.keys(_.pick(body, ['name', 'description', 'ip', 'mode'])).forEach(
             (key: string): any => (device_info[key] = body[key])
         );
-        if (body.mode) {
-            await this.deviceControlService.applyConfig({
-                deviceIp: device_info.ip,
-                deviceMode: device_info.mode,
-                token: device_info.token
-            });
+        const resp: { success: boolean; token: string } = await this.deviceControlService.applyConfig({
+            deviceIp: device_info.ip,
+            deviceMode: device_info.mode,
+            token: device_info.token,
+            generateToken: true
+        });
+        if (resp.success) {
+            device_info.token = resp.token;
         }
         device_info.save();
         return jsend.success(null);
