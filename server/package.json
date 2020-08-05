@@ -19,7 +19,7 @@
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "cookie": "^0.4.1",
-    "fastify": "2.13.0",
+    "fastify": "2.15.1",
     "fastify-cors": "3.0.3",
     "fastify-decorators": "2.0.0-7",
     "fastify-oas": "^2.6.2",
